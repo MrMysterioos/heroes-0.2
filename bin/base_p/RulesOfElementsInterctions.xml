@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Rules>
+  <Combination_rules>
+    <Combination first_element="Fire" second_element="Ground" result="Fire" />
+    <Combination first_element="Fire" second_element="Water" result="Steam" />
+    <Combination first_element="Fire" second_element="Steam" result="Fire" />
+    <Combination first_element="Fire" second_element="Oil" result="Fire" />
+    <Combination first_element="Fire" second_element="Gas" result="Fire" />
+    <Combination first_element="Fire" second_element="Venom" result="Gas" />
+    <Combination first_element="Magma" second_element="Ground" result="Magma" />
+    <Combination first_element="Magma" second_element="Water" result="Magma" />
+    <Combination first_element="Magma" second_element="Steam" result="Magma" />
+    <Combination first_element="Magma" second_element="Oil" result="Magma" />
+    <Combination first_element="Magma" second_element="Venom" result="Magma" />
+    <Combination first_element="Magma" second_element="Gas" result="Magma" />
+    <Combination first_element="Water" second_element="Ground" result="Water" />
+    <Combination first_element="Water" second_element="Steam" result="Water" />
+    <Combination first_element="Water" second_element="Oil" result="Oil" />
+    <Combination first_element="Steam" second_element="Ground" result="Steam" />
+    <Combination first_element="Steam" second_element="Oil" result="Oil" />
+  </Combination_rules>
+  <Extension_rules>
+    <Extension catalyst="Fire" start="Oil" final="Fire"/>
+    <Extension catalyst="Fire" start="Gas" final="Fire"/>
+    <Extension catalyst="Magma" start="Ground" final="Fire"/>
+    <Extension catalyst="Magma" start="Water" final="Steam"/>
+    <Extension catalyst="Magma" start="Oil" final="Fire"/>
+    <Extension catalyst="Magma" start="Venom" final="Gas"/>
+    <Extension catalyst="Magma" start="Gas" final="Fire"/>
+  </Extension_rules>
+</Rules>

@@ -1,0 +1,15 @@
+ipch
+/obj
+Build
+xcuserdata
+project.xcworkspace
+.deps
+/bin/write_directory
+/bin/*.exe
+/bin/*.pdb
+*.VC.db
+*.VC.opendb
+*.suo
+*.bak
+*.VC.opendb
+

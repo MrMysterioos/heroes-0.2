@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<GUI>
+	<Layer name="TestLayer">
+		<Controls>
+			<TestWidget name="TestWidget" map="levels/battle_map05.tmx"/>
+		</Controls>
+	</Layer>
+  <Layer name="GameLayer">
+    <Controls>
+      <GameWidget name="GameWidget"/>
+    </Controls>
+  </Layer>
+</GUI>

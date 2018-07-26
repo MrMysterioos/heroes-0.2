@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="staggered" renderorder="right-down" width="10" height="20" tilewidth="335" tileheight="95" infinite="0" staggeraxis="y" staggerindex="odd" nextobjectid="3">
+ <tileset firstgid="1" name="tileset_2" tilewidth="256" tileheight="128" tilecount="8" columns="2">
+  <properties>
+   <property name="Type" value="Ground"/>
+  </properties>
+  <image source="tileset_2.png" width="512" height="512"/>
+  <tile id="0" type="Oil">
+   <properties>
+    <property name="Effect" value="None"/>
+   </properties>
+  </tile>
+  <tile id="1" type="Magma">
+   <properties>
+    <property name="Effect" value="Magma"/>
+   </properties>
+  </tile>
+  <tile id="2" type="Gas">
+   <properties>
+    <property name="Effect" value="Gas"/>
+   </properties>
+  </tile>
+  <tile id="3" type="Venom">
+   <properties>
+    <property name="Effect" value="Venom"/>
+   </properties>
+  </tile>
+  <tile id="4" type="Steam">
+   <properties>
+    <property name="Effect" value="Steam"/>
+   </properties>
+  </tile>
+  <tile id="5" type="Fire">
+   <properties>
+    <property name="Effect" value="Fire"/>
+   </properties>
+  </tile>
+  <tile id="6" type="Ground">
+   <properties>
+    <property name="Effect" value="None"/>
+   </properties>
+  </tile>
+  <tile id="7" type="Water">
+   <properties>
+    <property name="Effect" value="None"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="TileLayer" width="10" height="20">
+  <data encoding="csv">
+7,7,7,7,7,6,6,6,7,1,
+7,7,7,7,7,6,6,7,1,7,
+7,7,7,7,7,7,6,7,1,1,
+7,7,8,5,7,7,7,1,7,7,
+7,7,8,8,5,7,7,7,1,1,
+7,7,8,5,5,8,7,7,1,7,
+7,7,8,8,5,7,8,5,7,7,
+7,7,8,5,5,8,5,7,7,7,
+1,7,5,5,5,7,8,8,7,7,
+1,7,5,5,7,8,8,8,3,7,
+1,1,7,5,7,5,8,8,3,3,
+1,7,7,7,7,5,8,8,3,4,
+1,1,7,7,7,7,5,8,3,4,
+1,1,7,7,7,5,5,7,3,7,
+7,1,7,7,7,7,5,5,7,4,
+7,7,7,7,7,7,7,7,7,7,
+7,7,4,4,3,7,7,7,7,7,
+7,4,4,3,3,7,7,7,7,7,
+7,4,4,3,3,7,7,7,7,7,
+7,4,4,3,3,7,7,7,7,7
+</data>
+ </layer>
+ <objectgroup name="Objects">
+  <object id="1" gid="2" x="501" y="799" width="256" height="128"/>
+  <object id="2" gid="2" x="334" y="470" width="256" height="128"/>
+ </objectgroup>
+</map>

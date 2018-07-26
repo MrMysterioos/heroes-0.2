@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<Resources>
+	<FreeTypeFonts group="TestGroup" upload="false">
+		<font name="arial" family="arial" size="12" color="255;255;255;255" letterSpacing="0">
+			<Effect alpha="0.1" type="shadow" blurX="2" blurY="2" strength="50" angle="0" inner="false" color="0;0;0;255" offset="0"/>
+		</font>
+	</FreeTypeFonts>
+	<Textures group="TestGroup">
+    <texture id="Star" path="textures/star.png"/>
+    <texture id="Circle" path="textures/circle.png"/>
+    <texture id="btnStart_Text" path="textures/Local/Buttons/Start_text.png"/>
+    <texture id="cancel_normal" path="textures/cancel_normal" />
+    <texture id="cancel_active" path="textures/cancel_active" />
+    <texture id="cancel_pressed" path="textures/cancel_pressed" />
+    <texture id="hero" path="textures/hero.png"/>
+	</Textures>
+  <Textures group="Tilesets" basePath="levels">
+    <texture path="tileset.png" id="tileset"/>
+    <texture path="tileset_2.png" id="tileset_2"/>
+  </Textures>
+  <Textures group="Animation" basePath="animations">
+    <texture path="unit_run_se.png" id="unit_run_se"/>
+    <texture path="unit_run_sw.png" id="unit_run_sw"/>
+    <texture path="unit_run_ne.png" id="unit_run_ne"/>
+    <texture path="unit_run_nw.png" id="unit_run_nw"/>
+    <texture path="unit_run_s.png" id="unit_run_s"/>
+    <texture path="unit_run_n.png" id="unit_run_n"/>
+    <texture path="unit_idle.png" id="unit_idle"/>
+  </Textures>
+</Resources>

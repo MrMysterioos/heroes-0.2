@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="staggered" renderorder="right-down" width="5" height="10" tilewidth="389" tileheight="228" infinite="0" staggeraxis="y" staggerindex="odd" nextobjectid="1">
+ <tileset firstgid="1" name="tileset" tilewidth="256" tileheight="256" tilecount="16" columns="4">
+  <properties>
+   <property name="Type" value="Ground"/>
+  </properties>
+  <image source="tileset.png" width="1024" height="1024"/>
+  <tile id="4" type="Stone"/>
+  <tile id="5" type="Magma"/>
+  <tile id="6" type="Blood"/>
+  <tile id="8" type="Steam"/>
+  <tile id="9" type="Venom"/>
+  <tile id="10" type="Gas"/>
+  <tile id="12" type="Ground"/>
+  <tile id="13" type="Water"/>
+  <tile id="14" type="Fire"/>
+ </tileset>
+ <tileset firstgid="17" name="tileset_object" tilewidth="256" tileheight="256" tilecount="16" columns="4">
+  <properties>
+   <property name="Type" value="Object"/>
+  </properties>
+  <image source="tileset_object.png" width="1024" height="1024"/>
+  <tile id="8" type="blue"/>
+  <tile id="9" type="orange"/>
+  <tile id="10" type="light green"/>
+  <tile id="12" type="red"/>
+  <tile id="13" type="purple"/>
+  <tile id="14" type="green"/>
+ </tileset>
+ <layer name="TileLayer" width="5" height="10">
+  <data encoding="csv">
+6,6,15,10,11,
+6,15,13,10,11,
+6,15,15,13,11,
+5,15,13,11,11,
+5,5,9,13,13,
+5,9,14,13,13,
+13,13,14,14,14,
+13,13,14,14,14,
+7,13,13,14,14,
+7,13,14,14,14
+</data>
+ </layer>
+ <layer name="StaticObjects" width="5" height="10">
+  <data encoding="csv">
+0,0,30,0,0,
+0,0,0,26,31,
+0,29,30,26,0,
+29,0,0,0,31,
+0,0,30,0,0,
+29,30,0,25,31,
+0,0,0,25,0,
+29,0,0,0,31,
+0,0,27,25,0,
+29,27,0,0,31
+</data>
+ </layer>
+</map>

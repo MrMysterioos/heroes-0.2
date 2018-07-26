@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Animationset>
+  <animation id="run_n" sprite_sheet="unit_run_n" width="205" height="205" speed="40" />
+  <animation id="run_nw" sprite_sheet="unit_run_nw" width="205" height="205" speed="40" />
+  <animation id="run_sw" sprite_sheet="unit_run_sw" width="205" height="205" speed="40" />
+  <animation id="run_s" sprite_sheet="unit_run_s" width="205" height="205" speed="40" />
+  <animation id="run_se" sprite_sheet="unit_run_se" width="205" height="205" speed="40" />
+  <animation id="run_ne" sprite_sheet="unit_run_ne" width="205" height="205" speed="40" />
+  <animation id="idle" sprite_sheet="unit_idle" width="205" height="205" speed="40" />
+</Animationset>
