@@ -33,14 +33,13 @@ public:
 	static boost::intrusive_ptr<TMXTiledMap> CreateMap(const std::string& nameFile);
 
 	inline std::vector<TilePtr> GetVectorTiles() const { return _tiles; }
-
 	inline std::vector<int> GetObjectVector() const { return _staticObjects; }
+	inline IPoint GetMapSize() const { return _mapSize; }
 
 	IPoint GetTileCoordinate(const FPoint& pos);
-
 	IPoint GetSceneCoordinate(const IPoint& tileCoord) const;
 
-	inline IPoint GetMapSize() const { return _mapSize; }
+	void ChangeStationVectorObject(const IPoint& point, int objectID);
 
 	void Draw();
 

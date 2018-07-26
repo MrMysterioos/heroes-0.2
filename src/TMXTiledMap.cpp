@@ -75,7 +75,7 @@ void TMXTiledMap::InitWithXMLFile(const std::string& xml) {
 							int y = _texture->getBitmapRect().height - (id / tileCount.x + 1) * _texTileSize.y;
 
 							Render::PartialTexturePtr tex(new Render::PartialTexture(_texture, x, y,
-								_texTileSize.x, _texTileSize.y,0, 0, _texTileSize.x, _texTileSize.y, 0));
+								_texTileSize.x, _texTileSize.y, 0, 0, _texTileSize.x, _texTileSize.y, 0));
 
 							area.texture = tex;
 							area.effect = "None";
@@ -102,7 +102,7 @@ void TMXTiledMap::InitWithXMLFile(const std::string& xml) {
 					for (auto tile = it->first_node(); tile != nullptr; tile = tile->next_sibling()) {
 						if (utils::equals(tile->name(), "tile")) {
 							int id = Xml::GetIntAttribute(tile, "id") + firstgid;
-							std::string name = Xml::GetStringAttribute(tile ,"type");
+							std::string name = Xml::GetStringAttribute(tile, "type");
 							auto val = std::map<int, std::string>::value_type(id, name);
 							_objectId.insert(val);
 						}
@@ -120,9 +120,11 @@ void TMXTiledMap::InitWithXMLFile(const std::string& xml) {
 				}
 				else if (utils::equals(it->first_attribute("name")->value(), "StaticObjects")) {
 					std::string stringValue = it->first_node()->value();
-					_staticObjects = GetVectorFromString(stringValue);   
-					auto debug = 0;
+					_staticObjects = GetVectorFromString(stringValue);
 				}
+			}
+			else if (_staticObjects.empty()) {
+				_staticObjects = std::vector<int>(_mapSize.x * _mapSize.y, 0);
 			}
 		}
 	}
@@ -191,7 +193,7 @@ void TMXTiledMap::InitRules(const std::string& xml)
 
 			eRule = eRule->next_sibling();
 		}
-		
+
 	}
 	catch (std::exception const& e) {
 		Log::log.WriteError(e.what());
@@ -232,11 +234,11 @@ IPoint TMXTiledMap::GetSceneCoordinate(const IPoint& tileCoord) const {
 	return IPoint(x, y);
 }
 
-IPoint TMXTiledMap::GetTileCoordinate(const FPoint& mouse_pos) 
+IPoint TMXTiledMap::GetTileCoordinate(const FPoint& mouse_pos)
 {
 	float scale = 1.f;
 
-	float x = (mouse_pos.x - _texTileSize.x * scale/ 2.f) / (_tileSize.x * scale);
+	float x = (mouse_pos.x - _texTileSize.x * scale / 2.f) / (_tileSize.x * scale);
 	int maxX = 0, minX = 0;
 	if (0.5f - (abs(x) - abs(int(x))) > 0 && x >= 0.f) {
 		minX = maxX = int(x);
@@ -271,7 +273,7 @@ IPoint TMXTiledMap::GetTileCoordinate(const FPoint& mouse_pos)
 	vect.push_back(GetSceneCoordinate(IPoint(maxX, minY)));
 	vect.push_back(GetSceneCoordinate(IPoint(minX, minY)));
 	vect.push_back(GetSceneCoordinate(IPoint(maxX, maxY)));
-	
+
 	std::vector< std::pair<float, IPoint> > vectLength;
 	for (auto i : vect) {
 		float length = FPoint(abs(mouse_pos.x - i.x * scale), abs(mouse_pos.y - i.y * scale)).Length();
@@ -286,7 +288,7 @@ IPoint TMXTiledMap::GetTileCoordinate(const FPoint& mouse_pos)
 
 	std::sort(vectLength.begin(), vectLength.end(), [](std::pair<float, IPoint> a, std::pair<float, IPoint> b) {
 		return a.first < b.first;
-	});	
+	});
 
 	return IPoint(vectLength[0].second.x, vectLength[0].second.y);
 }
@@ -364,7 +366,7 @@ void TMXTiledMap::ChangeArea(const std::string& elemName, IPoint pos) {
 }
 
 void TMXTiledMap::AddElement(const std::string& elemName, IPoint pos) {
-	
+
 	Area area;
 	try {
 		if (pos.x < 0 || pos.x >= _mapSize.x ||
@@ -496,4 +498,11 @@ IPoint TMXTiledMap::GetAdjacentAreaCoords(IPoint tileCoord, Direction dir)
 	}
 
 	return ret;
+}
+
+void TMXTiledMap::ChangeStationVectorObject(const IPoint& point, int objectID) {
+	int i = point.x + point.y * _mapSize.x;
+	if (i < _staticObjects.size()) {
+		_staticObjects[i] = objectID;
+	}
 }

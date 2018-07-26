@@ -14,9 +14,9 @@ public:
 
 	void Draw() override;
 	void Update(float dt) override;
-	
+
 	void AcceptMessage(const Message& message) override;
-	
+
 	bool MouseDown(const IPoint& mouse_pos) override;
 	void MouseMove(const IPoint& mouse_pos) override;
 	void MouseUp(const IPoint& mouse_pos) override;
@@ -28,13 +28,11 @@ private:
 
 private:
 	Scene _scene;
-	
+
 	TMXTiledMapPtr _map;
 
 	EffectsContainer _effCont;
 	ParticleEffectPtr _eff;
 
-	UnitPtr _unit;
-
-	Render::TexturePtr _tex;
+	std::vector<UnitPtr> _units;
 };
