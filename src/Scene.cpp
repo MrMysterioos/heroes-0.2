@@ -12,6 +12,15 @@ void Scene::Init() {
 	_cameraPosition = center;
 }
 
+void Scene::DeleteNode(NodePtr node)
+{
+	for (int i = 0; i < _nodes.size(); ++i) {
+		if (_nodes.at(i) == node) {
+			_nodes.erase(_nodes.begin() + i);
+		}
+	}
+}
+
 void Scene::Draw()
 {
 	std::sort(_nodes.begin(), _nodes.end(), [](NodePtr a, NodePtr b) {

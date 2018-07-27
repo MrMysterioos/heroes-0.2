@@ -14,6 +14,7 @@ public:
 	void Update(float dt);
 
 	inline void PushNode(NodePtr node) { _nodes.push_back(node); };
+	void DeleteNode(NodePtr node);
 	void PushVector(std::vector<NodePtr> nodes);
 
 	inline void SetCamraPosition(FPoint newPosition) { _cameraPosition = newPosition; };
