@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "TMXTiledMap.h"
 #include "Unit.h"
+#include "AnimateSprite.h"
 
 ///
 /// Виджет - основной визуальный элемент на экране.
@@ -34,5 +35,7 @@ private:
 	EffectsContainer _effCont;
 	ParticleEffectPtr _eff;
 
-	std::vector<UnitPtr> _units;
+	//std::vector<UnitPtr> _units;
+
+	UnitPtr _unit;
 };
