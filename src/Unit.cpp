@@ -129,11 +129,12 @@ void Unit::Update(float dt) {
 			if (FPoint(spritePos.x - point2.x, spritePos.y - point2.y).Length() > 5.f) {
 
 				_animate->SetPosition(_animate->GetPosition() + math::Vector3(x, y, 0));
+				_animate->SetPosition(math::Vector3(_animate->GetPosition().x, _animate->GetPosition().y, _animate->GetPosition().y));
 			}
 			else {
 				_map->ChangeStationVectorObject(_positionInTile, 0);
 				_counter++;
-				_positionInTile = _wayPoints[_counter];
+				SetPositionInTile(_wayPoints[_counter]);
 				_map->ChangeStationVectorObject(_positionInTile, _unitID);
 			}
 		}
@@ -158,12 +159,26 @@ void Unit::MouseDown(const IPoint& mouse_pos) {
 	}
 
 	std::vector<IPoint> allMoves = GetAllMoves();
-	auto m = _isMove;
 	IPoint mouseTileTap = _map->GetTileCoordinate(mouse_pos);
 
 	for (int i = 0; i < allMoves.size(); ++i) {
 		if (allMoves[i] == mouseTileTap) {
 
+			_wayPoints.clear();
+
+			_isMove = InitWayPoints(mouseTileTap);
+
+			break;
+		}
+	}
+}
+
+void Unit::MoveTo(const IPoint& mouse_pos) {
+	std::vector<IPoint> allMoves = GetAllMoves();
+	IPoint mouseTileTap = _map->GetTileCoordinate(mouse_pos);
+
+	for (int i = 0; i < allMoves.size(); ++i) {
+		if (allMoves[i] == mouseTileTap) {
 			_wayPoints.clear();
 
 			_isMove = InitWayPoints(mouseTileTap);
@@ -227,13 +242,15 @@ std::vector<IPoint> Unit::GetAllMoves() const {
 		}
 	}
 
+	allMoves.push_back(_positionInTile);
+
 	return allMoves;
 }
 
 void Unit::SetPositionInTile(const IPoint& point) {
 	_positionInTile = point;
 	IPoint pos = _map->GetSceneCoordinate(point);
-	_animate->SetPosition(math::Vector3(pos.x, pos.y, _animate->GetPosition().z));
+	_animate->SetPosition(math::Vector3(pos.x, pos.y, pos.y));
 
 	_map->ChangeStationVectorObject(_positionInTile, _unitID);
 }
