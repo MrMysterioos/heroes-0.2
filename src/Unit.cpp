@@ -113,23 +113,21 @@ void Unit::Update(float dt) {
 			IPoint point1 = _map->GetSceneCoordinate(_wayPoints[_counter]);
 			IPoint point2 = _map->GetSceneCoordinate(_wayPoints[_counter + 1]);
 
-			float kx = point2.x - point1.x;
-			float ky = point2.y - point1.y;
+			FPoint vel = point2 - point1;
+			vel.Normalize();
+			vel *= speed;
 
-			float k = sqrt(kx * kx + ky * ky);
-
-			float x = kx / k * speed;
-			float y = ky / k * speed;
-
-			std::string idAnim = GetAnimation(x, y);
+			std::string idAnim = GetAnimation(vel.x, vel.y);
 			_animate->SetAnimation(idAnim);
 
 			FPoint spritePos = FPoint(_animate->GetPosition().x, _animate->GetPosition().y);
 
 			if (FPoint(spritePos.x - point2.x, spritePos.y - point2.y).Length() > 5.f) {
 
-				_animate->SetPosition(_animate->GetPosition() + math::Vector3(x, y, 0));
-				_animate->SetPosition(math::Vector3(_animate->GetPosition().x, _animate->GetPosition().y, _animate->GetPosition().y));
+				math::Vector3 pos = _animate->GetPosition() + math::Vector3(vel.x, vel.y, 0.0f);
+				pos.z = pos.y - 200;
+
+				_animate->SetPosition(pos);
 			}
 			else {
 				_map->ChangeStationVectorObject(_positionInTile, 0);
@@ -250,7 +248,7 @@ std::vector<IPoint> Unit::GetAllMoves() const {
 void Unit::SetPositionInTile(const IPoint& point) {
 	_positionInTile = point;
 	IPoint pos = _map->GetSceneCoordinate(point);
-	_animate->SetPosition(math::Vector3(pos.x, pos.y, pos.y));
+	_animate->SetPosition(math::Vector3(pos.x, pos.y, pos.y - 200));
 
 	_map->ChangeStationVectorObject(_positionInTile, _unitID);
 }

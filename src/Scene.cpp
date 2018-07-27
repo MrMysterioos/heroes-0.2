@@ -39,23 +39,7 @@ void Scene::Draw()
 	Render::device.MatrixScale(_cameraZoom);
 
 	for (NodePtr node : _nodes) {
-		Sprite* spritePtr = dynamic_cast<Sprite*>(node.get());
-		if (spritePtr) {
-			/// @todo Дописать алгоритм прорисовки спрайтов
-			int topBound = _cameraPosition.y + height / _cameraZoom;
-			int bottomBound = _cameraPosition.y - height / _cameraZoom;
-			int rightBound = _cameraPosition.x + width / _cameraZoom;
-			int leftBound = _cameraPosition.x - width / _cameraZoom;
-
-			if (spritePtr->GetPosition().y < topBound && spritePtr->GetPosition().y > bottomBound &&
-				spritePtr->GetPosition().x > leftBound && spritePtr->GetPosition().x < rightBound) {
-				spritePtr->Draw();
-			}
-
-		}
-		else {
-			node->Draw();
-		}
+		node->Draw();
 	}
 
 	Render::device.PopMatrix();

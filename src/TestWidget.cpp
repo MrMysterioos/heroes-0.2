@@ -10,21 +10,14 @@ TestWidget::TestWidget(const std::string& name, rapidxml::xml_node<>* elem)
 
 void TestWidget::Init(const std::string& tmx)
 {
-	_map = TMXTiledMap::CreateMap(tmx);
-	auto tiles = _map->GetVectorTiles();
-	for (auto e : tiles) {
-		_scene.PushNode(e);
-	}
+	_map = TMXTiledMap::CreateMap(tmx, &_scene);
 	_scene.SetCameraZoom(0.5f);
-
-	_map->AddElement("Fire", IPoint(3, 8));
-	Render::TexturePtr tex = Core::resourceManager.Get<Render::Texture>("hero");
 
 	int countUnits = 2;
 	for (int i = 0; i < countUnits; ++i) {
-		AnimateSpritePtr anim = AnimateSprite::Create("animations/unit.xml");
+		AnimateSpritePtr anim = AnimateSprite::Create(&_scene, "animations/unit.xml");
 		anim->SetAnimation("idle");
-		anim->SetAnchorPoint(FPoint(0.5, 0.f));
+		anim->SetAnchorPoint(FPoint(0.5, 0.25f));
 		UnitPtr unit = Unit::Create(_map, anim);
 		unit->SetMaxStep(2);
 		_units.push_back(unit);
@@ -32,10 +25,6 @@ void TestWidget::Init(const std::string& tmx)
 
 	_units[0]->SetPositionInTile(IPoint(1, 3));
 	_units[1]->SetPositionInTile(IPoint(4, 8));
-
-	for (auto unit : _units) {
-		_scene.PushNode(unit->GetSprite());
-	}
 
 	//test unit
 	/*AnimateSpritePtr anim = AnimateSprite::Create("animations/unit.xml");

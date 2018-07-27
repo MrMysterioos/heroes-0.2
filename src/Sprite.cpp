@@ -1,9 +1,17 @@
 #include "stdafx.h"
 #include "Sprite.h"
+#include "Scene.h"
 
-boost::intrusive_ptr<Sprite> Sprite::Create()
+boost::intrusive_ptr<Sprite> Sprite::Create(Scene* scene)
 {
+	SpritePtr ret(new Sprite);
+	ret->Init(scene);
 	return SpritePtr(new Sprite);
+}
+
+void Sprite::Init(Scene * scene)
+{
+	Node::Init(scene);
 }
 
 void Sprite::Draw()

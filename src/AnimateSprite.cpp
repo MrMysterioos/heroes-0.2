@@ -2,14 +2,15 @@
 
 #include "AnimateSprite.h"
 
-boost::intrusive_ptr<AnimateSprite> AnimateSprite::Create(const std::string & xml)
+boost::intrusive_ptr<AnimateSprite> AnimateSprite::Create(Scene* scene, const std::string & xml)
 {
 	AnimateSpritePtr ret(new AnimateSprite);
-	ret->Init(xml);
+	ret->Init(scene, xml);
 	return ret;
 }
 
-void AnimateSprite::Init(const std::string& xml) {
+void AnimateSprite::Init(Scene* scene, const std::string& xml) {
+	Node::Init(scene);
 	try {
 
 		Xml::RapidXmlDocument doc(xml);

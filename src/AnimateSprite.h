@@ -2,11 +2,13 @@
 
 #include "Sprite.h"
 
+class Scene;
+
 class AnimateSprite : public Sprite {
 public:
-	static boost::intrusive_ptr<AnimateSprite> Create(const std::string& xml);
+	static boost::intrusive_ptr<AnimateSprite> Create(Scene* scene,const std::string& xml);
 
-	void Init(const std::string& xml);
+	void Init(Scene* scene, const std::string& xml);
 
 	void Draw() override;
 

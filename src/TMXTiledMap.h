@@ -1,6 +1,8 @@
 #pragma once
 #include "Tile.h"
 
+class Scene;
+
 struct Transform {
 	std::string catalyst;
 	std::string start;
@@ -30,7 +32,7 @@ class TMXTiledMap : public RefCounter {
 public:
 	TMXTiledMap();
 
-	static boost::intrusive_ptr<TMXTiledMap> CreateMap(const std::string& nameFile);
+	static boost::intrusive_ptr<TMXTiledMap> CreateMap(const std::string& nameFile, Scene* scene);
 
 	inline std::vector<TilePtr> GetVectorTiles() const { return _tiles; }
 	inline std::vector<int> GetObjectVector() const { return _staticObjects; }
@@ -54,6 +56,7 @@ public:
 
 private:
 	void InitWithXMLFile(const std::string& nameFile);
+	inline void InitScene(Scene* scene) { _scene = scene; };
 
 	void InitTiles(const std::vector<int>& vect);
 
@@ -74,6 +77,8 @@ private:
 	std::vector<int> _staticObjects;
 
 	Render::Texture * _texture = nullptr;
+
+	Scene* _scene;
 
 	std::map<std::pair<std::string, std::string>, Mix> _combinationRules;
 	std::map<std::string, std::vector<Transform>> _extensionRules;

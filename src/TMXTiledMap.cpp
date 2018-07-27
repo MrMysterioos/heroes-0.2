@@ -1,11 +1,13 @@
 #include "stdafx.h"
 #include "TMXTiledMap.h"
 #include "Sprite.h"
+#include "Scene.h"
 
 std::vector<int> GetVectorFromString(const std::string& str);
 
-TMXTiledMapPtr TMXTiledMap::CreateMap(const std::string& nameFile) {
+TMXTiledMapPtr TMXTiledMap::CreateMap(const std::string& nameFile, Scene* scene) {
 	TMXTiledMapPtr mapPtr = boost::intrusive_ptr<TMXTiledMap>(new TMXTiledMap());
+	mapPtr->InitScene(scene);
 	mapPtr->InitWithXMLFile(nameFile);
 	mapPtr->InitRules("RulesOfElementsInterctions.xml");
 	return mapPtr;
@@ -207,7 +209,7 @@ void TMXTiledMap::InitTiles(const std::vector<int>& vect) {
 			continue;
 		int id = vect[i] - 1;
 
-		auto tile = Tile::Create(_areas.at(id));
+		auto tile = Tile::Create(_scene, _areas.at(id));
 		tile->SetAnchorPoint(FPoint(0.5f, 0.5f));
 		_tiles.push_back(tile);
 
@@ -354,7 +356,7 @@ void TMXTiledMap::ChangeArea(const std::string& elemName, IPoint pos) {
 
 		auto pos = tile->GetPosition();
 
-		tile->Init(_areas.at(_tilesId.at(elemName)));
+		tile->ChangeArea(_areas.at(_tilesId.at(elemName)));
 		tile->SetPosition(pos);
 
 		_tileNames.at(i) = _areas.at(id).name;

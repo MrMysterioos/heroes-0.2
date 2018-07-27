@@ -5,6 +5,8 @@
 class Scene {
 public:
 
+	friend class Node;
+
 	Scene();
 
 	void Init();
@@ -13,7 +15,6 @@ public:
 
 	void Update(float dt);
 
-	inline void PushNode(NodePtr node) { _nodes.push_back(node); };
 	void DeleteNode(NodePtr node);
 	void PushVector(std::vector<NodePtr> nodes);
 
@@ -25,6 +26,7 @@ public:
 
 private:
 	std::vector<NodePtr> _nodes;
+	std::vector<EffectsContainer> _effects;
 	FPoint _cameraPosition = FPoint(0.0f, 0.0f);
 	float _cameraZoom = 1;
 };

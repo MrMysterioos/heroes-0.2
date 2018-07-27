@@ -1,5 +1,6 @@
 #pragma once
 #include "Sprite.h"
+#include "ParticleEffectNode.h"
 
 struct Area {
 	std::string name;
@@ -11,15 +12,15 @@ struct Area {
 
 class Tile : public Sprite {
 public:
-	static boost::intrusive_ptr<Tile> Create(Area area);
-	void Init(Area area);
+	static boost::intrusive_ptr<Tile> Create(Scene* scene, Area area);
+	void Init(Scene* scene, Area area);
 
-	void Draw() override;
-	void Update(float dt) override;
+	void ChangeArea(Area area);
+
+	void SetPosition(math::Vector3 pos) override;
 
 private:
-	EffectsContainer _effCont;
-	ParticleEffectPtr _eff;
+	ParticleEffectNodePtr _effNode;
 
 };
 

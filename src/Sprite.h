@@ -4,7 +4,9 @@
 
 class Sprite : public Node {
 public:
-	static boost::intrusive_ptr<Sprite> Create();
+	static boost::intrusive_ptr<Sprite> Create(Scene* scene);
+
+	void Init(Scene* scene);
 
 	void Draw() override;
 	void Update(float dt) override {};
@@ -16,6 +18,8 @@ public:
 	inline void SetColor(const Color& color) { _color = color; }
 
 	inline Render::TexturePtr GetTexture() { return _texture; };
+
+	virtual ~Sprite() {};
 
 protected:
 	Render::TexturePtr _texture;
