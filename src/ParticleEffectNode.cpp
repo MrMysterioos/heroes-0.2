@@ -32,3 +32,9 @@ void ParticleEffectNode::Update(float dt)
 	_effCont.Update(dt);
 }
 
+ParticleEffectNode::~ParticleEffectNode()
+{
+	if (!_effCont.IsFinished())
+		_effCont.Finish();
+}
+

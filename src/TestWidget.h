@@ -32,6 +32,8 @@ private:
 
 	TMXTiledMapPtr _map;
 
+	IPoint _selectTile = IPoint(0, 0);
+
 	EffectsContainer _effCont;
 	ParticleEffectPtr _eff;
 

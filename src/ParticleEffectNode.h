@@ -15,6 +15,8 @@ public:
 	inline EffectsContainer& GetContainer() { return _effCont; }
 	inline void SetContainer(EffectsContainer newCont) { _effCont = newCont; };
 
+	~ParticleEffectNode();
+
 private:
 	EffectsContainer _effCont;
 };

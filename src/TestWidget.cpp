@@ -98,15 +98,6 @@ bool TestWidget::MouseDown(const IPoint &mouse_pos)
 		unit->MouseDown(mousePos);
 	}*/
 
-	/*FPoint scenePos = FPoint(mouse_pos.x, mouse_pos.y) / zoom;
-	IPoint tileCoord = _map->GetTileCoordinate(scenePos);
-	if (Core::mainInput.GetMouseLeftButton()) {
-	_map->AddElement("Fire", tileCoord);
-	}
-	else {
-	_map->AddElement("Magma", tileCoord);
-	}*/
-
 
 	UnitPtr myUnit = nullptr;
 
@@ -116,9 +107,37 @@ bool TestWidget::MouseDown(const IPoint &mouse_pos)
 				unit->SetSelect(false);
 			}
 			else if (!unit->IsMoving()) {
+				for (auto e : _units) {
+					if (e->IsSelect() && !e->IsMoving()) {
+						e->SetSelect(false);
+					}
+				}
 				myUnit = unit;
 			}
 		}
+	}
+
+	bool bUnit = false;
+	for (auto e : _units) {
+		if (e->IsSelect()) {
+			bUnit = true;
+		}
+	}
+
+	if (!bUnit && !myUnit) {
+		FPoint scenePos = FPoint(mouse_pos.x, mouse_pos.y) / zoom;
+		IPoint tileCoord = _map->GetTileCoordinate(scenePos);
+		if (Core::mainInput.GetMouseLeftButton()) {
+			_map->AddElement("Fire", tileCoord);
+		}
+		else {
+			_map->AddElement("Magma", tileCoord);
+		}
+	}
+
+	std::vector<TilePtr> tiles = _map->GetVectorTiles();
+	for (auto tile : tiles) {
+		tile->SetColor(Color::Color());
 	}
 
 	if (myUnit != nullptr) {
@@ -151,6 +170,24 @@ bool TestWidget::MouseDown(const IPoint &mouse_pos)
 
 void TestWidget::MouseMove(const IPoint &mouse_pos)
 {
+	/*
+	float zoom = _scene.GetCameraZoom();
+
+	IPoint mousePos = IPoint(mouse_pos.x / zoom, mouse_pos.y / zoom);
+	auto tileCoord = _map->GetTileCoordinate(mousePos);
+	if (tileCoord == _selectTile) {
+		return;
+	}
+
+	int next = tileCoord.x + tileCoord.y * _map->GetMapSize().x;
+	int prev = _selectTile.x + _selectTile.y * _map->GetMapSize().x;
+	if (next < _map->GetVectorTiles().size() && next >= 0)
+		_map->GetVectorTiles().at(next)->SetColor(Color(255, 255, 0));
+	if (prev < _map->GetVectorTiles().size() && prev >= 0)
+		_map->GetVectorTiles().at(prev)->SetColor(Color(255, 255, 255));
+
+	_selectTile = tileCoord;
+	*/
 }
 
 void TestWidget::MouseUp(const IPoint &mouse_pos)

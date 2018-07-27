@@ -25,6 +25,7 @@ void Tile::ChangeArea(Area area)
 	auto eff = effCont.AddEffect(area.effect);
 	float rand = (float)(std::rand() % 100) / 10.f;
 	eff->Update(rand);
+	_scene->DeleteNode(_effNode);
 	_effNode.reset();
 	_effNode = ParticleEffectNode::Create(_scene, effCont);
 	math::Vector3 pos = _position;
