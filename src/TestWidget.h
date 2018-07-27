@@ -37,7 +37,7 @@ private:
 	EffectsContainer _effCont;
 	ParticleEffectPtr _eff;
 
-	std::vector<UnitPtr> _units;
+	//std::vector<UnitPtr> _units;
 
-	//UnitPtr _unit;
+	UnitPtr _unit;
 };

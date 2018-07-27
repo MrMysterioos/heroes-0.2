@@ -13,7 +13,11 @@ void TestWidget::Init(const std::string& tmx)
 	_map = TMXTiledMap::CreateMap(tmx, &_scene);
 	_scene.SetCameraZoom(0.5f);
 
-	int countUnits = 2;
+
+	_map->AddElement("Fire", IPoint(3, 8));
+	Render::TexturePtr tex = Core::resourceManager.Get<Render::Texture>("hero");
+
+	/*int countUnits = 2;
 	for (int i = 0; i < countUnits; ++i) {
 		AnimateSpritePtr anim = AnimateSprite::Create(&_scene, "animations/unit.xml");
 		anim->SetAnimation("idle");
@@ -26,14 +30,17 @@ void TestWidget::Init(const std::string& tmx)
 	_units[0]->SetPositionInTile(IPoint(1, 3));
 	_units[1]->SetPositionInTile(IPoint(4, 8));
 
+	for (auto unit : _units) {
+		_scene.PushNode(unit->GetAnimate());
+	}*/
+
 	//test unit
-	/*AnimateSpritePtr anim = AnimateSprite::Create("animations/unit.xml");
+	AnimateSpritePtr anim = AnimateSprite::Create(&_scene, "animations/unit.xml");
 	anim->SetAnimation("idle");
-	anim->SetAnchorPoint(FPoint(0.5, 0.f));
+	anim->SetAnchorPoint(FPoint(0.5, 0.25f));
 	_unit = Unit::Create(_map, anim);
-	_unit->SetMaxStep(6);
+	_unit->SetMaxStep(3);
 	_unit->SetPositionInTile(IPoint(1, 3));
-	_scene.PushNode(_unit->GetSprite());*/
 }
 
 void TestWidget::Draw()
@@ -47,11 +54,11 @@ void TestWidget::Update(float dt)
 	_scene.Update(dt);
 	_effCont.Update(dt);
 
-	for (auto unit : _units) {
+	/*for (auto unit : _units) {
 		unit->Update(dt);
-	}
+	}*/
 
-	//_unit->Update(dt);
+	_unit->Update(dt);
 }
 
 bool TestWidget::MouseDown(const IPoint &mouse_pos)
@@ -61,48 +68,14 @@ bool TestWidget::MouseDown(const IPoint &mouse_pos)
 	IPoint mousePos = IPoint(mouse_pos.x / zoom, mouse_pos.y / zoom);
 
 
-	//test 
-	/*if (_map->GetTileCoordinate(mousePos) == _unit->GetPositionInTile()) {
-			if (_unit->IsSelect() && !_unit->IsMoving()) {
-				_unit->SetSelect(false);
-			}
-			else if (!_unit->IsMoving()) {
-				myUnit = _unit;
-			}
-
-	}
-
-	if (myUnit != nullptr) {
-		myUnit->SetSelect(true);
-		std::vector<IPoint> allMoves = myUnit->GetAllMoves();
-		std::vector<TilePtr> tiles = _map->GetVectorTiles();
-		for (auto move : allMoves) {
-			for (auto tile : tiles) {
-				IPoint posTile = _map->GetTileCoordinate(IPoint(tile->GetPosition().x, tile->GetPosition().y));
-				if (posTile == move) {
-					tile->SetColor(Color::Color(255, 100, 255));
-				}
-			}
-		}
-	}
-	else {
-		std::vector<TilePtr> tiles = _map->GetVectorTiles();
-		for (auto tile : tiles) {
-			tile->SetColor(Color::Color());
-		}
-	}*/
-	/*_unit->SetSelect(true);
-	_unit->MouseDown(mousePos);*/
-
-	/*for (auto unit : _units) {
-		unit->MouseDown(mousePos);
-	}*/
+	_unit->SetSelect(true);
+	_unit->MoveTo(mousePos);
 
 
-	UnitPtr myUnit = nullptr;
+	/*UnitPtr myUnit = nullptr;
 
 	for (auto unit : _units) {
-		if (_map->GetTileCoordinate(mousePos) == unit->GetPositionInTile()) {
+		if (_map->GetTileCoordinate(mousePos) == unit->GetPosition()) {
 			if (unit->IsSelect() && !unit->IsMoving()) {
 				unit->SetSelect(false);
 			}
@@ -162,7 +135,7 @@ bool TestWidget::MouseDown(const IPoint &mouse_pos)
 
 	for (auto unit : _units) {
 		unit->MouseDown(mousePos);
-	}
+	}*/
 
 
 	return false;
