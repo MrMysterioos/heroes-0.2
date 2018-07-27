@@ -22,6 +22,8 @@ public:
 
 	std::vector<IPoint> GetAllMoves() const;
 
+	void MoveTo(const IPoint& mouse_pos);
+
 private:
 	bool InitWayPoints(const IPoint& mouseTileTap);
 

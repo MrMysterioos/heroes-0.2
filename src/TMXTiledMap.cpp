@@ -219,7 +219,7 @@ void TMXTiledMap::InitTiles(const std::vector<int>& vect) {
 	for (int i = _tiles.size() - 1; i >= 0; --i) {
 		int x = _texTileSize.x / 2.f + _tileSize.x * (1.f / 2.f + ((i) % _mapSize.x) - ((((_tiles.size() - 1) - i) / _mapSize.x) % 2) / 2.f);
 		int y = (_texTileSize.y + ((((_tiles.size() - 1) - i)) / _mapSize.x) * _tileSize.y) / 2.f;
-		_tiles[i]->SetPosition(math::Vector3(x, y, 0));
+		_tiles[i]->SetPosition(math::Vector3(x, y, y));
 	}
 }
 
