@@ -1,10 +1,12 @@
 #include "stdafx.h"
 #include "Unit.h"
 
-UnitPtr Unit::CreateUnit(TMXTiledMapPtr map, SpritePtr sprite) {
+std::string GetAnimation(float dtX, float dtY);
+
+UnitPtr Unit::Create(TMXTiledMapPtr map, AnimateSpritePtr anim) {
 	UnitPtr unit = boost::intrusive_ptr<Unit>(new Unit());
 	unit->_map = map;
-	unit->_unitSprite = sprite;
+	unit->_animate = anim;
 	return unit;
 }
 
@@ -119,11 +121,14 @@ void Unit::Update(float dt) {
 			float x = kx / k * speed;
 			float y = ky / k * speed;
 
-			FPoint spritePos = FPoint(_unitSprite->GetPosition().x, _unitSprite->GetPosition().y);
+			std::string idAnim = GetAnimation(x, y);
+			_animate->SetAnimation(idAnim);
+
+			FPoint spritePos = FPoint(_animate->GetPosition().x, _animate->GetPosition().y);
 
 			if (FPoint(spritePos.x - point2.x, spritePos.y - point2.y).Length() > 5.f) {
 
-				_unitSprite->SetPosition(_unitSprite->GetPosition() + math::Vector3(x, y, 0));
+				_animate->SetPosition(_animate->GetPosition() + math::Vector3(x, y, 0));
 			}
 			else {
 				_map->ChangeStationVectorObject(_positionInTile, 0);
@@ -133,6 +138,8 @@ void Unit::Update(float dt) {
 			}
 		}
 		else {
+
+			_animate->SetAnimation("idle");
 
 			_counter = 0;
 			_isMove = false;
@@ -226,7 +233,32 @@ std::vector<IPoint> Unit::GetAllMoves() const {
 void Unit::SetPositionInTile(const IPoint& point) {
 	_positionInTile = point;
 	IPoint pos = _map->GetSceneCoordinate(point);
-	_unitSprite->SetPosition(math::Vector3(pos.x, pos.y, _unitSprite->GetPosition().z));
+	_animate->SetPosition(math::Vector3(pos.x, pos.y, _animate->GetPosition().z));
 
 	_map->ChangeStationVectorObject(_positionInTile, _unitID);
+}
+
+std::string GetAnimation(float dtX, float dtY) {
+	std::string animate = "";
+
+	if (dtX == 0 && dtY > 0) {
+		animate = "run_n";
+	}
+	else if (dtX > 0 && dtY > 0) {
+		animate = "run_ne";
+	}
+	else if (dtX > 0 && dtY < 0) {
+		animate = "run_se";
+	}
+	else if (dtX == 0 && dtY < 0) {
+		animate = "run_s";
+	}
+	else if (dtX < 0 && dtY < 0) {
+		animate = "run_sw";
+	}
+	else if (dtX < 0 && dtY > 0) {
+		animate = "run_nw";
+	}
+
+	return animate;
 }

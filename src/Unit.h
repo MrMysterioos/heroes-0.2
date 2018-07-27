@@ -1,10 +1,11 @@
 #pragma once
 #include "Sprite.h"
 #include "TMXTiledMap.h"
+#include "AnimateSprite.h"
 
 class Unit : public RefCounter {
 public:
-	static boost::intrusive_ptr<Unit> CreateUnit(TMXTiledMapPtr map, SpritePtr sprite);
+	static boost::intrusive_ptr<Unit> Create(TMXTiledMapPtr map, AnimateSpritePtr anim);
 
 	void SetPositionInTile(const IPoint& point);
 	inline void SetMaxStep(int rad) { _maxStep = rad; }
@@ -14,7 +15,7 @@ public:
 
 	void Update(float dt);
 
-	inline SpritePtr GetSprite() const { return _unitSprite; }
+	inline AnimateSpritePtr GetSprite() const { return _animate; }
 	inline IPoint GetPositionInTile() const { return _positionInTile; }
 	inline bool IsSelect() const { return _isSelect; }
 	inline bool IsMoving() const { return _isMove; }
@@ -25,8 +26,7 @@ private:
 	bool InitWayPoints(const IPoint& mouseTileTap);
 
 private:
-
-	SpritePtr _unitSprite;
+	AnimateSpritePtr _animate;
 
 	IPoint _positionInTile = IPoint();
 	TMXTiledMapPtr _map = nullptr;
