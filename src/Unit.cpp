@@ -26,7 +26,7 @@ bool Unit::InitWayPoints(const IPoint& mouseTileTap) {
 
 	int iMouse = mouseTileTap.x + mouseTileTap.y * mapSize.x;
 
-	if (obj[iMouse] != 0 || mouseTileTap == _positionInTile) {
+	if (obj[iMouse] != 0 || mouseTileTap == _position) {
 		return false;
 	}
 
@@ -40,10 +40,10 @@ bool Unit::InitWayPoints(const IPoint& mouseTileTap) {
 	int d = 1;
 	int begin = 0;
 
-	int iPositionUnit = _positionInTile.x + _positionInTile.y * mapSize.x;
+	int iPositionUnit = _position.x + _position.y * mapSize.x;
 	obj[iPositionUnit] = d;
 
-	points.push_back(_positionInTile);
+	points.push_back(_position);
 
 	while (!isFind) {
 		int size = points.size();
@@ -132,10 +132,10 @@ void Unit::Update(float dt) {
 				_animate->SetPosition(math::Vector3(_animate->GetPosition().x, _animate->GetPosition().y, _animate->GetPosition().y));
 			}
 			else {
-				_map->ChangeStationVectorObject(_positionInTile, 0);
+				_map->ChangeStationVectorObject(_position, 0);
 				_counter++;
 				SetPositionInTile(_wayPoints[_counter]);
-				_map->ChangeStationVectorObject(_positionInTile, _unitID);
+				_map->ChangeStationVectorObject(_position, _unitID);
 			}
 		}
 		else {
@@ -205,7 +205,7 @@ std::vector<IPoint> Unit::GetAllMoves() const {
 	IPoint mapSize = _map->GetMapSize();
 
 	for (auto dir : directection) {
-		IPoint aroundPoint = _map->GetAdjacentAreaCoords(_positionInTile, dir);
+		IPoint aroundPoint = _map->GetAdjacentAreaCoords(_position, dir);
 		int iObj = aroundPoint.x + aroundPoint.y * _map->GetMapSize().x;
 		if (aroundPoint.x < 0 || aroundPoint.x >= mapSize.x ||
 			aroundPoint.y < 0 || aroundPoint.y >= mapSize.y || obj[iObj] != 0)
@@ -242,17 +242,17 @@ std::vector<IPoint> Unit::GetAllMoves() const {
 		}
 	}
 
-	allMoves.push_back(_positionInTile);
+	allMoves.push_back(_position);
 
 	return allMoves;
 }
 
 void Unit::SetPositionInTile(const IPoint& point) {
-	_positionInTile = point;
+	_position = point;
 	IPoint pos = _map->GetSceneCoordinate(point);
 	_animate->SetPosition(math::Vector3(pos.x, pos.y, pos.y));
 
-	_map->ChangeStationVectorObject(_positionInTile, _unitID);
+	_map->ChangeStationVectorObject(_position, _unitID);
 }
 
 std::string GetAnimation(float dtX, float dtY) {

@@ -1,12 +1,14 @@
 #pragma once
-#include "Sprite.h"
 #include "TMXTiledMap.h"
 #include "AnimateSprite.h"
+#include "InteractiveObject.h"
 
-class Unit : public RefCounter {
+class Unit : public InterObject {
 public:
 	static boost::intrusive_ptr<Unit> Create(TMXTiledMapPtr map, AnimateSpritePtr anim);
 
+	//пока не пересмотрели архитектуру, использовать этот метод для задания позиции спрайта или анимации
+	//когда добавим вектор интерактивных объектов, то перенесем его в InterObject
 	void SetPositionInTile(const IPoint& point);
 	inline void SetMaxStep(int rad) { _maxStep = rad; }
 	inline void SetSelect(bool select) { _isSelect = select; }
@@ -14,9 +16,6 @@ public:
 	void MouseDown(const IPoint& mouse_pos);
 
 	void Update(float dt);
-
-	inline AnimateSpritePtr GetSprite() const { return _animate; }
-	inline IPoint GetPositionInTile() const { return _positionInTile; }
 	inline bool IsSelect() const { return _isSelect; }
 	inline bool IsMoving() const { return _isMove; }
 
@@ -28,13 +27,10 @@ private:
 	bool InitWayPoints(const IPoint& mouseTileTap);
 
 private:
-	AnimateSpritePtr _animate;
-
-	IPoint _positionInTile = IPoint();
-	TMXTiledMapPtr _map = nullptr;
 	bool _isMove = false;
 	bool _isSelect = false;
-	int _counter = 0;
+
+	int _counter = 0;		///<позволяет отслеживать перемещение по вектору построенного пути
 	int _maxStep = 0.f;
 
 	std::vector<IPoint> _wayPoints;
