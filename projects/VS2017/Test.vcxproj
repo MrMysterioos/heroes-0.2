@@ -119,11 +119,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\AnimateSprite.cpp" />
+    <ClCompile Include="..\..\src\GameObject.cpp" />
     <ClCompile Include="..\..\src\GameWidget.cpp" />
+    <ClCompile Include="..\..\src\InteractiveObject.cpp" />
     <ClCompile Include="..\..\src\Main.cpp" />
     <ClCompile Include="..\..\src\Node.cpp" />
     <ClCompile Include="..\..\src\Scene.cpp" />
     <ClCompile Include="..\..\src\Sprite.cpp" />
+    <ClCompile Include="..\..\src\StaticObject.cpp" />
     <ClCompile Include="..\..\src\TestAppDelegate.cpp" />
     <ClCompile Include="..\..\src\TestWidget.cpp" />
     <ClCompile Include="..\..\src\stdafx.cpp">
@@ -136,10 +139,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\AnimateSprite.h" />
+    <ClInclude Include="..\..\src\GameObject.h" />
     <ClInclude Include="..\..\src\GameWidget.h" />
     <ClInclude Include="..\..\src\Node.h" />
     <ClInclude Include="..\..\src\Scene.h" />
     <ClInclude Include="..\..\src\Sprite.h" />
+    <ClInclude Include="..\..\src\InteractiveObject.h" />
+    <ClInclude Include="..\..\src\StaticObject.h" />
     <ClInclude Include="..\..\src\TestAppDelegate.h" />
     <ClInclude Include="..\..\src\TestWidget.h" />
     <ClInclude Include="..\..\src\stdafx.h" />

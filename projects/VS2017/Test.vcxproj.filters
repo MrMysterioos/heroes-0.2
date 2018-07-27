@@ -37,6 +37,15 @@
     <ClCompile Include="..\..\src\AnimateSprite.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GameObject.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\InteractiveObject.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\StaticObject.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\TestAppDelegate.h">
@@ -71,6 +80,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\AnimateSprite.h">
       <Filter>Source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GameObject.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\InteractiveObject.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\StaticObject.h">
+      <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
