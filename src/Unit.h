@@ -5,7 +5,9 @@
 
 class Unit : public InterObject {
 public:
-	static boost::intrusive_ptr<Unit> Create(TMXTiledMapPtr map, AnimateSpritePtr anim);
+	static boost::intrusive_ptr<Unit> Create(TMXTiledMap* map, AnimateSpritePtr anim, const IPoint& posTile);
+
+	static boost::intrusive_ptr<Unit> Create(TMXTiledMap* map, AnimateSpritePtr anim);
 
 	//пока не пересмотрели архитектуру, использовать этот метод для задания позиции спрайта или анимации
 	//когда добавим вектор интерактивных объектов, то перенесем его в InterObject
@@ -26,15 +28,12 @@ private:
 
 private:
 	bool _isMove = false;
-	bool _isSelect = false;
+	bool _isSelect = false;	
 
 	int _counter = 0;		///<позволяет отслеживать перемещение по вектору построенного пути
 	int _maxStep = 0.f;
 
 	std::vector<IPoint> _wayPoints;
-
-	//debug
-	int _unitID = 40;
 };
 
 typedef boost::intrusive_ptr<Unit> UnitPtr;
