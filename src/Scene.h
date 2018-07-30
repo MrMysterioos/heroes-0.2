@@ -18,6 +18,10 @@ public:
 	void DeleteNode(NodePtr node);
 	void PushVector(std::vector<NodePtr> nodes);
 
+	IPoint SceneToMouse(FPoint SceneCoord);
+	FPoint MouseToScene(IPoint SceneCoord);
+
+
 	inline void SetCamraPosition(FPoint newPosition) { _cameraPosition = newPosition; };
 	inline FPoint GetCamraPosition() { return _cameraPosition; };
 
@@ -27,6 +31,9 @@ public:
 private:
 	std::vector<NodePtr> _nodes;
 	std::vector<EffectsContainer> _effects;
+
+	/// todo вынести камеру в отдельный класс
+	/// Добиться того, чтобы зуммирование производилось не от угла
 	FPoint _cameraPosition = FPoint(0.0f, 0.0f);
-	float _cameraZoom = 1;
+	float _cameraZoom = 1.0f;
 };

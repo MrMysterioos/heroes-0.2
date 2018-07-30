@@ -2,12 +2,12 @@
 <GUI>
 	<Layer name="TestLayer">
 		<Controls>
-			<TestWidget name="TestWidget" map="levels/battle_map05.tmx"/>
+			<TestWidget name="TestWidget" map="levels/battle_map06.tmx"/>
 		</Controls>
 	</Layer>
   <Layer name="GameLayer">
     <Controls>
-      <GameWidget name="GameWidget"/>
+      <GameWidget name="GameWidget" map="levels/battle_map05.tmx"/>
     </Controls>
   </Layer>
 </GUI>

@@ -56,3 +56,29 @@ void Scene::PushVector(std::vector<NodePtr> nodes)
 {
 	_nodes.insert(_nodes.end(), nodes.begin(), nodes.end());
 }
+
+IPoint Scene::SceneToMouse(FPoint SceneCoord)
+{
+	int width = Render::device.Width();
+	int height = Render::device.Height();
+
+	FPoint center = FPoint((float)width / 2, (float)height / 2);
+
+	SceneCoord -= _cameraPosition - center;
+	SceneCoord *= _cameraZoom;
+	IPoint res(SceneCoord.x, SceneCoord.y);
+	return res;
+}
+
+FPoint Scene::MouseToScene(IPoint SceneCoord)
+{
+	int width = Render::device.Width();
+	int height = Render::device.Height();
+
+	FPoint center = FPoint((float)width / 2, (float)height / 2);
+
+	FPoint res(SceneCoord);
+	res += _cameraPosition - center;
+	res *= (1.0f / _cameraZoom);
+	return res;
+}

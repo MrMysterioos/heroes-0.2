@@ -1,5 +1,9 @@
 #pragma once
 
+#include "TMXTiledMap.h"
+#include "Scene.h"
+
+
 ///
 /// Виджет - основной визуальный элемент на экране.
 /// Он отрисовывает себя, а также может содержать другие виджеты.
@@ -21,8 +25,13 @@ public:
 	void KeyPressed(int keyCode) override;
 
 private:
-	void Init();
+	void Init(rapidxml::xml_node<>* elem);
+
 
 private:
-	
+	Scene _scene;
+	TMXTiledMapPtr _map;
+
+	bool _cameraMov = false;
+	IPoint _lastPosition;
 };
