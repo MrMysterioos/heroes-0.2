@@ -101,7 +101,12 @@ bool Unit::InitWayPoints(const IPoint& mouseTileTap) {
 		}
 	}
 
+
 	std::reverse(_wayPoints.begin(), _wayPoints.end());
+
+
+	auto vect = _wayPoints;
+	auto debug22 = 0;
 
 	return true;
 }
@@ -199,6 +204,10 @@ std::vector<IPoint> Unit::GetAllMoves() const {
 	};
 
 	std::vector<int> obj = _map->GetObjectVector();
+
+	if (obj.empty()) {
+		return allMoves;
+	}
 
 	IPoint mapSize = _map->GetMapSize();
 
