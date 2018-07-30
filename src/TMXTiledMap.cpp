@@ -125,9 +125,9 @@ void TMXTiledMap::InitWithXMLFile(const std::string& xml) {
 					_staticObjects = GetVectorFromString(stringValue);
 				}
 			}
-			else if (_staticObjects.empty()) {
-				_staticObjects = std::vector<int>(_mapSize.x * _mapSize.y, 0);
-			}
+		}
+		if (_staticObjects.empty()) {
+			_staticObjects = std::vector<int>(_mapSize.x * _mapSize.y, 0);
 		}
 	}
 	catch (std::exception const& e) {
@@ -214,13 +214,21 @@ void TMXTiledMap::InitTiles(const std::vector<int>& vect) {
 		_tiles.push_back(tile);
 
 		_tileNames.push_back(_areas.at(id).name);
-
 	}
 
 	/// todo переместить алгоритм в цикл выше
 	for (int i = _tiles.size() - 1; i >= 0; --i) {
-		int x = _texTileSize.x / 2.f + _tileSize.x * (1.f / 2.f + ((i) % _mapSize.x) - ((((_tiles.size() - 1) - i) / _mapSize.x) % 2) / 2.f);
+		int x = _texTileSize.x * _tiles[i]->GetAnchorPoint().x 
+			+ (_tileSize.x / (2.f)+ _tileSize.x * (((i) % _mapSize.x) - ((((_tiles.size() - 1) - i) / _mapSize.x) % 2) / 2.f));
 		int y = (_texTileSize.y + ((((_tiles.size() - 1) - i)) / _mapSize.x) * _tileSize.y) / 2.f;
+		if (_mapSize.y % 2 == 1) {
+			if ((i / _mapSize.x) % 2 == 0) {
+				x -= (_tileSize.x / (2.f));
+			}
+			else if ((i / _mapSize.x) % 2 == 1) {
+				x += _tileSize.x / (2.f);
+			}
+		} 
 		_tiles[i]->SetPosition(math::Vector3(x, y, y));
 	}
 }
@@ -232,6 +240,15 @@ IPoint TMXTiledMap::GetSceneCoordinate(const IPoint& tileCoord) const {
 	}
 	int x = _texTileSize.x / 2.f + _tileSize.x * (1.f / 2.f + tileCoord.x - ((((_tiles.size() - 1) - i) / _mapSize.x) % 2) / 2.f);
 	int y = (_texTileSize.y + ((((_tiles.size() - 1) - i)) / _mapSize.x) * _tileSize.y) / 2.f;
+
+	if (_mapSize.y % 2 == 1) {
+		if ((i / _mapSize.x) % 2 == 0) {
+			x -= (_tileSize.x / (2.f));
+		}
+		else if ((i / _mapSize.x) % 2 == 1) {
+			x += _tileSize.x / (2.f);
+		}
+	}
 
 	return IPoint(x, y);
 }

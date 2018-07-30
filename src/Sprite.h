@@ -11,6 +11,8 @@ public:
 	void Draw() override;
 	void Update(float dt) override {};
 
+	inline FPoint GetAnchorPoint() const { return _anchorPoint; }
+
 	inline void SetTexture(Render::TexturePtr newTexture) { _texture = newTexture; };
 
 	inline void SetAnchorPoint(FPoint point) { _anchorPoint = point; };
