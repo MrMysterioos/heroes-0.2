@@ -49,6 +49,9 @@
     <ClCompile Include="..\..\src\ParticleEffectNode.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\HealthBar.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\TestAppDelegate.h">
@@ -94,6 +97,9 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\ParticleEffectNode.h">
+      <Filter>Source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\HealthBar.h">
       <Filter>Source\Scene</Filter>
     </ClInclude>
   </ItemGroup>

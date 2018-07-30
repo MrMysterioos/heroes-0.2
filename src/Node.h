@@ -7,7 +7,9 @@ public:
 
 	void Init(Scene* scene);
 
-	virtual void Draw() = 0;
+	void Draw();
+
+	virtual void DrawNode() = 0;
 	virtual void Update(float dt) = 0;
 
 	virtual ~Node() {};

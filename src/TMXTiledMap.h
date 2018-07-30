@@ -38,6 +38,7 @@ public:
 	inline std::vector<int> GetObjectVector() const { return _staticObjects; }
 	inline IPoint GetMapSize() const { return _mapSize; }
 	inline IPoint GetTileSize() const { return _tileSize; }
+	inline Scene* GetPointerToScene() { return _scene; }
 
 	IPoint GetTileCoordinate(const FPoint& pos);
 	IPoint GetSceneCoordinate(const IPoint& tileCoord) const;

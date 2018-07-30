@@ -40,7 +40,7 @@ void TestWidget::Init(const std::string& tmx)
 	anim->SetAnchorPoint(FPoint(0.5, 0.25f));
 	_unit = Unit::Create(_map, anim);
 	_unit->SetMaxStep(3);
-	_unit->SetPositionInTile(IPoint(1, 3));
+	_unit->SetPosition(IPoint(1, 3));
 }
 
 void TestWidget::Draw()

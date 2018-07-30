@@ -2,6 +2,7 @@
 
 #include "TMXTiledMap.h"
 #include "Scene.h"
+#include "Unit.h"
 
 
 ///
@@ -34,4 +35,6 @@ private:
 
 	bool _cameraMov = false;
 	IPoint _lastPosition;
+
+	std::queue<UnitPtr> _queue;
 };

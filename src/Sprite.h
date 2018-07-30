@@ -8,7 +8,7 @@ public:
 
 	void Init(Scene* scene);
 
-	void Draw() override;
+	void DrawNode() override;
 	void Update(float dt) override {};
 
 	inline FPoint GetAnchorPoint() const { return _anchorPoint; }

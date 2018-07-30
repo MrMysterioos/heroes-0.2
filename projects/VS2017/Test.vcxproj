@@ -121,6 +121,7 @@
     <ClCompile Include="..\..\src\AnimateSprite.cpp" />
     <ClCompile Include="..\..\src\GameObject.cpp" />
     <ClCompile Include="..\..\src\GameWidget.cpp" />
+    <ClCompile Include="..\..\src\HealthBar.cpp" />
     <ClCompile Include="..\..\src\InteractiveObject.cpp" />
     <ClCompile Include="..\..\src\Main.cpp" />
     <ClCompile Include="..\..\src\Node.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="..\..\src\AnimateSprite.h" />
     <ClInclude Include="..\..\src\GameObject.h" />
     <ClInclude Include="..\..\src\GameWidget.h" />
+    <ClInclude Include="..\..\src\HealthBar.h" />
     <ClInclude Include="..\..\src\Node.h" />
     <ClInclude Include="..\..\src\ParticleEffectNode.h" />
     <ClInclude Include="..\..\src\Scene.h" />

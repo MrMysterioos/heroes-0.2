@@ -8,7 +8,7 @@ public:
 
 	void Init(Scene* scene, EffectsContainer effCont);
 
-	void Draw() override;
+	void DrawNode() override;
 
 	void Update(float dt) override;
 

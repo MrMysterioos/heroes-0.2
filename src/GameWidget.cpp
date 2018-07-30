@@ -16,6 +16,14 @@ void GameWidget::Init(rapidxml::xml_node<>* elem)
 	// Camera
 	_scene.SetCameraZoom(0.6);
 	
+	AnimateSpritePtr anim = AnimateSprite::Create(&_scene, "animations/unit.xml");
+	anim->SetAnimation("idle");
+	anim->SetAnchorPoint(FPoint(0.5, 0.25f));
+	UnitPtr unit = Unit::Create(_map, anim);
+	unit->SetMaxStep(3);
+	unit->SetPosition(IPoint(1, 3));
+	_queue.push(unit);
+
 }
 
 void GameWidget::Draw()

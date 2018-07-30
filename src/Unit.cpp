@@ -5,9 +5,19 @@ std::string GetAnimation(float dtX, float dtY);
 
 UnitPtr Unit::Create(TMXTiledMapPtr map, AnimateSpritePtr anim) {
 	UnitPtr unit = boost::intrusive_ptr<Unit>(new Unit());
-	unit->_map = map;
-	unit->_animate = anim;
+	unit->Init(map, anim);
 	return unit;
+}
+
+void Unit::Init(TMXTiledMapPtr map, AnimateSpritePtr anim)
+{
+	_map = map;
+	_animate = anim;
+
+	HealthBarPtr healthbar = HealthBar::Create(map->GetPointerToScene());
+	_healthBar = healthbar;
+	math::Vector3 pos = _animate->GetPosition();
+	_healthBar->SetPosition(pos);
 }
 
 bool Unit::InitWayPoints(const IPoint& mouseTileTap) {
@@ -129,11 +139,12 @@ void Unit::Update(float dt) {
 				pos.z = pos.y - 200;
 
 				_animate->SetPosition(pos);
+				UpdateNodePosition(FPoint(pos.x, pos.y));
 			}
 			else {
 				_map->ChangeStationVectorObject(_position, 0);
 				_counter++;
-				SetPositionInTile(_wayPoints[_counter]);
+				SetPosition(_wayPoints[_counter]);
 				_map->ChangeStationVectorObject(_position, _unitID);
 			}
 		}
@@ -149,6 +160,19 @@ void Unit::Update(float dt) {
 			_isSelect = false;
 		}
 	}
+}
+
+void Unit::UpdateNodePosition(FPoint newPos)
+{
+	math::Vector3 animPos = _animate->GetPosition();
+	animPos.x = newPos.x;
+	animPos.y = newPos.y;
+	_animate->SetPosition(animPos);
+	math::Vector3 barPos = _healthBar->GetPosition();
+	/// todo вынести константы
+	barPos.x = newPos.x - 50;
+	barPos.y = newPos.y + 125;
+	_healthBar->SetPosition(barPos);
 }
 
 void Unit::MoveTo(const IPoint& tilePos) {
@@ -233,10 +257,11 @@ std::vector<IPoint> Unit::GetAllMoves() const {
 	return allMoves;
 }
 
-void Unit::SetPositionInTile(const IPoint& point) {
+void Unit::SetPosition(const IPoint& point) {
 	_position = point;
 	IPoint pos = _map->GetSceneCoordinate(point);
 	_animate->SetPosition(math::Vector3(pos.x, pos.y, pos.y - 200));
+	UpdateNodePosition(FPoint(pos.x, pos.y));
 
 	_map->ChangeStationVectorObject(_position, _unitID);
 }

@@ -7,7 +7,7 @@
 	</Layer>
   <Layer name="GameLayer">
     <Controls>
-      <GameWidget name="GameWidget" map="levels/battle_map05.tmx"/>
+      <GameWidget name="GameWidget" map="levels/battle_map06.tmx"/>
     </Controls>
   </Layer>
 </GUI>
