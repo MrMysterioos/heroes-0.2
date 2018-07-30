@@ -151,23 +151,19 @@ void Unit::Update(float dt) {
 	}
 }
 
-void Unit::MouseDown(const IPoint& mouse_pos) {
-}
-
-void Unit::MoveTo(const IPoint& mouse_pos) {
+void Unit::MoveTo(const IPoint& tilePos) {
 
 	if (_isMove || !_isSelect) {
 		return;
 	}
 
 	std::vector<IPoint> allMoves = GetAllMoves();
-	IPoint mouseTileTap = _map->GetTileCoordinate(mouse_pos);
 
 	for (int i = 0; i < allMoves.size(); ++i) {
-		if (allMoves[i] == mouseTileTap) {
+		if (allMoves[i] == tilePos) {
 			_wayPoints.clear();
 
-			_isMove = InitWayPoints(mouseTileTap);
+			_isMove = InitWayPoints(tilePos);
 
 			break;
 		}
