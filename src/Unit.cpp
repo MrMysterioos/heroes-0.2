@@ -3,7 +3,16 @@
 
 std::string GetAnimation(float dtX, float dtY);
 
-UnitPtr Unit::Create(TMXTiledMapPtr map, AnimateSpritePtr anim) {
+UnitPtr Unit::Create(TMXTiledMap* map, AnimateSpritePtr anim, const IPoint& posTile) {
+	UnitPtr unit = boost::intrusive_ptr<Unit>(new Unit());
+	unit->_map = map;
+	unit->_animate = anim;
+	unit->SetPosition(posTile);
+	map->PushGameObject(unit);
+	return unit;
+}
+
+UnitPtr Unit::Create(TMXTiledMap* map, AnimateSpritePtr anim) {
 	UnitPtr unit = boost::intrusive_ptr<Unit>(new Unit());
 	unit->Init(map, anim);
 	return unit;
@@ -11,7 +20,7 @@ UnitPtr Unit::Create(TMXTiledMapPtr map, AnimateSpritePtr anim) {
 
 void Unit::Init(TMXTiledMapPtr map, AnimateSpritePtr anim)
 {
-	_map = map;
+	_map = map.get();
 	_animate = anim;
 
 	HealthBarPtr healthbar = HealthBar::Create(map->GetPointerToScene());
@@ -21,7 +30,8 @@ void Unit::Init(TMXTiledMapPtr map, AnimateSpritePtr anim)
 }
 
 bool Unit::InitWayPoints(const IPoint& mouseTileTap) {
-	std::vector<int> obj = _map->GetObjectVector();
+	std::vector<int> obj(_map->GetMapSize().x * _map->GetMapSize().y, 0);
+	auto objects = _map->GetGameObjects();
 	std::vector<IPoint> points;
 	IPoint mapSize = _map->GetMapSize();
 
@@ -36,13 +46,13 @@ bool Unit::InitWayPoints(const IPoint& mouseTileTap) {
 
 	int iMouse = mouseTileTap.x + mouseTileTap.y * mapSize.x;
 
-	if (obj[iMouse] != 0 || mouseTileTap == _position) {
+	if (objects[iMouse] != nullptr || mouseTileTap == _position) {
 		return false;
 	}
 
-	for (auto ob : obj) {
-		if (ob != 0) {
-			ob = -1;
+	for (size_t i = 0; i < obj.size(); ++i) {
+		if (objects[i] != nullptr) {
+			obj[i] = -1;
 		}
 	}
 
@@ -142,22 +152,22 @@ void Unit::Update(float dt) {
 				UpdateNodePosition(FPoint(pos.x, pos.y));
 			}
 			else {
-				_map->ChangeStationVectorObject(_position, 0);
 				_counter++;
+				_map->SwapGameObject(_position, _wayPoints[_counter]);
 				SetPosition(_wayPoints[_counter]);
-				_map->ChangeStationVectorObject(_position, _unitID);
 			}
 		}
 		else {
 
 			_animate->SetAnimation("idle");
 
+			_map->SwapGameObject(_position, _wayPoints[_counter]);
 			_counter = 0;
 			_isMove = false;
 			_wayPoints.clear();
 
-			//debug
 			_isSelect = false;
+
 		}
 	}
 }
@@ -177,13 +187,20 @@ void Unit::UpdateNodePosition(FPoint newPos)
 
 void Unit::MoveTo(const IPoint& tilePos) {
 
+	auto gameObjects = _map->GetGameObjects();
+	int id = _position.x + _position.y * _map->GetMapSize().x;
+
+	if (id < gameObjects.size() && gameObjects[id] == nullptr) {
+		return;
+	}
+
 	if (_isMove || !_isSelect) {
 		return;
 	}
 
 	std::vector<IPoint> allMoves = GetAllMoves();
 
-	for (int i = 0; i < allMoves.size(); ++i) {
+	for (size_t i = 0; i < allMoves.size(); ++i) {
 		if (allMoves[i] == tilePos) {
 			_wayPoints.clear();
 
@@ -206,13 +223,19 @@ std::vector<IPoint> Unit::GetAllMoves() const {
 		NorthEast
 	};
 
-	std::vector<int> obj = _map->GetObjectVector();
+	IPoint mapSize = _map->GetMapSize();
+
+	std::vector<int> obj(mapSize.x * mapSize.y, 0);
+	auto gameObjects = _map->GetGameObjects();
+	for (size_t i = 0; i < gameObjects.size(); ++i) {
+		if (gameObjects[i] != nullptr) {
+			obj[i] = -1;
+		}
+	}
 
 	if (obj.empty()) {
 		return allMoves;
 	}
-
-	IPoint mapSize = _map->GetMapSize();
 
 	for (auto dir : directection) {
 		IPoint aroundPoint = _map->GetAdjacentAreaCoords(_position, dir);
@@ -261,9 +284,10 @@ void Unit::SetPosition(const IPoint& point) {
 	_position = point;
 	IPoint pos = _map->GetSceneCoordinate(point);
 	_animate->SetPosition(math::Vector3(pos.x, pos.y, pos.y - 200));
+
 	UpdateNodePosition(FPoint(pos.x, pos.y));
 
-	_map->ChangeStationVectorObject(_position, _unitID);
+
 }
 
 std::string GetAnimation(float dtX, float dtY) {

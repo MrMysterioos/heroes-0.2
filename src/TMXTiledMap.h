@@ -1,5 +1,6 @@
 #pragma once
 #include "Tile.h"
+#include "GameObject.h"
 
 class Scene;
 
@@ -35,17 +36,21 @@ public:
 	static boost::intrusive_ptr<TMXTiledMap> CreateMap(const std::string& nameFile, Scene* scene);
 
 	inline std::vector<TilePtr> GetVectorTiles() const { return _tiles; }
-	inline std::vector<int> GetObjectVector() const { return _staticObjects; }
 	inline IPoint GetMapSize() const { return _mapSize; }
 	inline IPoint GetTileSize() const { return _tileSize; }
+
+	/// todo придумать что-нибудь с этим
 	inline Scene* GetPointerToScene() { return _scene; }
+
+	inline std::vector<GameObjectPtr> GetGameObjects() const { return _gameObjects; }
 
 	IPoint GetTileCoordinate(const FPoint& pos);
 	IPoint GetSceneCoordinate(const IPoint& tileCoord) const;
 
-	void ChangeStationVectorObject(const IPoint& point, int objectID);
+	void SwapGameObject(const IPoint& point1, const IPoint& point2);
+	void PushGameObject(GameObjectPtr object);
 
-	void Draw();
+	void Update(float dt);
 
 	Area GetArea(IPoint tileCoord);
 
@@ -75,7 +80,7 @@ private:
 	std::vector<TilePtr> _tiles;
 	std::map<int, std::string> _objectId;
 	std::vector<std::string> _tileNames;
-	std::vector<int> _staticObjects;
+	std::vector<GameObjectPtr> _gameObjects;
 
 	Render::Texture * _texture = nullptr;
 

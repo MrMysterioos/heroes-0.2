@@ -19,7 +19,7 @@ void GameWidget::Init(rapidxml::xml_node<>* elem)
 	AnimateSpritePtr anim = AnimateSprite::Create(&_scene, "animations/unit.xml");
 	anim->SetAnimation("idle");
 	anim->SetAnchorPoint(FPoint(0.5, 0.25f));
-	UnitPtr unit = Unit::Create(_map, anim);
+	UnitPtr unit = Unit::Create(_map.get(), anim);
 	unit->SetMaxStep(3);
 	unit->SetPosition(IPoint(1, 3));
 	_queue.push(unit);

@@ -120,14 +120,11 @@ void TMXTiledMap::InitWithXMLFile(const std::string& xml) {
 					auto vect = GetVectorFromString(stringValue);
 					InitTiles(vect);
 				}
-				else if (utils::equals(it->first_attribute("name")->value(), "StaticObjects")) {
-					std::string stringValue = it->first_node()->value();
-					_staticObjects = GetVectorFromString(stringValue);
-				}
+				///TODO считывать gameObjects из xml или tmx
 			}
 		}
-		if (_staticObjects.empty()) {
-			_staticObjects = std::vector<int>(_mapSize.x * _mapSize.y, 0);
+		if (_gameObjects.empty()) {
+			_gameObjects = std::vector<GameObjectPtr>(_mapSize.x * _mapSize.y, 0);
 		}
 	}
 	catch (std::exception const& e) {
@@ -240,10 +237,8 @@ IPoint TMXTiledMap::GetSceneCoordinate(const IPoint& tileCoord) const {
 
 IPoint TMXTiledMap::GetTileCoordinate(const FPoint& mouse_pos)
 {
-	///TODO delete scale
-	float scale = 1.f;
 
-	float x = (mouse_pos.x - _texTileSize.x * scale / 2.f) / (_tileSize.x * scale);
+	float x = (mouse_pos.x - _texTileSize.x / 2.f) / (_tileSize.x);
 	int maxX = 0, minX = 0;
 	if (0.5f - (abs(x) - abs(int(x))) > 0 && x >= 0.f) {
 		minX = maxX = int(x);
@@ -261,7 +256,7 @@ IPoint TMXTiledMap::GetTileCoordinate(const FPoint& mouse_pos)
 		minX = maxX = int(x);
 	}
 
-	float y = (mouse_pos.y - _texTileSize.y * scale / 2.f) / (_tileSize.y * scale);
+	float y = (mouse_pos.y - _texTileSize.y / 2.f) / (_tileSize.y);
 	int maxY = 0, minY = 0;
 	if (y >= 0.f) {
 		minY = _mapSize.y - int(y / 0.5f) - 2;
@@ -281,7 +276,7 @@ IPoint TMXTiledMap::GetTileCoordinate(const FPoint& mouse_pos)
 
 	std::vector< std::pair<float, IPoint> > vectLength;
 	for (auto i : vect) {
-		float length = FPoint(abs(mouse_pos.x - i.x * scale), abs(mouse_pos.y - i.y * scale)).Length();
+		float length = FPoint(abs(mouse_pos.x - i.x), abs(mouse_pos.y - i.y)).Length();
 		std::pair<float, IPoint> p;
 		p.first = length;
 		vectLength.push_back(p);
@@ -298,7 +293,11 @@ IPoint TMXTiledMap::GetTileCoordinate(const FPoint& mouse_pos)
 	return IPoint(vectLength[0].second.x, vectLength[0].second.y);
 }
 
-void TMXTiledMap::Draw() {
+void TMXTiledMap::Update(float dt) {
+	///TODO update gameobject
+	/*for (auto object : _gameObjects) {
+		object-
+	}*/
 }
 
 std::vector<int> GetVectorFromString(const std::string& str) {
@@ -461,7 +460,6 @@ IPoint TMXTiledMap::GetAdjacentAreaCoords(IPoint tileCoord, Direction dir)
 		even = false;
 	}
 
-
 	IPoint ret;
 	if (dir == North) {
 		ret = IPoint(tileCoord.x, tileCoord.y - 2);
@@ -505,9 +503,19 @@ IPoint TMXTiledMap::GetAdjacentAreaCoords(IPoint tileCoord, Direction dir)
 	return ret;
 }
 
-void TMXTiledMap::ChangeStationVectorObject(const IPoint& point, int objectID) {
+void TMXTiledMap::SwapGameObject(const IPoint& point1, const IPoint& point2) {
+	int i1 = point1.x + point1.y * _mapSize.x;
+	int i2 = point2.x + point2.y * _mapSize.x;
+
+	if (i1 < _gameObjects.size() && i2 < _gameObjects.size()) {
+		std::swap(_gameObjects[i1], _gameObjects[i2]);
+	}
+}
+
+void TMXTiledMap::PushGameObject(GameObjectPtr object) {
+	IPoint point = object->GetPosition();
 	int i = point.x + point.y * _mapSize.x;
-	if (i < _staticObjects.size()) {
-		_staticObjects[i] = objectID;
+	if (i < _gameObjects.size() && _gameObjects[i] == nullptr) {
+		_gameObjects[i] = object;
 	}
 }

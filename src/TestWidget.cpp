@@ -17,30 +17,24 @@ void TestWidget::Init(const std::string& tmx)
 	_map->AddElement("Fire", IPoint(3, 8));
 	Render::TexturePtr tex = Core::resourceManager.Get<Render::Texture>("hero");
 
-	/*int countUnits = 2;
+	int countUnits = 2;
 	for (int i = 0; i < countUnits; ++i) {
 		AnimateSpritePtr anim = AnimateSprite::Create(&_scene, "animations/unit.xml");
 		anim->SetAnimation("idle");
 		anim->SetAnchorPoint(FPoint(0.5, 0.25f));
-		UnitPtr unit = Unit::Create(_map, anim);
+		UnitPtr unit = Unit::Create(_map.get(), anim);
 		unit->SetMaxStep(2);
 		_units.push_back(unit);
 	}
 
-	_units[0]->SetPositionInTile(IPoint(1, 3));
-	_units[1]->SetPositionInTile(IPoint(4, 8));
+	_units[0]->SetPosition(IPoint(1, 3));
+	_units[1]->SetPosition(IPoint(4, 8));
+
 
 	for (auto unit : _units) {
-		_scene.PushNode(unit->GetAnimate());
-	}*/
+		_map->PushGameObject(unit);
+	}
 
-	//test unit
-	AnimateSpritePtr anim = AnimateSprite::Create(&_scene, "animations/unit.xml");
-	anim->SetAnimation("idle");
-	anim->SetAnchorPoint(FPoint(0.5, 0.25f));
-	_unit = Unit::Create(_map, anim);
-	_unit->SetMaxStep(3);
-	_unit->SetPosition(IPoint(1, 3));
 }
 
 void TestWidget::Draw()
@@ -53,12 +47,6 @@ void TestWidget::Update(float dt)
 {
 	_scene.Update(dt);
 	_effCont.Update(dt);
-
-	/*for (auto unit : _units) {
-		unit->Update(dt);
-	}*/
-
-	_unit->Update(dt);
 }
 
 bool TestWidget::MouseDown(const IPoint &mouse_pos)
@@ -68,11 +56,11 @@ bool TestWidget::MouseDown(const IPoint &mouse_pos)
 	IPoint mousePos = IPoint(mouse_pos.x / zoom, mouse_pos.y / zoom);
 
 
-	_unit->SetSelect(true);
-	_unit->MoveTo(mousePos);
+	/*_unit->SetSelect(true);
+	_unit->MoveTo(_map->GetTileCoordinate(mousePos));*/
 
 
-	/*UnitPtr myUnit = nullptr;
+	UnitPtr myUnit = nullptr;
 
 	for (auto unit : _units) {
 		if (_map->GetTileCoordinate(mousePos) == unit->GetPosition()) {
@@ -97,7 +85,7 @@ bool TestWidget::MouseDown(const IPoint &mouse_pos)
 		}
 	}
 
-	if (!bUnit && !myUnit) {
+	/*if (!bUnit && !myUnit) {
 		FPoint scenePos = FPoint(mouse_pos.x, mouse_pos.y) / zoom;
 		IPoint tileCoord = _map->GetTileCoordinate(scenePos);
 		if (Core::mainInput.GetMouseLeftButton()) {
@@ -106,7 +94,7 @@ bool TestWidget::MouseDown(const IPoint &mouse_pos)
 		else {
 			_map->AddElement("Magma", tileCoord);
 		}
-	}
+	}*/
 
 	std::vector<TilePtr> tiles = _map->GetVectorTiles();
 	for (auto tile : tiles) {
@@ -134,8 +122,9 @@ bool TestWidget::MouseDown(const IPoint &mouse_pos)
 	}
 
 	for (auto unit : _units) {
-		unit->MouseDown(mousePos);
-	}*/
+		IPoint point = _map->GetTileCoordinate(mousePos);
+		unit->MoveTo(point);
+	}
 
 
 	return false;

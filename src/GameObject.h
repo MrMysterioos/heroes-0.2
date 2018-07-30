@@ -1,5 +1,7 @@
 #pragma once
-#include "TMXTiledMap.h"
+#include "AnimateSprite.h"
+
+class TMXTiledMap;
 
 class GameObject : public RefCounter {
 public:
@@ -14,8 +16,7 @@ protected:
 
 	IPoint _position = IPoint(0, 0);
 
-	TMXTiledMapPtr _map = nullptr;
-
+	TMXTiledMap * _map = nullptr;
 };
 
 typedef boost::intrusive_ptr<GameObject> GameObjectPtr;
