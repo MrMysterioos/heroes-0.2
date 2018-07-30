@@ -211,50 +211,36 @@ void TMXTiledMap::InitTiles(const std::vector<int>& vect) {
 
 		auto tile = Tile::Create(_scene, _areas.at(id));
 		tile->SetAnchorPoint(FPoint(0.5f, 0.5f));
+
+		//смещаем тайл на значение опорной точки спрайта по Х,
+		//для того, чтобы он не выходил за границы экрана
+		int x = _texTileSize.x * tile->GetAnchorPoint().x + (i % _mapSize.x) * _tileSize.x;
+		//прибавляем смещение к Х на каждый нечетный по У тайл
+		x += ((i / _mapSize.x) % 2) * (_tileSize.x / 2.f);
+		//смещаем тайл на значение опорной точки по У
+		//и прибавляем к тайлу смещение по У относительно начала координат
+		int y = _texTileSize.y * tile->GetAnchorPoint().y + ((vect.size() - 1 - i) / _mapSize.x) * _tileSize.y / 2.f;
+		tile->SetPosition(math::Vector3(x, y, y));
+
 		_tiles.push_back(tile);
 
 		_tileNames.push_back(_areas.at(id).name);
-	}
-
-	/// todo переместить алгоритм в цикл выше
-	for (int i = _tiles.size() - 1; i >= 0; --i) {
-		int x = _texTileSize.x * _tiles[i]->GetAnchorPoint().x 
-			+ (_tileSize.x / (2.f)+ _tileSize.x * (((i) % _mapSize.x) - ((((_tiles.size() - 1) - i) / _mapSize.x) % 2) / 2.f));
-		int y = (_texTileSize.y + ((((_tiles.size() - 1) - i)) / _mapSize.x) * _tileSize.y) / 2.f;
-		if (_mapSize.y % 2 == 1) {
-			if ((i / _mapSize.x) % 2 == 0) {
-				x -= (_tileSize.x / (2.f));
-			}
-			else if ((i / _mapSize.x) % 2 == 1) {
-				x += _tileSize.x / (2.f);
-			}
-		} 
-		_tiles[i]->SetPosition(math::Vector3(x, y, y));
 	}
 }
 
 IPoint TMXTiledMap::GetSceneCoordinate(const IPoint& tileCoord) const {
 	int i = tileCoord.x + tileCoord.y * _mapSize.x;
+
 	if (i >= _tiles.size()) {
 		return IPoint(-1, -1);
 	}
-	int x = _texTileSize.x / 2.f + _tileSize.x * (1.f / 2.f + tileCoord.x - ((((_tiles.size() - 1) - i) / _mapSize.x) % 2) / 2.f);
-	int y = (_texTileSize.y + ((((_tiles.size() - 1) - i)) / _mapSize.x) * _tileSize.y) / 2.f;
 
-	if (_mapSize.y % 2 == 1) {
-		if ((i / _mapSize.x) % 2 == 0) {
-			x -= (_tileSize.x / (2.f));
-		}
-		else if ((i / _mapSize.x) % 2 == 1) {
-			x += _tileSize.x / (2.f);
-		}
-	}
-
-	return IPoint(x, y);
+	return IPoint(_tiles[i]->GetPosition().x, _tiles[i]->GetPosition().y);
 }
 
 IPoint TMXTiledMap::GetTileCoordinate(const FPoint& mouse_pos)
 {
+	///TODO delete scale
 	float scale = 1.f;
 
 	float x = (mouse_pos.x - _texTileSize.x * scale / 2.f) / (_tileSize.x * scale);

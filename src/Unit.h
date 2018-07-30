@@ -13,15 +13,13 @@ public:
 	inline void SetMaxStep(int rad) { _maxStep = rad; }
 	inline void SetSelect(bool select) { _isSelect = select; }
 
-	void MouseDown(const IPoint& mouse_pos);
-
 	void Update(float dt);
 	inline bool IsSelect() const { return _isSelect; }
 	inline bool IsMoving() const { return _isMove; }
 
 	std::vector<IPoint> GetAllMoves() const;
 
-	void MoveTo(const IPoint& mouse_pos);
+	void MoveTo(const IPoint& tilePos);
 
 private:
 	bool InitWayPoints(const IPoint& mouseTileTap);
