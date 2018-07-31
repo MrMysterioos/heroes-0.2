@@ -28,6 +28,8 @@ public:
 private:
 	void Init(rapidxml::xml_node<>* elem);
 
+	void SetColorAroundUnit();
+	void ResetColotAroundUnit();
 
 private:
 	Scene _scene;
@@ -37,4 +39,8 @@ private:
 	IPoint _lastPosition;
 
 	std::queue<UnitPtr> _queue;
+
+	//debug
+	UnitPtr _unit = nullptr;
+	bool _isUnitMove = false;
 };

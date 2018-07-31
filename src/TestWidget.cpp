@@ -10,7 +10,7 @@ TestWidget::TestWidget(const std::string& name, rapidxml::xml_node<>* elem)
 
 void TestWidget::Init(const std::string& tmx)
 {
-	_map = TMXTiledMap::CreateMap(tmx, &_scene);
+	/*_map = TMXTiledMap::CreateMap(tmx, &_scene);
 	_scene.SetCameraZoom(0.5f);
 
 
@@ -33,34 +33,34 @@ void TestWidget::Init(const std::string& tmx)
 
 	for (auto unit : _units) {
 		_map->PushGameObject(unit);
-	}
+	}*/
 
 }
 
 void TestWidget::Draw()
 {
-	_scene.Draw();
-	_effCont.Draw();
+	/*_scene.Draw();
+	_effCont.Draw();*/
 }
 
 void TestWidget::Update(float dt)
 {
-	_scene.Update(dt);
-	_effCont.Update(dt);
+	/*_scene.Update(dt);
+	_effCont.Update(dt);*/
 }
 
 bool TestWidget::MouseDown(const IPoint &mouse_pos)
 {
-	float zoom = _scene.GetCameraZoom();
+	/*float zoom = _scene.GetCameraZoom();
 
-	IPoint mousePos = IPoint(mouse_pos.x / zoom, mouse_pos.y / zoom);
+	IPoint mousePos = IPoint(mouse_pos.x / zoom, mouse_pos.y / zoom);*/
 
 
 	/*_unit->SetSelect(true);
 	_unit->MoveTo(_map->GetTileCoordinate(mousePos));*/
 
 
-	UnitPtr myUnit = nullptr;
+	/*UnitPtr myUnit = nullptr;
 
 	for (auto unit : _units) {
 		if (_map->GetTileCoordinate(mousePos) == unit->GetPosition()) {
@@ -83,7 +83,7 @@ bool TestWidget::MouseDown(const IPoint &mouse_pos)
 		if (e->IsSelect()) {
 			bUnit = true;
 		}
-	}
+	}*/
 
 	/*if (!bUnit && !myUnit) {
 		FPoint scenePos = FPoint(mouse_pos.x, mouse_pos.y) / zoom;
@@ -96,7 +96,7 @@ bool TestWidget::MouseDown(const IPoint &mouse_pos)
 		}
 	}*/
 
-	std::vector<TilePtr> tiles = _map->GetVectorTiles();
+/*	std::vector<TilePtr> tiles = _map->GetVectorTiles();
 	for (auto tile : tiles) {
 		tile->SetColor(Color::Color());
 	}
@@ -124,7 +124,7 @@ bool TestWidget::MouseDown(const IPoint &mouse_pos)
 	for (auto unit : _units) {
 		IPoint point = _map->GetTileCoordinate(mousePos);
 		unit->MoveTo(point);
-	}
+	}*/
 
 
 	return false;

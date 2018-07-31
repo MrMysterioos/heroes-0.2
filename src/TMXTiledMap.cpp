@@ -294,7 +294,6 @@ IPoint TMXTiledMap::GetTileCoordinate(const FPoint& mouse_pos)
 }
 
 void TMXTiledMap::Update(float dt) {
-	///TODO update gameobject
 	for (auto object : _gameObjects) {
 		if (object != nullptr) {
 			object->Update(dt);
