@@ -44,11 +44,10 @@ void GameWidget::Update(float dt)
 		_unit->SetSelect(true);
 		_queue.pop();
 		_queue.push(_unit);
-		//SetColorAroundUnit();
+		SetColorAroundUnit();
 	}
 
 	if (_unit != nullptr && !_unit->IsMoving() && _isUnitMove) {
-		//ResetColotAroundUnit();
 		_unit = nullptr;
 		_isUnitMove = false;
 	}
@@ -67,9 +66,9 @@ bool GameWidget::MouseDown(const IPoint &mouse_pos)
 		if (_unit != nullptr) {
 			_unit->MoveTo(point);
 			_isUnitMove = _unit->IsMoving();
-			auto debug2 = 0;
-			//выделение области отключить елси начал двигаться
-			//если не начал оставиьт всё так, как есть
+			if (_isUnitMove) {
+				ResetColotAroundUnit();
+			}
 		}
 	}
 
@@ -85,6 +84,23 @@ void GameWidget::MouseMove(const IPoint &mouse_pos)
 		_scene.SetCamraPosition(newCameraPos);
 	}
 	_lastPosition = mouse_pos;
+
+	if (_unit != nullptr) {
+		float zoom = _scene.GetCameraZoom();
+		IPoint mousePos = IPoint(mouse_pos.x / zoom, mouse_pos.y / zoom);
+		IPoint point = _map->GetTileCoordinate(mousePos);
+
+		std::vector<IPoint> allMoves = _unit->GetAllMoves();
+		std::vector<TilePtr> tiles = _map->GetVectorTiles();
+		IPoint positionUnit = _unit->GetPosition();
+
+		for (auto move : allMoves) {
+			if (point == move) {
+				int id = point.x + point.y * _map->GetMapSize().x;
+				tiles[id]->
+			}
+		}
+	}
 }
 
 void GameWidget::MouseUp(const IPoint &mouse_pos)
@@ -97,23 +113,24 @@ void GameWidget::SetColorAroundUnit() {
 	if(_unit != nullptr) {
 		std::vector<IPoint> allMoves = _unit->GetAllMoves();
 		std::vector<TilePtr> tiles = _map->GetVectorTiles();
+		IPoint positionUnit = _unit->GetPosition();
 
 		for (auto move : allMoves) {
 			for (auto tile : tiles) {
 				IPoint tilePos = _map->GetTileCoordinate(IPoint(tile->GetPosition().x, tile->GetPosition().y));
 				if (tilePos == move) {
-					tile->SetColor(Color::Color(255, 100, 255));
+					tile->SetColor(Color::Color(255, 50, 200));
 				}
-				/*if (move == *(allMoves.end() - 1)) {
-					tile->SetColor(Color::Color(255, 255, 100));
-				}*/
+				if (tilePos == positionUnit) {
+					tile->SetColor(Color::Color(100, 100, 100));
+				}
 			}
 		}
 	}
 }
 
 void GameWidget::ResetColotAroundUnit() {
-	std::vector<TilePtr> tiles;
+	std::vector<TilePtr> tiles = _map->GetVectorTiles();
 	for (auto tile : tiles) {
 		tile->SetColor(Color::Color(255, 255, 255));
 	}
