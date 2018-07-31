@@ -135,6 +135,7 @@ void GameWidget::SetColorAroundUnit() {
 	if(_unit != nullptr) {
 		std::vector<IPoint> allMoves = _unit->GetAllMoves();
 		std::vector<TilePtr> tiles = _map->GetVectorTiles();
+		std::vector<IPoint> posObjects = _unit->GetDestroyObject();
 		IPoint positionUnit = _unit->GetPosition();
 
 		for (auto move : allMoves) {
@@ -143,11 +144,18 @@ void GameWidget::SetColorAroundUnit() {
 				if (tilePos == move) {
 					tile->SetColor(Color::Color(255, 50, 200));
 				}
-				if (tilePos == positionUnit) {
-					tile->SetColor(Color::Color(100, 100, 100));
+			}
+		}
+
+		for (auto pos : posObjects) {
+			for (auto tile : tiles) {
+				IPoint tilePos = _map->GetTileCoordinate(IPoint(tile->GetPosition().x, tile->GetPosition().y));
+				if (tilePos == pos) {
+					tile->SetColor(Color::Color(0, 0, 0));
 				}
 			}
 		}
+		
 	}
 }
 

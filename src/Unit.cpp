@@ -269,6 +269,51 @@ std::vector<IPoint> Unit::GetAllMoves() const {
 	return allMoves;
 }
 
+std::vector<IPoint> Unit::GetDestroyObject() const {
+	std::vector<IPoint> posObject;
+
+	std::vector<IPoint> allMoves = this->GetAllMoves();
+
+	std::vector<GameObjectPtr> gameObjects = _map->GetGameObjects();
+	
+	std::vector<Direction> direction{
+		North,
+		NorthWest,
+		SouthWest,
+		South,
+		SouthEast,
+		NorthEast
+	};
+
+	IPoint mapSize = _map->GetMapSize();
+
+	for (auto move : allMoves) {
+		for (auto dir : direction) {
+			IPoint aroundPoint = _map->GetAdjacentAreaCoords(move, dir);
+			int iObj = aroundPoint.x + aroundPoint.y * _map->GetMapSize().x;
+			if (aroundPoint.x < 0 || aroundPoint.x >= mapSize.x ||
+				aroundPoint.y < 0 || aroundPoint.y >= mapSize.y ||
+				gameObjects[iObj] == nullptr || gameObjects[iObj] == this)
+			{
+				continue;
+			}
+
+			bool isFindEqual = false;
+			for (auto pos : posObject) {
+				if (pos == aroundPoint) {
+					isFindEqual = true;
+					break;
+				}
+			}
+			if (!isFindEqual) {
+				posObject.push_back(aroundPoint);
+			}
+		}
+	}
+
+	return posObject;
+}
+
 void Unit::SetPosition(const IPoint& point) {
 	_position = point;
 	IPoint pos = _map->GetSceneCoordinate(point);

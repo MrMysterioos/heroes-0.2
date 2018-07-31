@@ -18,6 +18,7 @@ public:
 	inline bool IsMoving() const { return _isMove; }
 
 	std::vector<IPoint> GetAllMoves() const;
+	std::vector<IPoint> GetDestroyObject() const;
 
 	void MoveTo(const IPoint& tilePos);
 
