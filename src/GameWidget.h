@@ -28,7 +28,7 @@ private:
 	void Init(rapidxml::xml_node<>* elem);
 
 	void SetColorAroundUnit();
-	void ResetColotAroundUnit();
+	void ResetColorAroundUnit();
 
 private:
 	TMXTiledMapPtr _map;
@@ -39,6 +39,7 @@ private:
 	std::queue<UnitPtr> _queue;
 
 	//debug
+	int _countStep = 0;
 	UnitPtr _unit = nullptr;
 	bool _isUnitMove = false;
 	ParticleEffectNodePtr _tile;

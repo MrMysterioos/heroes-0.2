@@ -146,21 +146,22 @@ void Unit::Update(float dt) {
 			else {
 				_counter++;
 				_map->SwapGameObject(_position, _wayPoints[_counter]);
-				SetPosition(_wayPoints[_counter]);
+				this->SetPosition(_wayPoints[_counter]);
+				--_steps;
 			}
 		}
 		else {
 
 			_animate->SetAnimation("idle");
-
 			_map->SwapGameObject(_position, _wayPoints[_counter]);
 			_counter = 0;
 			_isMove = false;
 			_wayPoints.clear();
 
-			_isSelect = false;
-
-		}
+			if (_steps <= 0) {
+				_isSelect = false;
+			}
+		}		
 	}
 }
 
@@ -241,7 +242,7 @@ std::vector<IPoint> Unit::GetAllMoves() const {
 			allMoves.push_back(aroundPoint);
 	}
 
-	for (size_t step = 1; step < _maxStep; ++step) {
+	for (size_t step = 1; step < _steps; ++step) {
 		int size = allMoves.size();
 		for (int i = size - 1, k = 6 * step - 1; i >= 0 && k >= 0; --k, --i) {
 			IPoint adjPoint = allMoves[i];

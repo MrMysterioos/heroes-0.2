@@ -54,9 +54,14 @@ void GameWidget::Update(float dt)
 		SetColorAroundUnit();
 	}
 
-	if (_unit != nullptr && !_unit->IsMoving() && _isUnitMove) {
+	if (_unit != nullptr && !_unit->IsMoving() && !_unit->IsSelect()) {
 		_unit = nullptr;
 		_isUnitMove = false;
+	}
+
+	//TODO пересмотреть условие, чтобы оно не повторялось постоянно
+	if (_unit != nullptr && !_unit->IsMoving() && _unit->IsSelect()) {
+		SetColorAroundUnit();
 	}
 }
 
@@ -75,7 +80,7 @@ bool GameWidget::MouseDown(const IPoint &mouse_pos)
 			_unit->MoveTo(point);
 			_isUnitMove = _unit->IsMoving();
 			if (_isUnitMove) {
-				ResetColotAroundUnit();
+				ResetColorAroundUnit();
 				_tile->GetContainer().KillAllEffects();
 			}
 		}
@@ -159,7 +164,7 @@ void GameWidget::SetColorAroundUnit() {
 	}
 }
 
-void GameWidget::ResetColotAroundUnit() {
+void GameWidget::ResetColorAroundUnit() {
 	std::vector<TilePtr> tiles = _map->GetVectorTiles();
 	for (auto tile : tiles) {
 		tile->SetColor(Color::Color(255, 255, 255));
@@ -170,4 +175,11 @@ void GameWidget::AcceptMessage(const Message& message)
 {}
 
 void GameWidget::KeyPressed(int keyCode)
-{}
+{
+	if (keyCode == VK_SPACE) {
+		_unit = nullptr;
+		this->ResetColorAroundUnit();
+		//TODO исправить баг с эффектом после пропуска хода
+		//_tile->GetContainer().KillAllEffects();
+	}
+}

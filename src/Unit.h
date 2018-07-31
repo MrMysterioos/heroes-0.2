@@ -11,11 +11,12 @@ public:
 
 	void SetPosition(const IPoint& point);
 	inline void SetMaxStep(int rad) { _maxStep = rad; }
-	inline void SetSelect(bool select) { _isSelect = select; }
+	inline void SetSelect(bool select) { _isSelect = select; _steps = _maxStep; }
 
 	void Update(float dt) override;
 	inline bool IsSelect() const { return _isSelect; }
 	inline bool IsMoving() const { return _isMove; }
+	inline int GetMaxStep() const{ return _maxStep; }
 
 	std::vector<IPoint> GetAllMoves() const;
 	std::vector<IPoint> GetDestroyObject() const;
@@ -34,6 +35,7 @@ private:
 
 	int _counter = 0;		///<позволяет отслеживать перемещение по вектору построенного пути
 	int _maxStep = 0.f;
+	int _steps = 0;
 
 	std::vector<IPoint> _wayPoints;
 
