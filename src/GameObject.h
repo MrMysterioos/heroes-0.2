@@ -10,6 +10,8 @@ public:
 
 	inline IPoint GetPosition() const { return _position; }
 
+	virtual void Update(float dt) {}
+
 	virtual ~GameObject() {};
 
 protected:

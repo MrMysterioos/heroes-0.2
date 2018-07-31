@@ -15,7 +15,7 @@ public:
 	inline void SetMaxStep(int rad) { _maxStep = rad; }
 	inline void SetSelect(bool select) { _isSelect = select; }
 
-	void Update(float dt);
+	void Update(float dt) override;
 	inline bool IsSelect() const { return _isSelect; }
 	inline bool IsMoving() const { return _isMove; }
 
@@ -26,7 +26,7 @@ public:
 private:
 	bool InitWayPoints(const IPoint& mouseTileTap);
 
-	/// todo придумать что-нибудь по красивее
+	/// todo придумать что-нибудь покрасивее
 	void UpdateNodePosition(FPoint newPos);
 
 private:
