@@ -13,9 +13,12 @@ void Unit::Init(TMXTiledMap* map, AnimateSpritePtr anim, const IPoint& posTile)
 {
 	_map = map;
 	_animate = anim;
+	InitHealthBar(1.0f);
 	SetPosition(posTile);
 	map->PushGameObject(this);
-	InitHealthBar();
+
+	/// todo גûםוסעט ג פאיכ
+	_hp = _maxHp = 20;
 }
 
 bool Unit::InitWayPoints(const IPoint& mouseTileTap) {
@@ -138,7 +141,7 @@ void Unit::Update(float dt) {
 				pos.z = pos.y - 200;
 
 				_animate->SetPosition(pos);
-				//UpdateNodePosition(FPoint(pos.x, pos.y));
+				UpdateNodePosition(FPoint(pos.x, pos.y));
 			}
 			else {
 				_counter++;
@@ -319,7 +322,7 @@ void Unit::SetPosition(const IPoint& point) {
 	IPoint pos = _map->GetSceneCoordinate(point);
 	_animate->SetPosition(math::Vector3(pos.x, pos.y, pos.y - 200));
 
-	//UpdateNodePosition(FPoint(pos.x, pos.y));
+	UpdateNodePosition(FPoint(pos.x, pos.y));
 }
 
 std::string GetAnimation(float dtX, float dtY) {

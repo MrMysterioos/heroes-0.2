@@ -9,13 +9,17 @@ public:
 	void Init();
 
 	void DrawNode() override;
-	void Update(float dt) override {};
+	void Update(float dt) override;
 
-	inline void SetValue(float newValue) { value = newValue; };
-	inline float GetValue() { return value; };
+	void Damage(float dh);
+
+	inline void SetValue(float newValue) { _value = newValue; };
+	inline float GetValue() { return _value; };
 
 private:
-	float value = 0.0f;
+	float _track = 0.0f;
+	float _value = 0.0f;
+	float _timer = 0.0f;
 
 };
 
