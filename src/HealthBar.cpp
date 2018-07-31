@@ -1,17 +1,17 @@
 #include "stdafx.h"
 #include "HealthBar.h"
 
-boost::intrusive_ptr<HealthBar> HealthBar::Create(Scene* scene)
+boost::intrusive_ptr<HealthBar> HealthBar::Create()
 {
 
 	HealthBarPtr ret(new HealthBar);
-	ret->Init(scene);
+	ret->Init();
 	return ret;
 }
 
-void HealthBar::Init(Scene* scene)
+void HealthBar::Init()
 {
-	Node::Init(scene);
+	Node::Init();
 }
 
 void HealthBar::DrawNode()

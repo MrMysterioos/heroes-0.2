@@ -1,7 +1,13 @@
 #include "stdafx.h"
 
 #include "Scene.h"
-#include "Sprite.h"
+
+Scene& Scene::GetInstance()
+{
+	static Scene instance;
+	return instance;
+}
+
 
 Scene::Scene() {
 	Init();

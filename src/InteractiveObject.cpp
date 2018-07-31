@@ -1,5 +1,11 @@
 #include "stdafx.h"
 #include "InteractiveObject.h"
+#include "TMXTiledMap.h"
+
+void InterObject::InitHealthBar()
+{
+	_healthBar = HealthBar::Create();
+}
 
 bool InterObject::Damage(int damage)
 {

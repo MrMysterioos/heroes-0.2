@@ -1,11 +1,9 @@
 #pragma once
 
-class Scene;
-
 class Node : public RefCounter {
 public:
 
-	void Init(Scene* scene);
+	void Init();
 
 	void Draw();
 
@@ -28,7 +26,6 @@ protected:
 	math::Vector3 _rotation = math::Vector3(0, 0, 0);
 	math::Vector3 _scale = math::Vector3(1, 1, 1);
 
-	Scene* _scene = nullptr;
 };
 
 typedef boost::intrusive_ptr<Node> NodePtr;

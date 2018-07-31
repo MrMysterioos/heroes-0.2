@@ -2,16 +2,16 @@
 #include "Sprite.h"
 #include "Scene.h"
 
-boost::intrusive_ptr<Sprite> Sprite::Create(Scene* scene)
+boost::intrusive_ptr<Sprite> Sprite::Create()
 {
 	SpritePtr ret(new Sprite);
-	ret->Init(scene);
-	return SpritePtr(new Sprite);
+	ret->Init();
+	return ret;
 }
 
-void Sprite::Init(Scene * scene)
+void Sprite::Init()
 {
-	Node::Init(scene);
+	Node::Init();
 }
 
 void Sprite::DrawNode()

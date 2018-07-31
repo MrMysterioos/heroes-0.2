@@ -4,9 +4,9 @@
 class ParticleEffectNode : public Node {
 public:
 
-	static boost::intrusive_ptr<ParticleEffectNode> Create(Scene* scene, EffectsContainer effCont);
+	static boost::intrusive_ptr<ParticleEffectNode> Create(EffectsContainer effCont);
 
-	void Init(Scene* scene, EffectsContainer effCont);
+	void Init(EffectsContainer effCont);
 
 	void DrawNode() override;
 

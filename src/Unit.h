@@ -7,8 +7,6 @@ class Unit : public InterObject {
 public:
 	static boost::intrusive_ptr<Unit> Create(TMXTiledMap* map, AnimateSpritePtr anim, const IPoint& posTile);
 
-	static boost::intrusive_ptr<Unit> Create(TMXTiledMap* map, AnimateSpritePtr anim);
-
 	void Init(TMXTiledMap* map, AnimateSpritePtr anim, const IPoint& posTile);
 
 	void SetPosition(const IPoint& point);

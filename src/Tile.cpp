@@ -2,14 +2,14 @@
 #include "Tile.h"
 #include "Scene.h"
 
-TilePtr Tile::Create(Scene* scene, Area area) {
+TilePtr Tile::Create(Area area) {
 	TilePtr ptr(new Tile);
-	ptr->Init(scene, area);
+	ptr->Init(area);
 	return ptr;
 }
 
-void Tile::Init(Scene* scene, Area area) {
-	Sprite::Init(scene);
+void Tile::Init(Area area) {
+	Sprite::Init();
 	ChangeArea(area);
 }
 
@@ -25,9 +25,12 @@ void Tile::ChangeArea(Area area)
 	auto eff = effCont.AddEffect(area.effect);
 	float rand = (float)(std::rand() % 100) / 10.f;
 	eff->Update(rand);
-	_scene->DeleteNode(_effNode);
+
+	Scene scene = Scene::GetInstance();
+	scene.DeleteNode(_effNode);
+
 	_effNode.reset();
-	_effNode = ParticleEffectNode::Create(_scene, effCont);
+	_effNode = ParticleEffectNode::Create(effCont);
 	math::Vector3 pos = _position;
 	pos.z -= 256;
 	_effNode->SetPosition(pos);

@@ -28,7 +28,6 @@ private:
 	void Init(const std::string& tmx);
 
 private:
-	Scene _scene;
 
 	TMXTiledMapPtr _map;
 

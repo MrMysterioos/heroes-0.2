@@ -1,7 +1,6 @@
 #pragma once
 
 #include "TMXTiledMap.h"
-#include "Scene.h"
 #include "Unit.h"
 
 
@@ -32,7 +31,6 @@ private:
 	void ResetColotAroundUnit();
 
 private:
-	Scene _scene;
 	TMXTiledMapPtr _map;
 
 	bool _cameraMov = false;

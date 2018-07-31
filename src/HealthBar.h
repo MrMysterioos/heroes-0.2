@@ -4,9 +4,9 @@
 
 class HealthBar : public Node {
 public:
-	static boost::intrusive_ptr<HealthBar> Create(Scene* scene);
+	static boost::intrusive_ptr<HealthBar> Create();
 
-	void Init(Scene* scene);
+	void Init();
 
 	void DrawNode() override;
 	void Update(float dt) override {};

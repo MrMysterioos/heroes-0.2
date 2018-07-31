@@ -15,6 +15,7 @@ void Unit::Init(TMXTiledMap* map, AnimateSpritePtr anim, const IPoint& posTile)
 	_animate = anim;
 	SetPosition(posTile);
 	map->PushGameObject(this);
+	InitHealthBar();
 }
 
 bool Unit::InitWayPoints(const IPoint& mouseTileTap) {
