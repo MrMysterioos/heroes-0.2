@@ -5,28 +5,16 @@ std::string GetAnimation(float dtX, float dtY);
 
 UnitPtr Unit::Create(TMXTiledMap* map, AnimateSpritePtr anim, const IPoint& posTile) {
 	UnitPtr unit = boost::intrusive_ptr<Unit>(new Unit());
-	unit->_map = map;
-	unit->_animate = anim;
-	unit->SetPosition(posTile);
-	map->PushGameObject(unit);
+	unit->Init(map, anim, posTile);
 	return unit;
 }
 
-UnitPtr Unit::Create(TMXTiledMap* map, AnimateSpritePtr anim) {
-	UnitPtr unit = boost::intrusive_ptr<Unit>(new Unit());
-	unit->Init(map, anim);
-	return unit;
-}
-
-void Unit::Init(TMXTiledMapPtr map, AnimateSpritePtr anim)
+void Unit::Init(TMXTiledMap* map, AnimateSpritePtr anim, const IPoint& posTile)
 {
-	_map = map.get();
+	_map = map;
 	_animate = anim;
-
-	HealthBarPtr healthbar = HealthBar::Create(map->GetPointerToScene());
-	_healthBar = healthbar;
-	math::Vector3 pos = _animate->GetPosition();
-	_healthBar->SetPosition(pos);
+	SetPosition(posTile);
+	map->PushGameObject(this);
 }
 
 bool Unit::InitWayPoints(const IPoint& mouseTileTap) {
@@ -149,7 +137,7 @@ void Unit::Update(float dt) {
 				pos.z = pos.y - 200;
 
 				_animate->SetPosition(pos);
-				//UpdateNodePosition(FPoint(pos.x, pos.y));
+				UpdateNodePosition(FPoint(pos.x, pos.y));
 			}
 			else {
 				_counter++;
