@@ -9,6 +9,11 @@ GameWidget::GameWidget(const std::string& name, rapidxml::xml_node<>* elem)
 
 void GameWidget::Init(rapidxml::xml_node<>* elem)
 {
+
+	//tile
+	EffectsContainer effCont;
+	_tile = ParticleEffectNode::Create(&_scene, effCont);
+
 	// map
 	std::string mapName = Xml::GetStringAttribute(elem, "map");
 	_map = TMXTiledMap::CreateMap(mapName, &_scene);
@@ -68,6 +73,7 @@ bool GameWidget::MouseDown(const IPoint &mouse_pos)
 			_isUnitMove = _unit->IsMoving();
 			if (_isUnitMove) {
 				ResetColotAroundUnit();
+				_tile->GetContainer().KillAllEffects();
 			}
 		}
 	}
@@ -85,19 +91,31 @@ void GameWidget::MouseMove(const IPoint &mouse_pos)
 	}
 	_lastPosition = mouse_pos;
 
+	//select tile
 	if (_unit != nullptr) {
 		float zoom = _scene.GetCameraZoom();
 		IPoint mousePos = IPoint(mouse_pos.x / zoom, mouse_pos.y / zoom);
-		IPoint point = _map->GetTileCoordinate(mousePos);
+		IPoint mousePoint = _map->GetTileCoordinate(mousePos);
 
 		std::vector<IPoint> allMoves = _unit->GetAllMoves();
-		std::vector<TilePtr> tiles = _map->GetVectorTiles();
-		IPoint positionUnit = _unit->GetPosition();
 
-		for (auto move : allMoves) {
-			if (point == move) {
-				int id = point.x + point.y * _map->GetMapSize().x;
-				tiles[id]->
+		IPoint positionTile = _map->GetTileCoordinate(IPoint(_tile->GetPosition().x, _tile->GetPosition().y));
+
+		if (positionTile != mousePoint && !_unit->IsMoving()) {
+			bool isSelectTile = false;
+			for (auto move : allMoves) {
+				if (mousePoint == move) {
+					IPoint pos = _map->GetSceneCoordinate(mousePoint);
+					_tile->GetContainer().KillAllEffects();
+					_tile->GetContainer().AddEffect("Select");
+					_tile->SetPosition(math::Vector3(pos.x, pos.y, 0));
+
+					isSelectTile = true;
+				}
+			}
+			if (!isSelectTile) {
+				_tile->GetContainer().KillAllEffects();
+				_tile->SetPosition(math::Vector3(0, 0, 0));
 			}
 		}
 	}

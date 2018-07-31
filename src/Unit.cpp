@@ -137,7 +137,7 @@ void Unit::Update(float dt) {
 				pos.z = pos.y - 200;
 
 				_animate->SetPosition(pos);
-				UpdateNodePosition(FPoint(pos.x, pos.y));
+				//UpdateNodePosition(FPoint(pos.x, pos.y));
 			}
 			else {
 				_counter++;

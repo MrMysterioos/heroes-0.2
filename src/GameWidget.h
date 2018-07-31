@@ -43,4 +43,5 @@ private:
 	//debug
 	UnitPtr _unit = nullptr;
 	bool _isUnitMove = false;
+	ParticleEffectNodePtr _tile;
 };
