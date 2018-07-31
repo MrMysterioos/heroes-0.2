@@ -69,8 +69,8 @@ bool GameWidget::MouseDown(const IPoint &mouse_pos)
 	else {
 		Scene& scene = Scene::GetInstance();
 		float zoom = scene.GetCameraZoom();
-		IPoint mousePos = IPoint(mouse_pos.x / zoom, mouse_pos.y / zoom);
-		IPoint point = _map->GetTileCoordinate(mousePos);
+		FPoint scenePos = scene.MouseToScene(mouse_pos);
+		IPoint point = _map->GetTileCoordinate(scenePos);
 		if (_unit != nullptr) {
 			_unit->MoveTo(point);
 			_isUnitMove = _unit->IsMoving();
@@ -98,8 +98,8 @@ void GameWidget::MouseMove(const IPoint &mouse_pos)
 	//select tile
 	if (_unit != nullptr) {
 		float zoom = Scene::GetInstance().GetCameraZoom();
-		IPoint mousePos = IPoint(mouse_pos.x / zoom, mouse_pos.y / zoom);
-		IPoint mousePoint = _map->GetTileCoordinate(mousePos);
+		FPoint scenePos = Scene::GetInstance().MouseToScene(mouse_pos);
+		IPoint mousePoint = _map->GetTileCoordinate(scenePos);
 
 		std::vector<IPoint> allMoves = _unit->GetAllMoves();
 
