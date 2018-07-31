@@ -4,6 +4,7 @@
 
 class InterObject : public GameObject {
 public:
+	void InitHealthBar();
 	/// Вощвращает true, если объект уничтожен
 	bool Damage(int damage);
 	virtual void Destroy();

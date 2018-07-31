@@ -12,8 +12,8 @@ struct Area {
 
 class Tile : public Sprite {
 public:
-	static boost::intrusive_ptr<Tile> Create(Scene* scene, Area area);
-	void Init(Scene* scene, Area area);
+	static boost::intrusive_ptr<Tile> Create(Area area);
+	void Init(Area area);
 
 	void ChangeArea(Area area);
 

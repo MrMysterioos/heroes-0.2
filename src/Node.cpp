@@ -2,11 +2,11 @@
 #include "Node.h"
 #include "Scene.h"
 
-void Node::Init(Scene* scene)
+void Node::Init()
 {
 	NodePtr node(this);
-	scene->_nodes.push_back(node);
-	_scene = scene;
+	Scene& scene = Scene::GetInstance();
+	scene._nodes.push_back(node);
 }
 
 void Node::Draw() {

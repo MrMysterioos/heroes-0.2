@@ -5,9 +5,7 @@
 class Scene {
 public:
 
-	friend class Node;
-
-	Scene();
+	static Scene& GetInstance();
 
 	void Init();
 
@@ -29,6 +27,11 @@ public:
 	inline float GetCameraZoom() { return _cameraZoom; };
 
 private:
+
+	Scene();
+
+private:
+
 	std::vector<NodePtr> _nodes;
 	std::vector<EffectsContainer> _effects;
 
@@ -36,4 +39,6 @@ private:
 	/// Добиться того, чтобы зуммирование производилось не от угла
 	FPoint _cameraPosition = FPoint(0.0f, 0.0f);
 	float _cameraZoom = 1.0f;
+
+	friend class Node;
 };

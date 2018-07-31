@@ -4,9 +4,9 @@
 
 class Sprite : public Node {
 public:
-	static boost::intrusive_ptr<Sprite> Create(Scene* scene);
+	static boost::intrusive_ptr<Sprite> Create();
 
-	void Init(Scene* scene);
+	void Init();
 
 	void DrawNode() override;
 	void Update(float dt) override {};

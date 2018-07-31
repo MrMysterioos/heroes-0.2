@@ -1,16 +1,16 @@
 #include "stdafx.h"
 #include "ParticleEffectNode.h"
 
-boost::intrusive_ptr<ParticleEffectNode> ParticleEffectNode::Create(Scene* scene, EffectsContainer effCont)
+boost::intrusive_ptr<ParticleEffectNode> ParticleEffectNode::Create(EffectsContainer effCont)
 {
 	ParticleEffectNodePtr ret(new ParticleEffectNode);
-	ret->Init(scene, effCont);
+	ret->Init(effCont);
 	return ret;
 }
 
-void ParticleEffectNode::Init(Scene* scene, EffectsContainer effCont)
+void ParticleEffectNode::Init(EffectsContainer effCont)
 {
-	Node::Init(scene);
+	Node::Init();
 	_effCont = effCont;
 }
 

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GameWidget.h"
+#include "Scene.h"
 
 GameWidget::GameWidget(const std::string& name, rapidxml::xml_node<>* elem)
 	: Widget(name)
@@ -12,20 +13,21 @@ void GameWidget::Init(rapidxml::xml_node<>* elem)
 
 	//tile
 	EffectsContainer effCont;
-	_tile = ParticleEffectNode::Create(&_scene, effCont);
+	_tile = ParticleEffectNode::Create(effCont);
 
 	// map
 	std::string mapName = Xml::GetStringAttribute(elem, "map");
-	_map = TMXTiledMap::CreateMap(mapName, &_scene);
+
+	_map = TMXTiledMap::CreateMap(mapName);
 
 	// Camera
-	_scene.SetCameraZoom(0.6);
+	Scene::GetInstance().SetCameraZoom(0.6);
 
 	//units
 	size_t countUnits = 3;
 
 	for (size_t i = 0; i < countUnits; ++i) {
-		AnimateSpritePtr anim = AnimateSprite::Create(&_scene, "animations/unit.xml");
+		AnimateSpritePtr anim = AnimateSprite::Create("animations/unit.xml");
 		anim->SetAnimation("idle");
 		anim->SetAnchorPoint(FPoint(0.5f, 0.25f));
 		UnitPtr unit = Unit::Create(_map.get(), anim, IPoint(1 + i, 1 + i));
@@ -36,12 +38,12 @@ void GameWidget::Init(rapidxml::xml_node<>* elem)
 
 void GameWidget::Draw()
 {
-	_scene.Draw();
+	Scene::GetInstance().Draw();
 }
 
 void GameWidget::Update(float dt)
 {
-	_scene.Update(dt);
+	Scene::GetInstance().Update(dt);
 	_map->Update(dt);
 
 	if (_unit == nullptr) {
@@ -65,7 +67,8 @@ bool GameWidget::MouseDown(const IPoint &mouse_pos)
 		_cameraMov = true;
 	}
 	else {
-		float zoom = _scene.GetCameraZoom();
+		Scene& scene = Scene::GetInstance();
+		float zoom = scene.GetCameraZoom();
 		IPoint mousePos = IPoint(mouse_pos.x / zoom, mouse_pos.y / zoom);
 		IPoint point = _map->GetTileCoordinate(mousePos);
 		if (_unit != nullptr) {
@@ -85,15 +88,16 @@ void GameWidget::MouseMove(const IPoint &mouse_pos)
 {
 	// moving
 	if (_cameraMov) {
+		Scene& scene = Scene::GetInstance();
 		FPoint move = mouse_pos - _lastPosition;
-		FPoint newCameraPos = _scene.GetCamraPosition() - move;
-		_scene.SetCamraPosition(newCameraPos);
+		FPoint newCameraPos = scene.GetCamraPosition() - move;
+		scene.SetCamraPosition(newCameraPos);
 	}
 	_lastPosition = mouse_pos;
 
 	//select tile
 	if (_unit != nullptr) {
-		float zoom = _scene.GetCameraZoom();
+		float zoom = Scene::GetInstance().GetCameraZoom();
 		IPoint mousePos = IPoint(mouse_pos.x / zoom, mouse_pos.y / zoom);
 		IPoint mousePoint = _map->GetTileCoordinate(mousePos);
 
