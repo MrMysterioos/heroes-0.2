@@ -7,7 +7,7 @@
   <image source="tileset_2.png" width="512" height="512"/>
   <tile id="0" type="Oil">
    <properties>
-    <property name="Effect" value="None"/>
+    <property name="Effect" value="Aqua"/>
    </properties>
   </tile>
   <tile id="1" type="Magma">
@@ -42,7 +42,7 @@
   </tile>
   <tile id="7" type="Water">
    <properties>
-    <property name="Effect" value="None"/>
+    <property name="Effect" value="Aqua"/>
    </properties>
   </tile>
  </tileset>
@@ -51,7 +51,20 @@
   <tile id="6" type="enemy_zone"/>
   <tile id="7" type="frendly_zone"/>
  </tileset>
- <layer name="TileLayer" width="5" height="15">
+ <tileset firstgid="17" name="Objects" tilewidth="256" tileheight="512" tilecount="2" columns="2">
+  <image source="Objects.png" width="512" height="512"/>
+  <tile id="0" type="Static">
+   <properties>
+    <property name="Name" value="Tree"/>
+   </properties>
+  </tile>
+  <tile id="1" type="Dynamic">
+   <properties>
+    <property name="Name" value="Barrel_Oil"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="TileLayer" width="5" height="15" locked="1">
   <data encoding="csv">
 8,7,7,8,7,
 7,7,8,7,8,
@@ -70,7 +83,7 @@
 7,7,7,7,8
 </data>
  </layer>
- <layer name="Areas" width="5" height="15" opacity="0.75">
+ <layer name="Areas" width="5" height="15" visible="0" locked="1" opacity="0.75">
   <data encoding="csv">
 0,15,15,15,15,
 0,15,15,15,15,
@@ -87,6 +100,25 @@
 16,16,16,0,0,
 16,16,16,0,0,
 16,16,16,16,0
+</data>
+ </layer>
+ <layer name="Objects" width="5" height="15" offsetx="-13" offsety="-32">
+  <data encoding="csv">
+0,0,0,0,18,
+0,17,0,0,0,
+0,0,0,17,0,
+0,0,0,0,0,
+0,0,18,0,0,
+0,0,0,0,0,
+0,0,0,0,0,
+18,0,0,0,0,
+0,0,0,0,0,
+0,0,17,18,0,
+0,17,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,17,
+0,0,17,0,0
 </data>
  </layer>
 </map>
