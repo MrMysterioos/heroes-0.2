@@ -1,6 +1,6 @@
 <Effects version="3" atlasFormat="png" atlasQuality="100" atlasPadding="2">
 	<Effect name="Select" description="">
-		<ParticleSystem objectId="0" name="Wave" numOfParticles="4" lifeInitial="3.0" lifeVariation="0.0" pauseAverage="0.0" pauseVariation="0.0" startTime="3.0" deadCountTime="0.0" bornTime="0.0" additive="false" linkedParticles="true" needStartDeadCounter="false" orientParticles="false" isVelocity="true" isEqual="false" isHidden="false" hotPointX="0.5" hotPointY="0.5" texture="hex" emitterType="point" showEmitter="false" emitterAngle="0.0" emitterRange="0.0" emitterOrientation="0.0" lineLength="0" rectWidth="0" rectHeight="0" ellipseRHor="0" ellipseRVert="0" ellipseThickness="0" emitterLink="-1" emitterOffsetX="0.0" emitterOffsetY="0.0" isAnimation="false" frameWidth="1" frameHeight="1" isScaledNonproportional="true" isEqualCreateTime="true">
+		<ParticleSystem objectId="0" name="Wave" numOfParticles="2" lifeInitial="2.0" lifeVariation="0.0" pauseAverage="0.0" pauseVariation="0.0" startTime="2.0" deadCountTime="0.0" bornTime="0.0" additive="false" linkedParticles="true" needStartDeadCounter="false" orientParticles="false" isVelocity="true" isEqual="false" isHidden="false" hotPointX="0.5" hotPointY="0.5" texture="hex" emitterType="point" showEmitter="false" emitterAngle="0.0" emitterRange="0.0" emitterOrientation="0.0" lineLength="0" rectWidth="0" rectHeight="0" ellipseRHor="0" ellipseRVert="0" ellipseThickness="0" emitterLink="-1" emitterOffsetX="0.0" emitterOffsetY="0.0" isAnimation="false" frameWidth="1" frameHeight="1" isScaledNonproportional="true" isEqualCreateTime="true">
 			<Param name="x" similar="false" removal="0.0">
 				<Key time="0.0" fixedGrad="false" repeat="false" valueLower="0.0" valueUpper="0.0"/>
 				<Key time="1.0" fixedGrad="false" repeat="false" valueLower="-300.0" valueUpper="300.0"/>
@@ -10,8 +10,8 @@
 				<Key time="1.0" fixedGrad="false" repeat="false" valueLower="-300.0" valueUpper="300.0"/>
 			</Param>
 			<Param name="size" similar="false" removal="0.0">
-				<Key time="0.0" fixedGrad="false" repeat="false" valueLower="0.0" valueUpper="0.0"/>
-				<Key time="1.0" fixedGrad="false" repeat="false" valueLower="128.0" valueUpper="128.0"/>
+				<Key time="0.0" fixedGrad="false" repeat="false" valueLower="128.0" valueUpper="128.0"/>
+				<Key time="1.0" fixedGrad="false" repeat="false" valueLower="0.0" valueUpper="0.0"/>
 			</Param>
 			<Param name="angle" similar="false" removal="0.0">
 				<Key time="0.0" fixedGrad="false" repeat="false" valueLower="0.0" valueUpper="0.0"/>
@@ -27,18 +27,22 @@
 			</Param>
 			<Param name="red" similar="false" removal="0.0">
 				<Key time="0.0" fixedGrad="false" repeat="false" valueLower="255.0" valueUpper="255.0"/>
+				<Key time="0.501" fixedGrad="false" repeat="true"/>
 				<Key time="1.0" fixedGrad="false" repeat="true"/>
 			</Param>
 			<Param name="green" similar="false" removal="0.0">
 				<Key time="0.0" fixedGrad="false" repeat="false" valueLower="255.0" valueUpper="255.0"/>
+				<Key time="0.501" fixedGrad="false" repeat="true"/>
 				<Key time="1.0" fixedGrad="false" repeat="true"/>
 			</Param>
 			<Param name="blue" similar="false" removal="0.0">
 				<Key time="0.0" fixedGrad="false" repeat="false" valueLower="255.0" valueUpper="255.0"/>
+				<Key time="0.501" fixedGrad="false" repeat="true"/>
 				<Key time="1.0" fixedGrad="false" repeat="true"/>
 			</Param>
 			<Param name="alpha" similar="false" removal="0.0">
-				<Key time="0.0" fixedGrad="false" repeat="false" valueLower="255.0" valueUpper="255.0"/>
+				<Key time="0.0" fixedGrad="false" repeat="false" valueLower="0.0" valueUpper="0.0"/>
+				<Key time="0.501" fixedGrad="false" repeat="false" valueLower="255.0" valueUpper="255.0"/>
 				<Key time="1.0" fixedGrad="false" repeat="false" valueLower="0.0" valueUpper="0.0"/>
 			</Param>
 			<Param name="fps" similar="false" removal="0.0">
@@ -46,8 +50,8 @@
 				<Key time="1.0" fixedGrad="false" repeat="true"/>
 			</Param>
 			<Param name="ySize" similar="false" removal="0.0">
-				<Key time="0.0" fixedGrad="false" repeat="false" valueLower="0.0" valueUpper="0.0"/>
-				<Key time="1.0" fixedGrad="false" repeat="false" valueLower="64.0" valueUpper="64.0"/>
+				<Key time="0.0" fixedGrad="false" repeat="false" valueLower="64.0" valueUpper="64.0"/>
+				<Key time="1.0" fixedGrad="false" repeat="false" valueLower="0.0" valueUpper="0.0"/>
 			</Param>
 		</ParticleSystem>
 	</Effect>
