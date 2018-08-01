@@ -206,7 +206,11 @@ void Unit::Destroy() {
 	}
 
 	if (_animate != nullptr) {
-		Scene::GetInstance().DeleteNode(_animate.get());
+		// Scene::GetInstance().DeleteNode(_animate.get());
+		// Вместо удаления анимации сдвинемм ее немного по z координате
+		math::Vector3 pos = _animate->GetPosition();
+		pos.z += 100;
+		_animate->SetPosition(pos);
 	}
 
 	if (_healthBar != nullptr) {
@@ -218,9 +222,11 @@ bool Unit::Damage(int damage) {
 	bool isDamage = InterObject::Damage(damage);
 
 	if (isDamage) {
-		_state = State::Death;
 		_map->EraseGameObject(this);
 		//анимация смерти
+		_animate->SetAnimation("death");
+		_animate->SetRepeat(false);
+		_state = State::Death;
 		return true;
 	}
 	else {

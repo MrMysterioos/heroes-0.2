@@ -36,6 +36,7 @@
     <texture path="unit_attack_se.png" id="unit_attack_se"/>
 
     <texture path="unit_damage.png" id="unit_damage"/>
+    <texture path="unit_death.png" id="unit_death"/>
   </Textures>
   <Textures group="Objects" basePath="textures/Objects">
     <texture path="Barrel_Oil.png" id="Barrel"/>
