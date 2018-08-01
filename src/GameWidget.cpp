@@ -110,13 +110,12 @@ bool GameWidget::MouseDown(const IPoint &mouse_pos)
 					if (pos == _unit->GetPosition()) {
 						auto enemy = dynamic_cast<InterObject*>(object.get());
 						if (enemy != nullptr) {
-							bool damage = enemy->Damage(20);
-							_unit->SetSelect(false);
-							if (damage) {
+							_unit->Attack(enemy);
+						/*	if (damage) {
 								_map->EraseGameObject(enemy);
 								DestroyInterObject(enemy);
-								ResetColorAroundUnit();
-							}
+							}*/
+							ResetColorAroundUnit();
 						}
 						break;
 					}
