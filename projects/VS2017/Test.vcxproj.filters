@@ -55,6 +55,9 @@
     <ClCompile Include="..\..\src\Barrel.cpp">
       <Filter>Source\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Tree.cpp">
+      <Filter>Source\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\TestAppDelegate.h">
@@ -106,6 +109,9 @@
       <Filter>Source\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Barrel.h">
+      <Filter>Source\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Tree.h">
       <Filter>Source\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

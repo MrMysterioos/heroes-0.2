@@ -36,10 +36,6 @@ void GameWidget::Init(rapidxml::xml_node<>* elem)
 		_queue.push(unit);
 	}
 
-	// temp
-	_barr = Barrel::Create(_map.get(), "Fire");
-	_barr->SetPosition(IPoint(3, 9));
-
 }
 
 void GameWidget::Draw()
@@ -130,10 +126,6 @@ bool GameWidget::MouseDown(const IPoint &mouse_pos)
 			}
 		}
 	}
-
-	// temp
-	if (!_barr->IsDestroy())
-		_barr->Damage(1);
 
 	return false;
 }

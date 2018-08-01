@@ -42,6 +42,4 @@ private:
 
 	UnitPtr _unit = nullptr;
 	ParticleEffectNodePtr _tile;
-
-	BarrelPtr _barr;
 };

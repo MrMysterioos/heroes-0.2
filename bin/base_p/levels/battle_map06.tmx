@@ -60,16 +60,19 @@
   <tile id="7" type="frendly_zone"/>
  </tileset>
  <tileset firstgid="17" name="Objects" tilewidth="256" tileheight="512" tilecount="2" columns="2">
+  <properties>
+   <property name="Type" value="Object"/>
+  </properties>
   <image source="Objects.png" width="512" height="512"/>
-  <tile id="0" type="Static">
+  <tile id="0" type="Tree">
    <properties>
     <property name="Name" value="Tree"/>
     <property name="Z" type="int" value="250"/>
    </properties>
   </tile>
-  <tile id="1" type="Dynamic">
+  <tile id="1" type="Barrel">
    <properties>
-    <property name="Name" value="Barrel_Oil"/>
+    <property name="Name" value="Barrel"/>
     <property name="Z" type="int" value="250"/>
    </properties>
   </tile>
@@ -115,7 +118,7 @@
  <layer name="Objects" width="5" height="15" offsetx="-13" offsety="-32">
   <data encoding="csv">
 0,0,0,0,18,
-0,17,0,0,0,
+0,0,0,0,0,
 0,0,0,17,0,
 0,0,0,0,0,
 0,0,18,0,0,

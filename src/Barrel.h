@@ -8,7 +8,7 @@ class Barrel : public InterObject {
 public:
 	static boost::intrusive_ptr<Barrel> Create(TMXTiledMap* map, std::string element);
 
-	void SetPosition(IPoint pos);
+	void SetPosition(const IPoint& pos) override;
 
 	void Destroy() override;
 

@@ -28,7 +28,7 @@ void Barrel::Init(TMXTiledMap* map, std::string element)
 	_sprite->SetAnchorPoint(FPoint(0.55f, 0.1f));
 }
 
-void Barrel::SetPosition(IPoint point)
+void Barrel::SetPosition(const IPoint& point)
 {
 	_position = point;
 	IPoint pos = _map->GetSceneCoordinate(point);

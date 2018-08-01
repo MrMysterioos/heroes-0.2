@@ -202,11 +202,11 @@ void Unit::Destroy() {
 	InterObject::Destroy();
 
 	if (_sprite != nullptr) {
-		Scene::GetInstance().DeleteNode(_sprite);
+		Scene::GetInstance().DeleteNode(_sprite.get());
 	}
 
 	if (_animate != nullptr) {
-		Scene::GetInstance().DeleteNode(_animate);
+		Scene::GetInstance().DeleteNode(_animate.get());
 	}
 
 	if (_healthBar != nullptr) {
