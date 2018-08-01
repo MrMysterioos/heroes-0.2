@@ -8,6 +8,7 @@ public:
 	/// Вощвращает true, если объект уничтожен
 	virtual bool Damage(int damage);
 	virtual void Destroy();
+	inline bool IsDestroy() const { return _destroy; }
 
 	inline bool IsDestroy() { return _destroy; };
 

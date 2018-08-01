@@ -122,16 +122,28 @@ bool Unit::InitWayPoints(const IPoint& mouseTileTap) {
 
 void Unit::Update(float dt) {
 	//TODO вынести в файл
-	float speed = 5.;
+	float speed = 5.f;
 
+	//в этот кадр происходит удар
+	//TODO разработать систему кадровых взаимодействий
+	int frame = 16;
+
+	//урон юнита
+	//TODO разработь систему урона объектов
+	int damage = 5;
+
+	if (_animate->GetCurrentFrame() > frame && _state == State::Attack) {
+		if (_enemy != nullptr) {
+			_enemy->Damage(damage);
+			_enemy = nullptr;
+		}		
+	}
 	if (_animate->IsFinal()) {
 
 		if (_state == State::Attack) {
-			//_isAttack = false;
-			_enemy->Damage(20);
-			_enemy = nullptr;
 			_isSelect = false;
 		}
+
 		_state = State::Idle;
 		_animate->SetAnimation("idle");
 		_animate->SetRepeat(true);
@@ -189,7 +201,7 @@ void Unit::Destroy() {
 
 	InterObject::Destroy();
 
-	/*if (_sprite != nullptr) {
+	if (_sprite != nullptr) {
 		Scene::GetInstance().DeleteNode(_sprite);
 	}
 
@@ -199,33 +211,31 @@ void Unit::Destroy() {
 
 	if (_healthBar != nullptr) {
 		Scene::GetInstance().DeleteNode(_healthBar);
-	}*/
+	}
 }
 
 bool Unit::Damage(int damage) {
 	bool isDamage = InterObject::Damage(damage);
-	_animate->SetAnimation("damage");
-	_animate->SetRepeat(false);
-	_state = State::Damage;
 
 	if (isDamage) {
+		_state = State::Death;
+		_map->EraseGameObject(this);
+		//анимация смерти
 		return true;
 	}
 	else {
+		_animate->SetAnimation("damage");
+		_animate->SetRepeat(false);
+		_state = State::Damage;
 		return false;
 	}
 }
 
 void Unit::Attack(InterObjectPtr object) {
-
-	//TODO разработать систему урона 
-	//int damage = 5;
 	if (_state != State::Idle) {
 		return;
 	}
-	//object->Damage(damage);
 	_state = State::Attack;
-	//_isAttack = true;
 	_animate->SetAnimation(GetAttackAnimation(object->GetPosition()));
 	_animate->SetRepeat(false);	
 	_enemy = object;

@@ -24,7 +24,8 @@ void GameWidget::Init(rapidxml::xml_node<>* elem)
 	Scene::GetInstance().SetCameraZoom(0.6);
 
 	//units
-	size_t countUnits = 5;
+	//TODO вынести в файл
+	size_t countUnits = 2;
 
 	for (size_t i = 0; i < countUnits; ++i) {
 		AnimateSpritePtr anim = AnimateSprite::Create("animations/unit.xml");
@@ -54,19 +55,26 @@ void GameWidget::Update(float dt)
 	if (_unit == nullptr) {
 		_unit = _queue.front();
 		_queue.pop();
+		while(_unit->IsDestroy() && !_queue.empty()) {
+			_unit = _queue.front();
+			_queue.pop();
+		}
 		_unit->SetSelect(true);
 		_queue.push(_unit);
-		SetColorAroundUnit();
 	}
 
 	if (_unit != nullptr && !_unit->IsMoving() && !_unit->IsSelect()) {
 		_unit = nullptr;
-		_isUnitMove = false;
 	}
 
 	//TODO пересмотреть условие, чтобы оно не повторялось постоянно
-	if (_unit != nullptr && !_unit->IsMoving() && _unit->IsSelect()) {
+	if (_unit != nullptr && _unit->GetState() == Unit::State::Idle) {
 		SetColorAroundUnit();
+	}
+	else {
+		ResetColorAroundUnit();
+		_tile->GetContainer().KillAllEffects();
+		_tile->SetPosition(math::Vector3(0, 0, 0));
 	}
 }
 
@@ -84,9 +92,7 @@ bool GameWidget::MouseDown(const IPoint &mouse_pos)
 		//moving unit
 		if (_unit != nullptr) {
 			_unit->MoveTo(point);
-			_isUnitMove = _unit->IsMoving();
-			if (_isUnitMove) {
-				ResetColorAroundUnit();
+			if (_unit->IsMoving()) {
 				_tile->GetContainer().KillAllEffects();
 			}
 		}
@@ -116,11 +122,6 @@ bool GameWidget::MouseDown(const IPoint &mouse_pos)
 						auto enemy = dynamic_cast<InterObject*>(object.get());
 						if (enemy != nullptr) {
 							_unit->Attack(enemy);
-						/*	if (damage) {
-								_map->EraseGameObject(enemy);
-								DestroyInterObject(enemy);
-							}*/
-							ResetColorAroundUnit();
 						}
 						break;
 					}
@@ -155,6 +156,9 @@ void GameWidget::MouseMove(const IPoint &mouse_pos)
 		IPoint mousePoint = _map->GetTileCoordinate(scenePos);
 
 		std::vector<IPoint> allMoves = _unit->GetAllMoves();
+		std::vector<IPoint> gameObjects = _unit->GetDestroyObject();
+
+		allMoves.insert(allMoves.end(), gameObjects.begin(), gameObjects.end());
 
 		IPoint positionTile = _map->GetTileCoordinate(IPoint(_tile->GetPosition().x, _tile->GetPosition().y));
 
@@ -219,27 +223,6 @@ void GameWidget::ResetColorAroundUnit() {
 	}
 }
 
-void GameWidget::DestroyInterObject(InterObjectPtr object) {
-	auto front = _queue.front();
-	while (true) {
-		auto obj = _queue.front();
-		_queue.pop();
-		if (obj != object) {
-			_queue.push(obj);
-		}
-		else {
-			break;
-		}
-	}
-
-	SetColorAroundUnit();
-
-	/*while (front != _queue.front()) {
-		_queue.push(_queue.front());
-		_queue.pop();
-	}*/
-}
-
 void GameWidget::AcceptMessage(const Message& message)
 {}
 
@@ -248,7 +231,5 @@ void GameWidget::KeyPressed(int keyCode)
 	if (keyCode == VK_SPACE) {
 		_unit = nullptr;
 		this->ResetColorAroundUnit();
-		//TODO исправить баг с эффектом после пропуска хода
-		//_tile->GetContainer().KillAllEffects();
 	}
 }

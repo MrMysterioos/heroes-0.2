@@ -20,6 +20,8 @@ public:
 
 	inline bool IsFinal() { return _final; };
 
+	inline int GetCurrentFrame() const { return _currentFrame; }
+
 private:
 
 	struct Animate {

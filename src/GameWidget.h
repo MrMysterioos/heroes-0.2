@@ -31,7 +31,6 @@ private:
 
 	void SetColorAroundUnit();
 	void ResetColorAroundUnit();
-	void DestroyInterObject(InterObjectPtr object);
 
 private:
 	TMXTiledMapPtr _map;
@@ -41,10 +40,7 @@ private:
 
 	std::queue<UnitPtr> _queue;
 
-	//debug
-	int _countStep = 0;
 	UnitPtr _unit = nullptr;
-	bool _isUnitMove = false;
 	ParticleEffectNodePtr _tile;
 
 	BarrelPtr _barr;
