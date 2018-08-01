@@ -522,3 +522,11 @@ void TMXTiledMap::PushGameObject(GameObjectPtr object) {
 		_gameObjects[i] = object;
 	}
 }
+
+void TMXTiledMap::EraseGameObject(GameObjectPtr object) {
+	IPoint point = object->GetPosition();
+	int i = point.x + point.y * _mapSize.x;
+	if (i < _gameObjects.size() && _gameObjects[i] == object) {
+		_gameObjects[i] = nullptr;
+	}
+}

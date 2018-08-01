@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "Unit.h"
+#include "Scene.h"
 
-std::string GetAnimation(float dtX, float dtY);
+std::string GetRunAnimation(float dtX, float dtY);
 
 UnitPtr Unit::Create(TMXTiledMap* map, AnimateSpritePtr anim, const IPoint& posTile) {
 	UnitPtr unit = boost::intrusive_ptr<Unit>(new Unit());
@@ -120,8 +121,23 @@ bool Unit::InitWayPoints(const IPoint& mouseTileTap) {
 }
 
 void Unit::Update(float dt) {
+	//TODO вынести в файл
 	float speed = 5.;
-	if (_isSelect && _isMove) {
+
+	if (_animate->IsFinal()) {
+
+		if (_state == State::Attack) {
+			//_isAttack = false;
+			_enemy->Damage(20);
+			_enemy = nullptr;
+			_isSelect = false;
+		}
+		_state = State::Idle;
+		_animate->SetAnimation("idle");
+		_animate->SetRepeat(true);
+	}
+
+	if (_isSelect && _state == State::Run) {
 		if (_counter + 1 != _wayPoints.size()) {
 			IPoint point1 = _map->GetSceneCoordinate(_wayPoints[_counter]);
 			IPoint point2 = _map->GetSceneCoordinate(_wayPoints[_counter + 1]);
@@ -130,8 +146,11 @@ void Unit::Update(float dt) {
 			vel.Normalize();
 			vel *= speed;
 
-			std::string idAnim = GetAnimation(vel.x, vel.y);
-			_animate->SetAnimation(idAnim);
+			std::string idAnim = GetRunAnimation(vel.x, vel.y);
+			if (_idAnim != idAnim) {
+				_idAnim = idAnim;
+				_animate->SetAnimation(idAnim);
+			}
 
 			FPoint spritePos = FPoint(_animate->GetPosition().x, _animate->GetPosition().y);
 
@@ -153,9 +172,10 @@ void Unit::Update(float dt) {
 		else {
 
 			_animate->SetAnimation("idle");
+			_idAnim = "";
 			_map->SwapGameObject(_position, _wayPoints[_counter]);
 			_counter = 0;
-			_isMove = false;
+			_state = State::Idle;
 			_wayPoints.clear();
 
 			if (_steps <= 0) {
@@ -163,6 +183,52 @@ void Unit::Update(float dt) {
 			}
 		}		
 	}
+}
+
+void Unit::Destroy() {
+
+	InterObject::Destroy();
+
+	/*if (_sprite != nullptr) {
+		Scene::GetInstance().DeleteNode(_sprite);
+	}
+
+	if (_animate != nullptr) {
+		Scene::GetInstance().DeleteNode(_animate);
+	}
+
+	if (_healthBar != nullptr) {
+		Scene::GetInstance().DeleteNode(_healthBar);
+	}*/
+}
+
+bool Unit::Damage(int damage) {
+	bool isDamage = InterObject::Damage(damage);
+	_animate->SetAnimation("damage");
+	_animate->SetRepeat(false);
+	_state = State::Damage;
+
+	if (isDamage) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+void Unit::Attack(InterObjectPtr object) {
+
+	//TODO разработать систему урона 
+	//int damage = 5;
+	if (_state != State::Idle) {
+		return;
+	}
+	//object->Damage(damage);
+	_state = State::Attack;
+	//_isAttack = true;
+	_animate->SetAnimation(GetAttackAnimation(object->GetPosition()));
+	_animate->SetRepeat(false);	
+	_enemy = object;
 }
 
 void Unit::UpdateNodePosition(FPoint newPos)
@@ -187,7 +253,7 @@ void Unit::MoveTo(const IPoint& tilePos) {
 		return;
 	}
 
-	if (_isMove || !_isSelect) {
+	if (_state != State::Idle || !_isSelect) {
 		return;
 	}
 
@@ -197,7 +263,11 @@ void Unit::MoveTo(const IPoint& tilePos) {
 		if (allMoves[i] == tilePos) {
 			_wayPoints.clear();
 
-			_isMove = InitWayPoints(tilePos);
+			bool isMove = InitWayPoints(tilePos);
+
+			if (isMove) {
+				_state = State::Run;
+			}
 
 			break;
 		}
@@ -326,7 +396,56 @@ void Unit::SetPosition(const IPoint& point) {
 	UpdateNodePosition(FPoint(pos.x, pos.y));
 }
 
-std::string GetAnimation(float dtX, float dtY) {
+std::string Unit::GetAttackAnimation(const IPoint& posEnemy) {
+	std::string animate = "";
+
+	std::vector<Direction> direction = {
+		North,
+		NorthWest,
+		SouthWest,
+		South,
+		SouthEast,
+		NorthEast
+	};
+
+	Direction direct;
+
+	for (auto dir : direction) {
+		IPoint pos = _map->GetAdjacentAreaCoords(_position, dir);
+		if (pos.x < 0 || pos.x >= _map->GetMapSize().x ||
+			pos.y < 0 || pos.y >= _map->GetMapSize().y)
+		{
+			continue;
+		}
+		if (pos == posEnemy) {
+			direct = dir;
+			break;
+		}
+	}
+
+	if (direct == North) {
+		animate = "attack_n";
+	}
+	else if (direct == NorthWest) {
+		animate = "attack_nw";
+	}
+	else if (direct == NorthEast) {
+		animate = "attack_ne";
+	}
+	else if (direct == SouthWest) {
+		animate = "attack_sw";
+	}
+	else if (direct == SouthEast) {
+		animate = "attack_se";
+	}
+	else if (direct == South) {
+		animate = "attack_s";
+	}
+
+	return animate;
+}
+
+std::string GetRunAnimation(float dtX, float dtY) {
 	std::string animate = "";
 
 	if (dtX == 0 && dtY > 0) {

@@ -11,7 +11,7 @@
 
   <animation id="attack_n" sprite_sheet="unit_attack_n" width="205" height="205" speed="40" />
   <animation id="attack_nw" sprite_sheet="unit_attack_nw" width="205" height="205" speed="40" />
-  <animation id="attack_sw" sprite_sheet="unit_attack_sw" width="205" height="205" speed="40" />
+  <animation id="attack_ne" sprite_sheet="unit_attack_ne" width="205" height="205" speed="40" />
   <animation id="attack_s" sprite_sheet="unit_attack_s" width="205" height="205" speed="40" />
   <animation id="attack_sw" sprite_sheet="unit_attack_sw" width="205" height="205" speed="40" />
   <animation id="attack_se" sprite_sheet="unit_attack_se" width="205" height="205" speed="40" />

@@ -24,13 +24,13 @@ void GameWidget::Init(rapidxml::xml_node<>* elem)
 	Scene::GetInstance().SetCameraZoom(0.6);
 
 	//units
-	size_t countUnits = 3;
+	size_t countUnits = 5;
 
 	for (size_t i = 0; i < countUnits; ++i) {
 		AnimateSpritePtr anim = AnimateSprite::Create("animations/unit.xml");
 		anim->SetAnimation("idle");
 		anim->SetAnchorPoint(FPoint(0.5f, 0.25f));
-		UnitPtr unit = Unit::Create(_map.get(), anim, IPoint(1 + i, 1 + i));
+		UnitPtr unit = Unit::Create(_map.get(), anim, IPoint(i, i));
 		unit->SetMaxStep(2);
 		_queue.push(unit);
 	}
@@ -53,8 +53,8 @@ void GameWidget::Update(float dt)
 
 	if (_unit == nullptr) {
 		_unit = _queue.front();
-		_unit->SetSelect(true);
 		_queue.pop();
+		_unit->SetSelect(true);
 		_queue.push(_unit);
 		SetColorAroundUnit();
 	}
@@ -78,15 +78,54 @@ bool GameWidget::MouseDown(const IPoint &mouse_pos)
 	}
 	else {
 		Scene& scene = Scene::GetInstance();
-		float zoom = scene.GetCameraZoom();
 		FPoint scenePos = scene.MouseToScene(mouse_pos);
 		IPoint point = _map->GetTileCoordinate(scenePos);
+
+		//moving unit
 		if (_unit != nullptr) {
 			_unit->MoveTo(point);
 			_isUnitMove = _unit->IsMoving();
 			if (_isUnitMove) {
 				ResetColorAroundUnit();
 				_tile->GetContainer().KillAllEffects();
+			}
+		}
+
+		//atack unit
+		std::vector<GameObjectPtr> gameObjects = _map->GetGameObjects();
+		for (auto object : gameObjects) {
+			if (object != nullptr && object != _unit &&
+				point == object->GetPosition()) 
+			{
+				std::vector<Direction> direction{
+					North,
+					NorthWest,
+					SouthWest,
+					South,
+					SouthEast,
+					NorthEast
+				};
+				for (auto dir : direction) {
+					IPoint pos = _map->GetAdjacentAreaCoords(point, dir);
+					if (pos.x < 0 || pos.x >= _map->GetMapSize().x ||
+						pos.y < 0 || pos.y >= _map->GetMapSize().y)
+					{
+						continue;
+					}
+					if (pos == _unit->GetPosition()) {
+						auto enemy = dynamic_cast<InterObject*>(object.get());
+						if (enemy != nullptr) {
+							_unit->Attack(enemy);
+						/*	if (damage) {
+								_map->EraseGameObject(enemy);
+								DestroyInterObject(enemy);
+							}*/
+							ResetColorAroundUnit();
+						}
+						break;
+					}
+
+				}
 			}
 		}
 	}
@@ -178,6 +217,27 @@ void GameWidget::ResetColorAroundUnit() {
 	for (auto tile : tiles) {
 		tile->SetColor(Color::Color(255, 255, 255));
 	}
+}
+
+void GameWidget::DestroyInterObject(InterObjectPtr object) {
+	auto front = _queue.front();
+	while (true) {
+		auto obj = _queue.front();
+		_queue.pop();
+		if (obj != object) {
+			_queue.push(obj);
+		}
+		else {
+			break;
+		}
+	}
+
+	SetColorAroundUnit();
+
+	/*while (front != _queue.front()) {
+		_queue.push(_queue.front());
+		_queue.pop();
+	}*/
 }
 
 void GameWidget::AcceptMessage(const Message& message)

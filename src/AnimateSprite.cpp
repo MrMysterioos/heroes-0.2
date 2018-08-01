@@ -62,6 +62,7 @@ void AnimateSprite::SetAnimation(const std::string& id)
 		Render::Texture* tex = Core::resourceManager.Get<Render::Texture>(textureId);
 		SetTexture(tex);
 		_currentAnim = id;
+		_currentFrame = 0;
 	}
 	catch (std::exception const& e) {
 		Log::log.WriteError(e.what());

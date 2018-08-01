@@ -6,7 +6,7 @@ class InterObject : public GameObject {
 public:
 	void InitHealthBar(float value);
 	/// Вощвращает true, если объект уничтожен
-	bool Damage(int damage);
+	virtual bool Damage(int damage);
 	virtual void Destroy();
 
 	inline bool IsDestroy() { return _destroy; };
