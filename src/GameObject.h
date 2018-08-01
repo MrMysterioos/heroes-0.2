@@ -16,6 +16,10 @@ public:
 
 protected:
 
+	void Init(TMXTiledMap * map);
+
+protected:
+
 	IPoint _position = IPoint(0, 0);
 
 	TMXTiledMap * _map = nullptr;

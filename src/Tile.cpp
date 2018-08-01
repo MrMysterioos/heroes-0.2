@@ -27,11 +27,15 @@ void Tile::ChangeArea(Area area)
 	float rand = (float)(std::rand() % 100) / 10.f;
 	eff->Update(rand);
 
-	Scene scene = Scene::GetInstance();
-	scene.DeleteNode(_effNode);
+	Scene& scene = Scene::GetInstance();
 
-	_effNode.reset();
-	_effNode = ParticleEffectNode::Create(effCont);
+	if (_effNode) {
+		scene.DeleteNode(_effNode);
+		_effNode = nullptr;
+	}
+
+	auto effNodePtr = ParticleEffectNode::Create(effCont);
+	_effNode = effNodePtr.get();
 	math::Vector3 pos = _position;
 	pos.z -= 256;
 	_effNode->SetPosition(pos);

@@ -1,5 +1,7 @@
 #include "stdafx.h"
+
 #include "ParticleEffectNode.h"
+#include "Scene.h"
 
 boost::intrusive_ptr<ParticleEffectNode> ParticleEffectNode::Create(EffectsContainer effCont)
 {
@@ -25,6 +27,14 @@ void ParticleEffectNode::DrawNode() {
 void ParticleEffectNode::Update(float dt)
 {
 	_effCont.Update(dt);
+	if (_effCont.IsFinished() && autoDelete) {
+		Destroy();
+	}
+}
+
+void ParticleEffectNode::Destroy()
+{
+	Scene::GetInstance().DeleteNode(this);
 }
 
 ParticleEffectNode::~ParticleEffectNode()

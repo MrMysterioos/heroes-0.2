@@ -28,29 +28,32 @@
     <ClCompile Include="..\..\src\Tile.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Unit.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\TMXTiledMap.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\AnimateSprite.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GameObject.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\InteractiveObject.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\StaticObject.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\ParticleEffectNode.cpp">
       <Filter>Source\Scene</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\HealthBar.cpp">
       <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Unit.cpp">
+      <Filter>Source\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\StaticObject.cpp">
+      <Filter>Source\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\InteractiveObject.cpp">
+      <Filter>Source\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GameObject.cpp">
+      <Filter>Source\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Barrel.cpp">
+      <Filter>Source\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -81,26 +84,29 @@
     <ClInclude Include="..\..\src\Tile.h">
       <Filter>Source\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Unit.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\AnimateSprite.h">
       <Filter>Source\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GameObject.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\InteractiveObject.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\StaticObject.h">
-      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\ParticleEffectNode.h">
       <Filter>Source\Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\HealthBar.h">
       <Filter>Source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Unit.h">
+      <Filter>Source\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\StaticObject.h">
+      <Filter>Source\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\InteractiveObject.h">
+      <Filter>Source\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GameObject.h">
+      <Filter>Source\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Barrel.h">
+      <Filter>Source\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +144,9 @@
     </Filter>
     <Filter Include="Source\Widgets">
       <UniqueIdentifier>{fa1ac3a4-6759-4a4a-96a1-406b6e6e73ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObjects">
+      <UniqueIdentifier>{00f96d27-44c6-4953-aaf8-643416439cfd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

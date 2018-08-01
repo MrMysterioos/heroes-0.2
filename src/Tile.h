@@ -21,7 +21,7 @@ public:
 	void SetPosition(math::Vector3 pos) override;
 
 private:
-	ParticleEffectNodePtr _effNode;
+	ParticleEffectNode* _effNode = nullptr;
 	Area _area;
 };
 

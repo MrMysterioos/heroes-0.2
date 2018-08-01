@@ -9,12 +9,14 @@ public:
 	bool Damage(int damage);
 	virtual void Destroy();
 
+	inline bool IsDestroy() { return _destroy; };
+
 protected:
 	int _hp = 1;
 	int _maxHp = 1;
 	bool _destroy = false;
 
-	HealthBarPtr _healthBar;
+	HealthBar* _healthBar;
 };
 
 typedef boost::intrusive_ptr<InterObject> InterObjectPtr;

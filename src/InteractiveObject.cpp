@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "InteractiveObject.h"
 #include "TMXTiledMap.h"
+#include "Scene.h"
 
 void InterObject::InitHealthBar(float value)
 {
-	_healthBar = HealthBar::Create();
+	_healthBar = HealthBar::Create().get();
 	_healthBar->SetValue(value);
 }
 
@@ -28,4 +29,5 @@ bool InterObject::Damage(int damage)
 void InterObject::Destroy()
 {
 	_destroy = true;
+	Scene::GetInstance().DeleteNode(_healthBar);
 }

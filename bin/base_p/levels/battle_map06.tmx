@@ -64,11 +64,13 @@
   <tile id="0" type="Static">
    <properties>
     <property name="Name" value="Tree"/>
+    <property name="Z" type="int" value="250"/>
    </properties>
   </tile>
   <tile id="1" type="Dynamic">
    <properties>
     <property name="Name" value="Barrel_Oil"/>
+    <property name="Z" type="int" value="250"/>
    </properties>
   </tile>
  </tileset>

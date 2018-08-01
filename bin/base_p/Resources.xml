@@ -37,4 +37,8 @@
 
     <texture path="unit_damage.png" id="unit_damage"/>
   </Textures>
+  <Textures group="Objects" basePath="textures/Objects">
+    <texture path="Barrel_Oil.png" id="Barrel"/>
+    <texture path="Tree.png" id="Tree"/>
+  </Textures>
 </Resources>

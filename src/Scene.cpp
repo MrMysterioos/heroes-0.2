@@ -18,13 +18,9 @@ void Scene::Init() {
 	_cameraPosition = center;
 }
 
-void Scene::DeleteNode(NodePtr node)
+void Scene::DeleteNode(Node* node)
 {
-	for (int i = 0; i < _nodes.size(); ++i) {
-		if (_nodes.at(i) == node) {
-			_nodes.erase(_nodes.begin() + i);
-		}
-	}
+	_eraceList.push(node);
 }
 
 void Scene::Draw()
@@ -53,6 +49,17 @@ void Scene::Draw()
 
 void Scene::Update(float dt)
 {
+
+	while (_eraceList.size()) {
+		auto node = _eraceList.front();
+		_eraceList.pop();
+		for (int i = 0; i < _nodes.size(); ++i) {
+			if (_nodes.at(i).get() == node) {
+				_nodes.erase(_nodes.begin() + i);
+			}
+		}
+	}
+
 	for (NodePtr node : _nodes) {
 		node->Update(dt);
 	}

@@ -13,7 +13,7 @@ public:
 
 	void Update(float dt);
 
-	void DeleteNode(NodePtr node);
+	void DeleteNode(Node* node);
 	void PushVector(std::vector<NodePtr> nodes);
 
 	IPoint SceneToMouse(FPoint SceneCoord);
@@ -31,6 +31,8 @@ private:
 	Scene();
 
 private:
+
+	std::queue<Node*> _eraceList;
 
 	std::vector<NodePtr> _nodes;
 	std::vector<EffectsContainer> _effects;

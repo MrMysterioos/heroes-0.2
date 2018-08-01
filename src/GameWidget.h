@@ -3,6 +3,8 @@
 #include "TMXTiledMap.h"
 #include "Unit.h"
 
+#include "Barrel.h"
+
 
 ///
 /// Виджет - основной визуальный элемент на экране.
@@ -43,4 +45,6 @@ private:
 	UnitPtr _unit = nullptr;
 	bool _isUnitMove = false;
 	ParticleEffectNodePtr _tile;
+
+	BarrelPtr _barr;
 };

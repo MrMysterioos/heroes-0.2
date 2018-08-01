@@ -12,6 +12,7 @@ LoadResource("Resources.xml")
 --
 LoadEffects("effects/elements.xml")
 LoadEffects("effects/select.xml")
+LoadEffects("effects/explosions.xml")
 
 --
 -- Загрузка слоёв.
@@ -30,6 +31,7 @@ GUI:LoadLayers("Layers.xml")
 UploadResourceGroup("TestGroup")
 UploadResourceGroup("Tilesets")
 UploadResourceGroup("Animation")
+UploadResourceGroup("Objects")
 
 --
 -- Слой кладётся на экран.

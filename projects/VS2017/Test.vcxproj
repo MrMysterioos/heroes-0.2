@@ -119,6 +119,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\AnimateSprite.cpp" />
+    <ClCompile Include="..\..\src\Barrel.cpp" />
     <ClCompile Include="..\..\src\GameObject.cpp" />
     <ClCompile Include="..\..\src\GameWidget.cpp" />
     <ClCompile Include="..\..\src\HealthBar.cpp" />
@@ -141,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\AnimateSprite.h" />
+    <ClInclude Include="..\..\src\Barrel.h" />
     <ClInclude Include="..\..\src\GameObject.h" />
     <ClInclude Include="..\..\src\GameWidget.h" />
     <ClInclude Include="..\..\src\HealthBar.h" />
