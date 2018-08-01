@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Unit.h"
+#include "Scene.h"
 
 std::string GetAnimation(float dtX, float dtY);
 
@@ -162,6 +163,20 @@ void Unit::Update(float dt) {
 				_isSelect = false;
 			}
 		}		
+	}
+}
+
+void Unit::Destroy() {
+	if (_sprite != nullptr) {
+		Scene::GetInstance().DeleteNode(_sprite);
+	}
+
+	if (_animate != nullptr) {
+		Scene::GetInstance().DeleteNode(_animate);
+	}
+
+	if (_healthBar != nullptr) {
+		Scene::GetInstance().DeleteNode(_healthBar);
 	}
 }
 

@@ -29,6 +29,7 @@ private:
 
 	void SetColorAroundUnit();
 	void ResetColorAroundUnit();
+	void DestroyInterObject(InterObjectPtr object);
 
 private:
 	TMXTiledMapPtr _map;

@@ -44,6 +44,7 @@ public:
 
 	void SwapGameObject(const IPoint& point1, const IPoint& point2);
 	void PushGameObject(GameObjectPtr object);
+	void EraseGameObject(GameObjectPtr object);
 
 	void Update(float dt);
 

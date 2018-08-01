@@ -14,6 +14,8 @@ public:
 	inline void SetSelect(bool select) { _isSelect = select; _steps = _maxStep; }
 
 	void Update(float dt) override;
+	void Destroy() override;
+
 	inline bool IsSelect() const { return _isSelect; }
 	inline bool IsMoving() const { return _isMove; }
 	inline int GetMaxStep() const{ return _maxStep; }
