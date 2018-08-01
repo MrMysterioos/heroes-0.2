@@ -25,6 +25,16 @@
     <texture path="unit_run_nw.png" id="unit_run_nw"/>
     <texture path="unit_run_s.png" id="unit_run_s"/>
     <texture path="unit_run_n.png" id="unit_run_n"/>
+    
     <texture path="unit_idle.png" id="unit_idle"/>
+    
+    <texture path="unit_attack_n.png" id="unit_attack_n"/>
+    <texture path="unit_attack_nw.png" id="unit_attack_nw"/>
+    <texture path="unit_attack_ne.png" id="unit_attack_ne"/>
+    <texture path="unit_attack_s.png" id="unit_attack_s"/>
+    <texture path="unit_attack_sw.png" id="unit_attack_sw"/>
+    <texture path="unit_attack_se.png" id="unit_attack_se"/>
+
+    <texture path="unit_damage.png" id="unit_damage"/>
   </Textures>
 </Resources>
