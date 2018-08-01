@@ -36,6 +36,13 @@ void GameWidget::Init(rapidxml::xml_node<>* elem)
 		_queue.push(unit);
 	}
 
+	// background
+	Render::Texture* back = Core::resourceManager.Get<Render::Texture>("background");
+	auto sprite = Sprite::Create();
+	sprite->SetTexture(back);
+	sprite->SetPosition(math::Vector3(-500.0f, -500.0f, 1000.0f));
+	
+
 }
 
 void GameWidget::Draw()
