@@ -7,6 +7,7 @@ struct Area {
 
 	Render::TexturePtr texture;
 	std::string effect;
+	float ZCoord;
 
 };
 
@@ -21,7 +22,7 @@ public:
 
 private:
 	ParticleEffectNodePtr _effNode;
-
+	Area _area;
 };
 
 typedef boost::intrusive_ptr<Tile> TilePtr;

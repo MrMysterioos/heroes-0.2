@@ -88,6 +88,9 @@ void TMXTiledMap::InitWithXMLFile(const std::string& xml) {
 									if (Xml::GetStringAttribute(property, "name") == "Effect") {
 										area.effect = Xml::GetStringAttribute(property, "value");
 									}
+									else if (Xml::GetStringAttribute(property, "name") == "Z") {
+										area.ZCoord = Xml::GetFloatAttribute(property, "value");
+									}
 									property = property->next_sibling();
 								}
 							}
