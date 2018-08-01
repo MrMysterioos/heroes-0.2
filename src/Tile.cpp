@@ -11,6 +11,7 @@ TilePtr Tile::Create(Area area) {
 void Tile::Init(Area area) {
 	Sprite::Init();
 	ChangeArea(area);
+	_area = area;
 }
 
 void Tile::ChangeArea(Area area)
@@ -40,7 +41,7 @@ void Tile::SetPosition(math::Vector3 pos)
 {
 	Sprite::SetPosition(pos);
 	if (_effNode) {
-		pos.z -= 250;
+		pos.z -= _area.ZCoord;
 		_effNode->SetPosition(pos);
 	}
 }

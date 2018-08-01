@@ -8,49 +8,49 @@
   <tile id="0" type="Oil">
    <properties>
     <property name="Effect" value="Aqua"/>
-    <property name="Z" type="int" value="0"/>
+    <property name="Z" type="int" value="125"/>
    </properties>
   </tile>
   <tile id="1" type="Magma">
    <properties>
     <property name="Effect" value="Magma"/>
-    <property name="Z" type="int" value="0"/>
+    <property name="Z" type="int" value="125"/>
    </properties>
   </tile>
   <tile id="2" type="Gas">
    <properties>
     <property name="Effect" value="Gas"/>
-    <property name="Z" type="int" value="1"/>
+    <property name="Z" type="int" value="250"/>
    </properties>
   </tile>
   <tile id="3" type="Venom">
    <properties>
     <property name="Effect" value="Venom"/>
-    <property name="Z" type="int" value="0"/>
+    <property name="Z" type="int" value="125"/>
    </properties>
   </tile>
   <tile id="4" type="Steam">
    <properties>
     <property name="Effect" value="Steam"/>
-    <property name="Z" type="int" value="1"/>
+    <property name="Z" type="int" value="250"/>
    </properties>
   </tile>
   <tile id="5" type="Fire">
    <properties>
     <property name="Effect" value="Fire"/>
-    <property name="Z" type="int" value="1"/>
+    <property name="Z" type="int" value="250"/>
    </properties>
   </tile>
   <tile id="6" type="Ground">
    <properties>
     <property name="Effect" value="None"/>
-    <property name="Z" type="int" value="0"/>
+    <property name="Z" type="int" value="125"/>
    </properties>
   </tile>
   <tile id="7" type="Water">
    <properties>
     <property name="Effect" value="Aqua"/>
-    <property name="Z" type="int" value="0"/>
+    <property name="Z" type="int" value="125"/>
    </properties>
   </tile>
  </tileset>

@@ -41,7 +41,7 @@ void Scene::Draw()
 
 	Render::device.PushMatrix();
 
-	Render::device.MatrixTranslate(offset);
+	Render::device.MatrixTranslate(IPoint(offset.x, offset.y));
 	Render::device.MatrixScale(_cameraZoom);
 
 	for (NodePtr node : _nodes) {

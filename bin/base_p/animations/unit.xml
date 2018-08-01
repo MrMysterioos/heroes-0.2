@@ -6,5 +6,15 @@
   <animation id="run_s" sprite_sheet="unit_run_s" width="205" height="205" speed="40" />
   <animation id="run_se" sprite_sheet="unit_run_se" width="205" height="205" speed="40" />
   <animation id="run_ne" sprite_sheet="unit_run_ne" width="205" height="205" speed="40" />
+
   <animation id="idle" sprite_sheet="unit_idle" width="205" height="205" speed="40" />
+
+  <animation id="attack_n" sprite_sheet="unit_attack_n" width="205" height="205" speed="40" />
+  <animation id="attack_nw" sprite_sheet="unit_attack_nw" width="205" height="205" speed="40" />
+  <animation id="attack_sw" sprite_sheet="unit_attack_sw" width="205" height="205" speed="40" />
+  <animation id="attack_s" sprite_sheet="unit_attack_s" width="205" height="205" speed="40" />
+  <animation id="attack_sw" sprite_sheet="unit_attack_sw" width="205" height="205" speed="40" />
+  <animation id="attack_se" sprite_sheet="unit_attack_se" width="205" height="205" speed="40" />
+
+  <animation id="damage" sprite_sheet="unit_damage" width="205" height="205" speed="40" />
 </Animationset>
