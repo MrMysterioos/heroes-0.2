@@ -60,6 +60,7 @@ private:
 	void InitWithXMLFile(const std::string& nameFile);
 
 	void InitTiles(const std::vector<int>& vect);
+	void InitObjects(const std::vector<int>& vect);
 
 	void InitRules(const std::string& xml);
 

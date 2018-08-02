@@ -13,6 +13,7 @@
     <texture id="cancel_active" path="textures/cancel_active" />
     <texture id="cancel_pressed" path="textures/cancel_pressed" />
     <texture id="hero" path="textures/hero.png"/>
+    <texture id="background" path="textures/background.png"/>
 	</Textures>
   <Textures group="Tilesets" basePath="levels">
     <texture path="tileset.png" id="tileset"/>
@@ -36,6 +37,7 @@
     <texture path="unit_attack_se.png" id="unit_attack_se"/>
 
     <texture path="unit_damage.png" id="unit_damage"/>
+    <texture path="unit_death.png" id="unit_death"/>
   </Textures>
   <Textures group="Objects" basePath="textures/Objects">
     <texture path="Barrel_Oil.png" id="Barrel"/>

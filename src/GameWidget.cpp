@@ -36,9 +36,12 @@ void GameWidget::Init(rapidxml::xml_node<>* elem)
 		_queue.push(unit);
 	}
 
-	// temp
-	_barr = Barrel::Create(_map.get(), "Fire");
-	_barr->SetPosition(IPoint(3, 9));
+	// background
+	Render::Texture* back = Core::resourceManager.Get<Render::Texture>("background");
+	auto sprite = Sprite::Create();
+	sprite->SetTexture(back);
+	sprite->SetPosition(math::Vector3(-500.0f, -500.0f, 1000.0f));
+	
 
 }
 
@@ -130,10 +133,6 @@ bool GameWidget::MouseDown(const IPoint &mouse_pos)
 			}
 		}
 	}
-
-	// temp
-	if (!_barr->IsDestroy())
-		_barr->Damage(1);
 
 	return false;
 }

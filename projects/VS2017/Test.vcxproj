@@ -138,6 +138,7 @@
     </ClCompile>
     <ClCompile Include="..\..\src\Tile.cpp" />
     <ClCompile Include="..\..\src\TMXTiledMap.cpp" />
+    <ClCompile Include="..\..\src\Tree.cpp" />
     <ClCompile Include="..\..\src\Unit.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +158,7 @@
     <ClInclude Include="..\..\src\stdafx.h" />
     <ClInclude Include="..\..\src\Tile.h" />
     <ClInclude Include="..\..\src\TMXTiledMap.h" />
+    <ClInclude Include="..\..\src\Tree.h" />
     <ClInclude Include="..\..\src\Unit.h" />
   </ItemGroup>
   <ItemGroup>

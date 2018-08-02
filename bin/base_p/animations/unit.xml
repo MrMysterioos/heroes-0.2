@@ -17,4 +17,5 @@
   <animation id="attack_se" sprite_sheet="unit_attack_se" width="205" height="205" speed="40" />
 
   <animation id="damage" sprite_sheet="unit_damage" width="205" height="205" speed="40" />
+  <animation id="death" sprite_sheet="unit_death" width="205" height="205" speed="40" />
 </Animationset>

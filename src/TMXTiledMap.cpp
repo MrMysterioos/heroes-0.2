@@ -2,6 +2,8 @@
 #include "TMXTiledMap.h"
 #include "Sprite.h"
 #include "Scene.h"
+#include "Barrel.h"
+#include "Tree.h"
 
 std::vector<int> GetVectorFromString(const std::string& str);
 
@@ -115,14 +117,18 @@ void TMXTiledMap::InitWithXMLFile(const std::string& xml) {
 			}
 			else if (utils::equals(it->name(), "layer")) {
 				if (utils::equals(it->first_attribute("name")->value(), "TileLayer")) {
-					_mapSize.x = utils::lexical_cast<int>(it->first_attribute("width")->value());
-					_mapSize.y = utils::lexical_cast<int>(it->first_attribute("height")->value());
-
 					std::string stringValue = it->first_node()->value();
 					auto vect = GetVectorFromString(stringValue);
 					InitTiles(vect);
 				}
 				///TODO считывать gameObjects из xml или tmx
+
+				if (utils::equals(it->first_attribute("name")->value(), "Objects")) {
+
+					std::string stringValue = it->first_node()->value();
+					auto vect = GetVectorFromString(stringValue);
+					InitObjects(vect);
+				}
 			}
 		}
 		if (_gameObjects.empty()) {
@@ -224,6 +230,30 @@ void TMXTiledMap::InitTiles(const std::vector<int>& vect) {
 		_tiles.push_back(tile);
 
 		_tileNames.push_back(_areas.at(id).name);
+	}
+}
+
+void TMXTiledMap::InitObjects(const std::vector<int>& vect)
+{
+	for (size_t i = 0; i < vect.size(); ++i) {
+		if (!vect[i])
+			continue;
+		int id = vect[i];
+
+		GameObjectPtr obj;
+
+		if (_objectId.at(id) == "Barrel")
+			obj = Barrel::Create(this, "Fire");
+		else if (_objectId.at(id) == "Tree")
+			obj = Tree::Create(this);
+
+		int x = i % _mapSize.x;
+		int y = i / _mapSize.x;
+
+		if (obj)
+			obj->SetPosition(IPoint(x, y));
+
+		//_gameObjects.push_back(obj);
 	}
 }
 
