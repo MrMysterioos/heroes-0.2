@@ -24,7 +24,7 @@ void Unit::Init(TMXTiledMap* map, AnimateSpritePtr anim, const IPoint& posTile)
 
 bool Unit::InitWayPoints(const IPoint& mouseTileTap) {
 	std::vector<int> obj(_map->GetMapSize().x * _map->GetMapSize().y, 0);
-	auto objects = _map->GetGameObjects();
+	auto objects = _map->GetVectorGameObjects();
 	std::vector<IPoint> points;
 	IPoint mapSize = _map->GetMapSize();
 
@@ -37,9 +37,9 @@ bool Unit::InitWayPoints(const IPoint& mouseTileTap) {
 		NorthEast
 	};
 
-	int iMouse = mouseTileTap.x + mouseTileTap.y * mapSize.x;
+	//int iMouse = mouseTileTap.x + mouseTileTap.y * mapSize.x;
 
-	if (objects[iMouse] != nullptr || mouseTileTap == _position) {
+	if (_map->GetGameObject(mouseTileTap) != nullptr || mouseTileTap == _position) {
 		return false;
 	}
 
@@ -264,7 +264,7 @@ void Unit::UpdateNodePosition(FPoint newPos)
 
 void Unit::MoveTo(const IPoint& tilePos) {
 
-	auto gameObjects = _map->GetGameObjects();
+	auto gameObjects = _map->GetVectorGameObjects();
 	int id = _position.x + _position.y * _map->GetMapSize().x;
 
 	if (id < gameObjects.size() && gameObjects[id] == nullptr) {
@@ -307,7 +307,7 @@ std::vector<IPoint> Unit::GetAllMoves() const {
 	IPoint mapSize = _map->GetMapSize();
 
 	std::vector<int> obj(mapSize.x * mapSize.y, 0);
-	auto gameObjects = _map->GetGameObjects();
+	auto gameObjects = _map->GetVectorGameObjects();
 	for (size_t i = 0; i < gameObjects.size(); ++i) {
 		if (gameObjects[i] != nullptr) {
 			obj[i] = -1;
@@ -370,7 +370,7 @@ std::vector<IPoint> Unit::GetDestroyObject() const {
 
 	std::vector<IPoint> allMoves = this->GetAllMoves();
 
-	std::vector<GameObjectPtr> gameObjects = _map->GetGameObjects();
+	std::vector<GameObjectPtr> gameObjects = _map->GetVectorGameObjects();
 	
 	std::vector<Direction> direction{
 		North,

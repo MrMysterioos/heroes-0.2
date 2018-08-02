@@ -108,7 +108,7 @@ bool GameWidget::MouseDown(const IPoint &mouse_pos)
 		}
 
 		//atack unit
-		std::vector<GameObjectPtr> gameObjects = _map->GetGameObjects();
+		std::vector<GameObjectPtr> gameObjects = _map->GetVectorGameObjects();
 		for (auto object : gameObjects) {
 			if (object != nullptr && object != _unit &&
 				point == object->GetPosition()) 
