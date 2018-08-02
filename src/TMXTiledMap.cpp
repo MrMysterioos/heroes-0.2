@@ -570,11 +570,3 @@ GameObjectPtr TMXTiledMap::GetGameObject(const IPoint& coordinate) {
 		return nullptr;
 	}
 }
-
-//debug
-//begin
-
-void TMXTiledMap::ImposeEffectOnUnit(Unit unit) {
-
-}
-//end

@@ -230,6 +230,10 @@ void Unit::Destroy() {
 bool Unit::Damage(int damage) {
 	bool isDamage = InterObject::Damage(damage);
 
+	if (_state == State::Attack) {
+		_isSelect = false;
+	}
+
 	if (isDamage) {
 		_map->EraseGameObject(this);
 		//анимация смерти

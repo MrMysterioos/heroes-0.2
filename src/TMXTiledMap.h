@@ -58,14 +58,6 @@ public:
 	IPoint GetAdjacentAreaCoords(IPoint tileCoord, Direction dir);
 	GameObjectPtr GetGameObject(const IPoint& coordinate);
 
-
-	//debug
-	//begin
-
-	void ImposeEffectOnUnit(Unit unit);
-
-	//end
-
 private:
 	void InitWithXMLFile(const std::string& nameFile);
 
