@@ -20,8 +20,11 @@ void GameWidget::Init(rapidxml::xml_node<>* elem)
 
 	_map = TMXTiledMap::CreateMap(mapName);
 
-	// Camera
+	// camera
 	Scene::GetInstance().SetCameraZoom(0.6);
+
+	// music
+	MM::manager.PlayTrack("epic music");
 
 	//units
 	//TODO גûםוסעט ג פאיכ

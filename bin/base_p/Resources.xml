@@ -43,4 +43,7 @@
     <texture path="Barrel_Oil.png" id="Barrel"/>
     <texture path="Tree.png" id="Tree"/>
   </Textures>
+  <Sounds group="Sounds" basePath="sound">
+    <sample id="epic music" path="epic music.ogg" mode="stream" mix="1"/>
+  </Sounds>
 </Resources>
