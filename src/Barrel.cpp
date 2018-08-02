@@ -54,6 +54,8 @@ void Barrel::Destroy()
 
 	for (auto point : points) {
 		_map->AddElement(_elem, point);
+		/*int i = point.x + point.y * _map->GetMapSize().x;
+		_map->GetGameObjects().at(i);*/
 	}
 
 	EffectsContainer effCont;
@@ -64,5 +66,6 @@ void Barrel::Destroy()
 	effPtr->SetAutoDelete(true);
 
 	Scene::GetInstance().DeleteNode(_sprite);
+	_map->EraseGameObject(this);
 
 }
