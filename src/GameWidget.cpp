@@ -39,8 +39,12 @@ void GameWidget::Init(rapidxml::xml_node<>* elem)
 	// background
 	Render::Texture* back = Core::resourceManager.Get<Render::Texture>("background");
 	auto sprite = Sprite::Create();
+	IPoint mapSize = _map->GetMapSize();
+	IPoint tileSize = _map->GetTileSize();
+	IPoint center = IPoint(mapSize.x * tileSize.x / 2, mapSize.y * tileSize.y / 2);
 	sprite->SetTexture(back);
-	sprite->SetPosition(math::Vector3(-500.0f, -500.0f, 1000.0f));
+	sprite->SetAnchorPoint(FPoint(0.5f, 0.5f));
+	sprite->SetPosition(math::Vector3((float)center.x, (float)center.y, 1000.0f));
 	
 
 }
@@ -141,10 +145,44 @@ void GameWidget::MouseMove(const IPoint &mouse_pos)
 {
 	// moving
 	if (_cameraMov) {
+
+		IPoint mapSize = _map->GetMapSize();
+		IPoint tileSize = _map->GetTileSize();
+		IPoint center = IPoint(mapSize.x * tileSize.x / 2, mapSize.y * tileSize.y / 2);
+
+		float zoom = Scene::GetInstance().GetCameraZoom();
+
+		int vertPadd = 100;
+		int horPadd = 500;
+
+		///todo зуммирование происходит не от центра камеры.
+		///следовательно, границы просчитываются не совсем верно.
+		int rightBound = (mapSize.x * tileSize.x - horPadd) * zoom;
+		int topBound = (mapSize.y * ((float)tileSize.y / 1.5f) - vertPadd) * zoom;
+
+		int bottomBound = horPadd - tileSize.x / 2;
+		int leftBound = vertPadd - tileSize.y / 2;
+
 		Scene& scene = Scene::GetInstance();
 		FPoint move = mouse_pos - _lastPosition;
 		FPoint newCameraPos = scene.GetCamraPosition() - move;
+
+		if (newCameraPos.x < bottomBound) {
+			newCameraPos.x = bottomBound;
+		}
+		else if (newCameraPos.x > rightBound) {
+			newCameraPos.x = rightBound;
+		}
+
+		if (newCameraPos.y < leftBound) {
+			newCameraPos.y = leftBound;
+		}
+		else if (newCameraPos.y > topBound) {
+			newCameraPos.y = topBound;
+		}
+
 		scene.SetCamraPosition(newCameraPos);
+
 	}
 	_lastPosition = mouse_pos;
 
