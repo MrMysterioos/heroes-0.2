@@ -16,6 +16,8 @@ void Tile::Init(Area area) {
 
 void Tile::ChangeArea(Area area)
 {
+	_area = area;
+
 	SetTexture(area.texture);
 	EffectsContainer effCont;
 
