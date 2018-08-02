@@ -124,15 +124,12 @@ void TMXTiledMap::InitWithXMLFile(const std::string& xml) {
 				///TODO считывать gameObjects из xml или tmx
 
 				if (utils::equals(it->first_attribute("name")->value(), "Objects")) {
-
+					_gameObjects = std::vector<GameObjectPtr>(_mapSize.x * _mapSize.y, 0);
 					std::string stringValue = it->first_node()->value();
 					auto vect = GetVectorFromString(stringValue);
 					InitObjects(vect);
 				}
 			}
-		}
-		if (_gameObjects.empty()) {
-			_gameObjects = std::vector<GameObjectPtr>(_mapSize.x * _mapSize.y, 0);
 		}
 	}
 	catch (std::exception const& e) {
@@ -250,11 +247,13 @@ void TMXTiledMap::InitObjects(const std::vector<int>& vect)
 		int x = i % _mapSize.x;
 		int y = i / _mapSize.x;
 
+
 		if (obj)
 			obj->SetPosition(IPoint(x, y));
 
-		//_gameObjects.push_back(obj);
+		_gameObjects[i] = obj;
 	}
+
 }
 
 IPoint TMXTiledMap::GetSceneCoordinate(const IPoint& tileCoord) const {
