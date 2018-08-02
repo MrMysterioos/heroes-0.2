@@ -559,3 +559,13 @@ void TMXTiledMap::EraseGameObject(GameObjectPtr object) {
 		_gameObjects[i] = nullptr;
 	}
 }
+
+GameObjectPtr TMXTiledMap::GetGameObject(const IPoint& coordinate) {
+	int i = coordinate.x + coordinate.y * _mapSize.x;
+	if (i >= 0 && i < _gameObjects.size()) {
+		return _gameObjects[i];
+	}
+	else {
+		return nullptr;
+	}
+}

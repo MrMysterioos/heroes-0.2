@@ -37,7 +37,7 @@ public:
 	inline IPoint GetMapSize() const { return _mapSize; }
 	inline IPoint GetTileSize() const { return _tileSize; }
 
-	inline std::vector<GameObjectPtr> GetGameObjects() const { return _gameObjects; }
+	inline std::vector<GameObjectPtr> GetVectorGameObjects() const { return _gameObjects; }
 
 	IPoint GetTileCoordinate(const FPoint& pos);
 	IPoint GetSceneCoordinate(const IPoint& tileCoord) const;
@@ -55,6 +55,8 @@ public:
 	void AddElement(const std::string& name, IPoint pos);
 
 	IPoint GetAdjacentAreaCoords(IPoint tileCoord, Direction dir);
+
+	GameObjectPtr GetGameObject(const IPoint& coordinate);
 
 private:
 	void InitWithXMLFile(const std::string& nameFile);
