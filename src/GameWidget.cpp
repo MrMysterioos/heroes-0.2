@@ -74,7 +74,7 @@ void GameWidget::Update(float dt)
 	else {
 		ResetColorAroundUnit();
 		_tile->GetContainer().KillAllEffects();
-		_tile->SetPosition(math::Vector3(0, 0, 0));
+		_tile->SetPosition(math::Vector3(0, 0, _tile->GetPosition().z));
 	}
 }
 
@@ -161,7 +161,7 @@ void GameWidget::MouseMove(const IPoint &mouse_pos)
 		allMoves.insert(allMoves.end(), gameObjects.begin(), gameObjects.end());
 
 		IPoint positionTile = _map->GetTileCoordinate(IPoint(_tile->GetPosition().x, _tile->GetPosition().y));
-
+		
 		if (positionTile != mousePoint && !_unit->IsMoving()) {
 			bool isSelectTile = false;
 			for (auto move : allMoves) {
