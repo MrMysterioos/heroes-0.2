@@ -59,6 +59,7 @@ private:
 	State _state = State::Idle;
 	SpritePtr _sprite;
 	AnimateSpritePtr _animate;
+	bool _isAttack = false;
 };
 
 typedef boost::intrusive_ptr<Unit> UnitPtr;
