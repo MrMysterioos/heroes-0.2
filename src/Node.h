@@ -21,10 +21,14 @@ public:
 	inline math::Vector3 GetScale() { return _scale; };
 	inline void SetScale(math::Vector3 scale) { _scale = scale; };
 
+	inline void SetVisibility(bool newVal) { _visible = newVal; };
+
 protected:
 	math::Vector3 _position = math::Vector3(0, 0, 0);
 	math::Vector3 _rotation = math::Vector3(0, 0, 0);
 	math::Vector3 _scale = math::Vector3(1, 1, 1);
+
+	bool _visible = true;
 
 };
 
