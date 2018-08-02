@@ -191,7 +191,9 @@ void Unit::Update(float dt) {
 			_wayPoints.clear();
 
 			if (_steps <= 0) {
-				_isSelect = false;
+				if (GetDestroyObject().size() == 0) {
+					_isSelect = false;
+				}
 			}
 		}		
 	}
@@ -315,40 +317,44 @@ std::vector<IPoint> Unit::GetAllMoves() const {
 	if (obj.empty()) {
 		return allMoves;
 	}
+	
 
-	for (auto dir : directection) {
-		IPoint aroundPoint = _map->GetAdjacentAreaCoords(_position, dir);
-		int iObj = aroundPoint.x + aroundPoint.y * _map->GetMapSize().x;
-		if (aroundPoint.x < 0 || aroundPoint.x >= mapSize.x ||
-			aroundPoint.y < 0 || aroundPoint.y >= mapSize.y || obj[iObj] != 0)
-		{
-			continue;
+	if (_steps != 0) {
+
+		for (auto dir : directection) {
+			IPoint aroundPoint = _map->GetAdjacentAreaCoords(_position, dir);
+			int iObj = aroundPoint.x + aroundPoint.y * _map->GetMapSize().x;
+			if (aroundPoint.x < 0 || aroundPoint.x >= mapSize.x ||
+				aroundPoint.y < 0 || aroundPoint.y >= mapSize.y || obj[iObj] != 0)
+			{
+				continue;
+			}
+			else
+				allMoves.push_back(aroundPoint);
 		}
-		else
-			allMoves.push_back(aroundPoint);
-	}
 
-	for (size_t step = 1; step < _steps; ++step) {
-		int size = allMoves.size();
-		for (int i = size - 1, k = 6 * step - 1; i >= 0 && k >= 0; --k, --i) {
-			IPoint adjPoint = allMoves[i];
-			for (size_t j = 0; j < directection.size(); ++j) {
-				IPoint aroundPoint = _map->GetAdjacentAreaCoords(adjPoint, directection[j]);
-				int iObj = aroundPoint.x + aroundPoint.y * _map->GetMapSize().x;
-				if (aroundPoint.x < 0 || aroundPoint.x >= mapSize.x ||
-					aroundPoint.y < 0 || aroundPoint.y >= mapSize.y || obj[iObj] != 0)
-				{
-					continue;
-				}
-				bool isFindEqual = false;
-				for (auto adj : allMoves) {
-					if (aroundPoint == adj) {
-						isFindEqual = true;
-						break;
+		for (size_t step = 1; step < _steps; ++step) {
+			int size = allMoves.size();
+			for (int i = size - 1, k = 6 * step - 1; i >= 0 && k >= 0; --k, --i) {
+				IPoint adjPoint = allMoves[i];
+				for (size_t j = 0; j < directection.size(); ++j) {
+					IPoint aroundPoint = _map->GetAdjacentAreaCoords(adjPoint, directection[j]);
+					int iObj = aroundPoint.x + aroundPoint.y * _map->GetMapSize().x;
+					if (aroundPoint.x < 0 || aroundPoint.x >= mapSize.x ||
+						aroundPoint.y < 0 || aroundPoint.y >= mapSize.y || obj[iObj] != 0)
+					{
+						continue;
 					}
-				}
-				if (!isFindEqual) {
-					allMoves.push_back(aroundPoint);
+					bool isFindEqual = false;
+					for (auto adj : allMoves) {
+						if (aroundPoint == adj) {
+							isFindEqual = true;
+							break;
+						}
+					}
+					if (!isFindEqual) {
+						allMoves.push_back(aroundPoint);
+					}
 				}
 			}
 		}
@@ -392,10 +398,6 @@ std::vector<IPoint> Unit::GetDestroyObject() const {
 			if (interObject == nullptr) {
 				continue;
 			}
-			/*if (interObject != nullptr) {
-			auto debug2 = 0;
-			continue;
-			}*/
 
 			bool isFindEqual = false;
 			for (auto pos : posObject) {
