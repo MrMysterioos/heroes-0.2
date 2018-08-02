@@ -35,7 +35,7 @@ void GameWidget::Init(rapidxml::xml_node<>* elem)
 		anim->SetAnimation("idle");
 		anim->SetAnchorPoint(FPoint(0.5f, 0.25f));
 		UnitPtr unit = Unit::Create(_map.get(), anim, IPoint(i, i));
-		unit->SetMaxStep(2);
+		unit->SetMaxStep(3);
 		_queue.push(unit);
 	}
 
@@ -48,8 +48,6 @@ void GameWidget::Init(rapidxml::xml_node<>* elem)
 	sprite->SetTexture(back);
 	sprite->SetAnchorPoint(FPoint(0.5f, 0.5f));
 	sprite->SetPosition(math::Vector3((float)center.x, (float)center.y, 1000.0f));
-	
-
 }
 
 void GameWidget::Draw()
@@ -77,6 +75,11 @@ void GameWidget::Update(float dt)
 		_unit = nullptr;
 	}
 
+	if (_unit != nullptr && _isMovingInAttack && _unit->GetState() == Unit::State::Idle) {
+		_unit->Attack(_enemy);
+		_isMovingInAttack = false;
+	}
+
 	//TODO пересмотреть условие, чтобы оно не повторялось постоянно
 	if (_unit != nullptr && _unit->GetState() == Unit::State::Idle) {
 		SetColorAroundUnit();
@@ -86,6 +89,8 @@ void GameWidget::Update(float dt)
 		_tile->GetContainer().KillAllEffects();
 		_tile->SetPosition(math::Vector3(0, 0, _tile->GetPosition().z));
 	}
+
+	
 }
 
 bool GameWidget::MouseDown(const IPoint &mouse_pos)
@@ -121,6 +126,7 @@ bool GameWidget::MouseDown(const IPoint &mouse_pos)
 					SouthEast,
 					NorthEast
 				};
+				//ближний бой
 				for (auto dir : direction) {
 					IPoint pos = _map->GetAdjacentAreaCoords(point, dir);
 					if (pos.x < 0 || pos.x >= _map->GetMapSize().x ||
@@ -135,8 +141,32 @@ bool GameWidget::MouseDown(const IPoint &mouse_pos)
 						}
 						break;
 					}
-
 				}
+				//begin
+				//дальний бой(игрок подходит к врагу и наносит ему урон)
+				if (_unit->GetState() != Unit::State::Attack) {
+					std::vector<IPoint> allMoves = _unit->GetAllMoves();
+					for (auto move : allMoves) {
+						for (auto dir : direction) {
+							IPoint pos = _map->GetAdjacentAreaCoords(point, dir);
+							if (pos.x < 0 || pos.x >= _map->GetMapSize().x ||
+								pos.y < 0 || pos.y >= _map->GetMapSize().y)
+							{
+								continue;
+							}
+							if (move == pos) {
+								auto enemy = dynamic_cast<InterObject*>(object.get());
+								if (enemy != nullptr) {
+									_unit->MoveTo(move);
+									_enemy = enemy;
+									_isMovingInAttack = true;
+								}
+								break;
+							}
+						}
+					}
+				}
+				//end
 			}
 		}
 	}
