@@ -4,6 +4,7 @@
 #include "Scene.h"
 #include "Barrel.h"
 #include "Tree.h"
+#include "Unit.h"
 
 std::vector<int> GetVectorFromString(const std::string& str);
 
@@ -569,3 +570,11 @@ GameObjectPtr TMXTiledMap::GetGameObject(const IPoint& coordinate) {
 		return nullptr;
 	}
 }
+
+//debug
+//begin
+
+void TMXTiledMap::ImposeEffectOnUnit(Unit unit) {
+
+}
+//end

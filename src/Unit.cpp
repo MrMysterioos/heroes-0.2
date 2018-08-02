@@ -122,7 +122,7 @@ bool Unit::InitWayPoints(const IPoint& mouseTileTap) {
 
 void Unit::Update(float dt) {
 	//TODO вынести в файл
-	float speed = 5.f;
+	//float speed = 5.f;
 
 	//в этот кадр происходит удар
 	//TODO разработать систему кадровых взаимодействий
@@ -156,7 +156,7 @@ void Unit::Update(float dt) {
 
 			FPoint vel = point2 - point1;
 			vel.Normalize();
-			vel *= speed;
+			vel *= _speed;
 
 			std::string idAnim = GetRunAnimation(vel.x, vel.y);
 			if (_idAnim != idAnim) {
@@ -435,7 +435,7 @@ std::string Unit::GetAttackAnimation(const IPoint& posEnemy) {
 		NorthEast
 	};
 
-	Direction direct;
+	Direction direct = direction[0];
 
 	for (auto dir : direction) {
 		IPoint pos = _map->GetAdjacentAreaCoords(_position, dir);

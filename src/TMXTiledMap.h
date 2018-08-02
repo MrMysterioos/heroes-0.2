@@ -2,6 +2,8 @@
 #include "Tile.h"
 #include "GameObject.h"
 
+class Unit;
+
 struct Transform {
 	std::string catalyst;
 	std::string start;
@@ -33,11 +35,10 @@ public:
 
 	static boost::intrusive_ptr<TMXTiledMap> CreateMap(const std::string& nameFile);
 
+	inline std::vector<GameObjectPtr> GetVectorGameObjects() const { return _gameObjects; }
 	inline std::vector<TilePtr> GetVectorTiles() const { return _tiles; }
 	inline IPoint GetMapSize() const { return _mapSize; }
 	inline IPoint GetTileSize() const { return _tileSize; }
-
-	inline std::vector<GameObjectPtr> GetVectorGameObjects() const { return _gameObjects; }
 
 	IPoint GetTileCoordinate(const FPoint& pos);
 	IPoint GetSceneCoordinate(const IPoint& tileCoord) const;
@@ -55,8 +56,15 @@ public:
 	void AddElement(const std::string& name, IPoint pos);
 
 	IPoint GetAdjacentAreaCoords(IPoint tileCoord, Direction dir);
-
 	GameObjectPtr GetGameObject(const IPoint& coordinate);
+
+
+	//debug
+	//begin
+
+	void ImposeEffectOnUnit(Unit unit);
+
+	//end
 
 private:
 	void InitWithXMLFile(const std::string& nameFile);

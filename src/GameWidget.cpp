@@ -36,6 +36,7 @@ void GameWidget::Init(rapidxml::xml_node<>* elem)
 		anim->SetAnchorPoint(FPoint(0.5f, 0.25f));
 		UnitPtr unit = Unit::Create(_map.get(), anim, IPoint(i, i));
 		unit->SetMaxStep(3);
+		unit->SetSpeed(5.f);
 		_queue.push(unit);
 	}
 
@@ -170,6 +171,21 @@ bool GameWidget::MouseDown(const IPoint &mouse_pos)
 			}
 		}
 	}
+	/*
+
+	//debug
+	std::vector<TilePtr> tiles = _map->GetVectorTiles();
+
+	Scene& scene = Scene::GetInstance();
+	FPoint scenePos = scene.MouseToScene(mouse_pos);
+	IPoint point = _map->GetTileCoordinate(scenePos);
+
+	for (auto tile : tiles) {
+		IPoint pos = _map->GetTileCoordinate(IPoint(tile->GetPosition().x, tile->GetPosition().y));
+		if (pos == point) {
+			auto debug2 = 0;
+		}
+	}*/
 
 	return false;
 }

@@ -24,6 +24,7 @@ public:
 
 	inline void SetMaxStep(int rad) { _maxStep = rad; }
 	inline void SetSelect(bool select) { _isSelect = select; _steps = _maxStep; }
+	inline void SetSpeed(float speed) { _speed = speed; }
 
 	void Update(float dt) override;
 	void Destroy() override;
@@ -53,6 +54,7 @@ private:
 	int _counter = 0;		///<позволяет отслеживать перемещение по вектору построенного пути
 	int _maxStep = 0.f;
 	int _steps = 0;
+	float _speed = 0.f;
 
 	std::vector<IPoint> _wayPoints;
 
