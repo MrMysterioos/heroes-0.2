@@ -54,8 +54,11 @@ void Barrel::Destroy()
 
 	for (auto point : points) {
 		_map->AddElement(_elem, point);
-		/*int i = point.x + point.y * _map->GetMapSize().x;
-		_map->GetGameObjects().at(i);*/
+		auto obj = _map->GetGameObject(point);
+		auto interObj = dynamic_cast<InterObject*>(obj.get());
+		if (interObj && interObj != this) {
+			interObj->Damage(1);
+		}
 	}
 
 	EffectsContainer effCont;

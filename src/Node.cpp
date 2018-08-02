@@ -10,6 +10,10 @@ void Node::Init()
 }
 
 void Node::Draw() {
+	if (!_visible) {
+		return;
+	}
+
 	Render::device.PushMatrix();
 
 	Render::device.MatrixTranslate(_position);

@@ -7,6 +7,7 @@ void InterObject::InitHealthBar(float value)
 {
 	_healthBar = HealthBar::Create().get();
 	_healthBar->SetValue(value);
+	_healthBar->SetVisibility(_showInfo);
 }
 
 bool InterObject::Damage(int damage)

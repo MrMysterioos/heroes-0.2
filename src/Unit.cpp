@@ -121,6 +121,13 @@ bool Unit::InitWayPoints(const IPoint& mouseTileTap) {
 }
 
 void Unit::Update(float dt) {
+	if (_state == State::Attack || _state == State::Damage || _isSelect || _showInfo) {
+		_healthBar->SetVisibility(true);
+	}
+	else {
+		_healthBar->SetVisibility(false);
+	}
+
 	//TODO גûםוסעט ג פאיכ
 	//float speed = 5.f;
 

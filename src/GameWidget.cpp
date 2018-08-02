@@ -235,6 +235,24 @@ void GameWidget::MouseMove(const IPoint &mouse_pos)
 	}
 	_lastPosition = mouse_pos;
 
+	//select objects
+	if (_unit != nullptr) {
+		float zoom = Scene::GetInstance().GetCameraZoom();
+		FPoint scenePos = Scene::GetInstance().MouseToScene(mouse_pos);
+		IPoint tilePoint = _map->GetTileCoordinate(scenePos);
+		auto obj = _map->GetGameObject(tilePoint);
+		auto interObj = dynamic_cast<InterObject*>(obj.get());
+
+		if (interObj) {
+			interObj->ShowInfo();
+			if ( _selectObject && _selectObject != interObj) {
+				_selectObject->HideInfo();
+			}
+			_selectObject = interObj;
+		}
+
+	}
+
 	//select tile
 	if (_unit != nullptr) {
 		float zoom = Scene::GetInstance().GetCameraZoom();
@@ -294,7 +312,7 @@ void GameWidget::SetColorAroundUnit() {
 			for (auto tile : tiles) {
 				IPoint tilePos = _map->GetTileCoordinate(IPoint(tile->GetPosition().x, tile->GetPosition().y));
 				if (tilePos == pos) {
-					tile->SetColor(Color::Color(0, 0, 0));
+					tile->SetColor(Color::Color(255, 100, 0));
 				}
 			}
 		}

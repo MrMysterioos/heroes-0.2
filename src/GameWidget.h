@@ -43,6 +43,8 @@ private:
 	UnitPtr _unit = nullptr;
 	ParticleEffectNodePtr _tile;
 
+	InterObjectPtr _selectObject = nullptr;
+
 	//debug
 	bool _isMovingInAttack = false;
 	InterObjectPtr _enemy = nullptr;
