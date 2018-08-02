@@ -37,7 +37,7 @@ void Tile::ChangeArea(Area area)
 	auto effNodePtr = ParticleEffectNode::Create(effCont);
 	_effNode = effNodePtr.get();
 	math::Vector3 pos = _position;
-	pos.z -= 256;
+	pos.z -= area.ZCoord;
 	_effNode->SetPosition(pos);
 }
 
