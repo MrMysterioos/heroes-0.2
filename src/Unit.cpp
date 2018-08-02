@@ -381,12 +381,21 @@ std::vector<IPoint> Unit::GetDestroyObject() const {
 		for (auto dir : direction) {
 			IPoint aroundPoint = _map->GetAdjacentAreaCoords(move, dir);
 			int iObj = aroundPoint.x + aroundPoint.y * _map->GetMapSize().x;
+			
 			if (aroundPoint.x < 0 || aroundPoint.x >= mapSize.x ||
 				aroundPoint.y < 0 || aroundPoint.y >= mapSize.y ||
 				gameObjects[iObj] == nullptr || gameObjects[iObj] == this)
 			{
 				continue;
 			}
+			auto interObject = dynamic_cast<InterObject*>(gameObjects[iObj].get());
+			if (interObject == nullptr) {
+				continue;
+			}
+			/*if (interObject != nullptr) {
+			auto debug2 = 0;
+			continue;
+			}*/
 
 			bool isFindEqual = false;
 			for (auto pos : posObject) {
