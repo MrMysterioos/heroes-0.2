@@ -27,7 +27,7 @@ protected:
 	int _maxHp = 1;
 	bool _destroy = false;
 
-	bool _showInfo;
+	bool _showInfo = false;
 
 	HealthBar* _healthBar;
 };

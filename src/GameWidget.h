@@ -43,5 +43,5 @@ private:
 	UnitPtr _unit = nullptr;
 	ParticleEffectNodePtr _tile;
 
-	GameObject* _gameObject = nullptr;
+	InterObjectPtr _selectObject = nullptr;
 };

@@ -194,7 +194,17 @@ void GameWidget::MouseMove(const IPoint &mouse_pos)
 		float zoom = Scene::GetInstance().GetCameraZoom();
 		FPoint scenePos = Scene::GetInstance().MouseToScene(mouse_pos);
 		IPoint tilePoint = _map->GetTileCoordinate(scenePos);
-		// ...
+		auto obj = _map->GetGameObject(tilePoint);
+		auto interObj = dynamic_cast<InterObject*>(obj.get());
+
+		if (interObj) {
+			interObj->ShowInfo();
+			if ( _selectObject && _selectObject != interObj) {
+				_selectObject->HideInfo();
+			}
+			_selectObject = interObj;
+		}
+
 	}
 
 	//select tile
